@@ -1,0 +1,14 @@
+# Source data + tooling — not needed at runtime (data is embedded in js/data.js)
+data/
+scripts/
+docs/
+
+# Repo + OS cruft
+.git/
+.gitignore
+AGENTS.md
+.DS_Store
+**/.DS_Store
+*.swp
+*.tmp
+*.bak

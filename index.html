@@ -4,17 +4,21 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>See Today's Best Home Loan Rates</title>
+<!-- Brand fonts: EB Garamond (title + headings) + Figtree (all UI/body). -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&family=Figtree:wght@400;600;700&display=swap" />
 <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 <div class="wrap">
   <header class="hero">
     <h1>See Today's Best Home Loan Rates</h1>
-    <p class="sub">Check your current home loan interest rate against today's real-time market rates.</p>
+    <p class="sub">Check your current home loan interest rate against<br>today's real-time market rates.</p>
     <div class="tags">
-      <span class="tag">100+ lenders covered</span>
-      <span class="tag">Live home loan rates</span>
-      <span class="tag">No login, No spam</span>
+      <span class="tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/></svg>30+ lenders covered</span>
+      <span class="tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2 7 4-14 2 7h6"/></svg>Live home loan rates</span>
+      <span class="tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>No login, No spam</span>
     </div>
   </header>
 
@@ -57,17 +61,21 @@
           <div id="otherRates"></div>
         </div>
         <div class="out-note">These are today's fair rates for your profile. If your active rate is higher, you are likely overpaying.</div>
-
-        <!-- Savings sub-calculator (owned by js/savings.js — Agent 4).
-             It renders all its UI inside this container. -->
-        <div id="savingsRoot"></div>
       </div>
     </section>
   </div>
 
-  <footer class="disc">
-    Rates are indicative, sourced June 2026 (Urban Money, Business Standard / Paisabazaar, official rate sheets).
-    Always get a personalised quote before applying.
+  <!-- SAVINGS STAGE — own full-width destination, revealed once rates exist. -->
+  <section class="card savings-stage hidden" id="savingsStage">
+    <h2>See how much you could save</h2>
+    <p class="stage-sub">If your rate dropped to the best fair rate for your profile, here's what switching could put back in your pocket.</p>
+    <!-- Savings sub-calculator (owned by js/savings.js — Agent 4).
+         It renders all its UI inside this container. -->
+    <div id="savingsRoot"></div>
+  </section>
+
+  <footer class="disc" id="discFooter">
+    Lower home loan rates are out there. Check yours above and see what you could save.
   </footer>
 </div>
 

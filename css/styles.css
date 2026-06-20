@@ -65,9 +65,32 @@
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* ── Type stacks (system fallbacks for the brand serif/sans) ────────── */
-  --font-head: Georgia, "Times New Roman", serif;
-  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* ── Type system ─────────────────────────────────────────────────────
+     Two families only. EB Garamond serves exactly two roles — the big hero
+     title and section/card headings — everything else is Figtree. System
+     stacks stay as graceful fallbacks if the Google Fonts link is blocked.
+     Variations are deliberately limited: 4 weights, 6 sizes, 3 line-heights. */
+  --font-head: "EB Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* weights (Figtree 400/600/700; EB Garamond 500) */
+  --fw-head: 500;     /* EB Garamond — title + headings */
+  --fw-body: 400;     /* Figtree — body / paragraphs */
+  --fw-medium: 600;   /* Figtree — labels, tags, buttons, segmented control */
+  --fw-bold: 700;     /* Figtree — emphasis: rate numbers, savings amounts */
+
+  /* sizes */
+  --fs-display: clamp(2.25rem, 4.5vw, 3rem);  /* Garamond — big hero title */
+  --fs-title: 1.5rem;                          /* Garamond — card/section headings */
+  --fs-lead: 1.1875rem;                        /* Figtree — subtitle, prominent numbers */
+  --fs-body: 1.0625rem;                        /* Figtree — base body */
+  --fs-sm: 0.9375rem;                          /* Figtree — notes, secondary text */
+  --fs-xs: 0.8125rem;                          /* Figtree — labels, tags, captions */
+
+  /* line-heights */
+  --lh-tight: 1.1;    /* headings */
+  --lh-snug: 1.3;     /* subtitles / amounts */
+  --lh-normal: 1.6;   /* body */
 }
 
 * { box-sizing: border-box; }
@@ -77,11 +100,12 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 1.0625rem;
-  font-weight: 500;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
   background: var(--bg);
   color: var(--fg);
-  line-height: 1.6;
+  line-height: var(--lh-normal);
+  font-feature-settings: "cv11", "ss01";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -116,35 +140,35 @@ header.hero {
 }
 header.hero h1 {
   font-family: var(--font-head);
-  font-weight: 400;
-  font-size: clamp(2.25rem, 4.5vw, 3.25rem);
-  line-height: 1.05;
+  font-weight: var(--fw-head);
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
   letter-spacing: -0.03em;
   color: var(--fg-strong);
   margin: 0 0 14px;
 }
 header.hero p.sub {
-  font-size: 1.1875rem;
+  font-size: var(--fs-lead);
   color: var(--muted);
   margin: 0 auto 22px;
   max-width: 40rem;
 }
 
-/* tag pills — soft primary tint */
+/* tag pills — subtle, muted */
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   justify-content: center;
 }
 .tag {
-  background: var(--primary-soft);
-  color: var(--primary-strong);
-  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
-  padding: 7px 15px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid color-mix(in srgb, var(--muted) 22%, transparent);
+  padding: 5px 13px;
   border-radius: 999px;
-  font-size: 0.8125rem;
-  font-weight: 600;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular, 400);
   letter-spacing: 0.01em;
   display: inline-flex;
   align-items: center;
@@ -159,10 +183,34 @@ header.hero p.sub {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: 28px;
-  align-items: start;
+  align-items: stretch;
 }
 @media (max-width: 860px) {
   .grid { grid-template-columns: 1fr; }
+}
+
+/* Output card fills the column so it matches the profile card's height; the
+   result body grows to fill and its alternative rows spread to take up the
+   slack rather than bunching at the top. */
+.grid > .card { display: flex; flex-direction: column; }
+#outResult { display: flex; flex-direction: column; flex: 1 1 auto; }
+#outResult .rate-block:last-of-type { display: flex; flex-direction: column; flex: 1 1 auto; }
+#otherRates { display: flex; flex-direction: column; flex: 1 1 auto; gap: 9px; }
+#otherRates .rate-row { flex: 1 1 0; margin-bottom: 0; }
+
+/* =============================================================================
+   Savings stage — its own full-width destination below the grid. Generous top
+   margin so the payoff reads as a distinct step, not a footnote of the rates.
+============================================================================= */
+.savings-stage {
+  margin-top: 28px;
+}
+.savings-stage > h2 { margin-bottom: 8px; }
+.savings-stage .stage-sub {
+  font-size: var(--fs-body);
+  color: var(--muted);
+  margin: 0 0 24px;
+  max-width: 44rem;
 }
 
 /* =============================================================================
@@ -177,9 +225,10 @@ header.hero p.sub {
 }
 .card h2 {
   font-family: var(--font-head);
-  font-weight: 400;
-  font-size: 1.5rem;
+  font-weight: var(--fw-head);
+  font-size: var(--fs-title);
   letter-spacing: -0.02em;
+  line-height: var(--lh-tight);
   color: var(--fg-strong);
   margin: 0 0 22px;
 }
@@ -190,8 +239,8 @@ header.hero p.sub {
 label.field { display: block; margin-bottom: 18px; }
 .field span.lbl {
   display: block;
-  font-size: 0.8125rem;
-  font-weight: 600;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
   color: var(--fg);
   margin-bottom: 7px;
 }
@@ -201,8 +250,8 @@ input {
   width: 100%;
   padding: 12px 14px;
   font-family: inherit;
-  font-size: 0.9375rem;
-  font-weight: 600;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
   color: var(--fg);
   background: var(--bg);
   border: 1px solid var(--border);
@@ -221,7 +270,7 @@ select {
   padding-right: 40px;
   cursor: pointer;
 }
-input::placeholder { color: var(--faint); font-weight: 500; }
+input::placeholder { color: var(--faint); font-weight: var(--fw-body); }
 
 select:focus,
 input:focus {
@@ -239,7 +288,7 @@ input[readonly] {
   cursor: not-allowed;
 }
 
-/* segmented control — clean inset toggle, active = navy pill */
+/* segmented control — clean inset toggle, active = raised neutral pill */
 .seg {
   display: grid;
   grid-auto-flow: column;
@@ -256,8 +305,8 @@ input[readonly] {
   background: transparent;
   border-radius: 0.5rem;
   font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
   color: var(--muted);
   cursor: pointer;
   transition: background 0.15s var(--ease-out-soft),
@@ -266,9 +315,12 @@ input[readonly] {
 }
 .seg button:hover { color: var(--fg); }
 .seg button.active {
-  background: var(--primary);
-  color: var(--primary-fg);
-  box-shadow: var(--shadow-xs);
+  /* raised white pill on the inset track — clearly "selected" without
+     competing with the navy CTA. Hairline + tinted text keep it legible
+     against the ivory track. */
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
 }
 
 /* =============================================================================
@@ -278,8 +330,8 @@ button.cta {
   width: 100%;
   padding: 14px;
   font-family: inherit;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
   letter-spacing: -0.01em;
   color: var(--primary-fg);
   background: var(--primary);
@@ -315,28 +367,35 @@ button.cta.secondary:hover {
 ============================================================================= */
 .out-empty {
   color: var(--muted);
-  font-size: 0.9375rem;
+  font-size: var(--fs-sm);
   text-align: center;
-  padding: 48px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 40px 24px;
   border: 1px dashed var(--border-strong);
   border-radius: var(--radius-card);
   background: var(--surface-2);
 }
-.out-empty b { color: var(--fg); font-weight: 600; }
+.out-empty > div { max-width: 22rem; }
+.out-empty b { color: var(--fg); font-weight: var(--fw-medium); }
 .out-empty svg { width: 46px; height: 46px; opacity: 0.3; margin-bottom: 12px; }
 
 /* =============================================================================
    Rate blocks + rows — each rate is a soft card
 ============================================================================= */
-.rate-block { margin-bottom: 26px; }
+.rate-block { margin-bottom: 22px; }
+.rate-block:last-of-type { margin-bottom: 18px; }
 .rate-block h3 {
   font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--faint);
-  margin: 0 0 12px;
+  margin: 0 0 10px;
 }
 
 .rate-row {
@@ -357,19 +416,50 @@ button.cta.secondary:hover {
   box-shadow: var(--shadow-xs);
 }
 .rate-row .bank {
-  font-weight: 600;
+  font-weight: var(--fw-medium);
   color: var(--fg);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* lender logo chip — sits left of the name; logos pulled from logo.dev
+   (see scripts/fetch-logos.sh) and stored under logos/<slug>.png */
+.bank-logo,
+.bank-logo-fallback {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.bank-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 4px;
+}
+.bank-logo-fallback {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.02em;
+  color: var(--muted);
 }
 .rate-row .bank small {
   display: block;
   margin-top: 2px;
-  font-weight: 500;
+  font-weight: var(--fw-body);
   color: var(--muted);
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
 }
 .rate-row .rate {
-  font-weight: 700;
-  font-size: 1.0625rem;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-body);
   color: var(--fg-strong);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
@@ -385,13 +475,20 @@ button.cta.secondary:hover {
 }
 .rate-row.current .rate { color: var(--success-strong); }
 
+/* cheapest alternative (first in the sorted list) — draw the eye to the gap */
+#otherRates .rate-row:first-child {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-xs);
+}
+#otherRates .rate-row:first-child .rate { color: var(--accent-strong); }
+
 /* warning note — warm gold tint */
 .out-note {
   background: var(--gold-soft);
   color: color-mix(in srgb, var(--gold) 78%, var(--fg-strong));
   border: 1px solid color-mix(in srgb, var(--gold) 32%, transparent);
-  font-size: 0.84375rem;
-  line-height: 1.5;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
   padding: 13px 15px;
   border-radius: var(--radius-field);
   margin-bottom: 22px;
@@ -400,37 +497,37 @@ button.cta.secondary:hover {
 /* =============================================================================
    Savings sub-calculator
 ============================================================================= */
+/* the reveal toggle sits at the top of the stage; full-width, clear next step */
+#savingsToggle { margin-top: 0; }
 .savings-panel {
-  border-top: 1px solid var(--border);
-  padding-top: 22px;
-  margin-top: 6px;
+  margin-top: 18px;
 }
 .savings-inputs {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
 }
-@media (max-width: 480px) {
+@media (max-width: 540px) {
   .savings-inputs { grid-template-columns: 1fr; }
 }
 
 /* "new rate from best profile match" context line above the savings inputs */
 .save-newrate {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--muted);
   background: var(--primary-soft);
   border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
   border-radius: 10px;
-  padding: 10px 14px;
-  margin-bottom: 14px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
 }
-.save-newrate b { color: var(--primary-strong); font-weight: 700; }
+.save-newrate b { color: var(--primary-strong); font-weight: var(--fw-bold); }
 
 /* optional "max savings" hero box (Agent 4 may add it) */
 .save-hero {
-  margin-top: 18px;
-  padding: 24px;
+  margin-top: 4px;
+  padding: 28px;
   border-radius: var(--radius-card);
   background:
     radial-gradient(32rem 18rem at 88% -20%,
@@ -441,8 +538,8 @@ button.cta.secondary:hover {
   box-shadow: var(--shadow-md);
 }
 .save-hero .tagline {
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--success-strong);
@@ -450,20 +547,20 @@ button.cta.secondary:hover {
 }
 .save-hero .big {
   font-size: clamp(2.25rem, 6vw, 3rem);
-  font-weight: 800;
+  font-weight: var(--fw-bold);
   line-height: 1;
   color: var(--success-strong);
   font-variant-numeric: tabular-nums;
 }
-.save-hero .meta { font-size: 0.875rem; color: var(--muted); margin-top: 10px; }
+.save-hero .meta { font-size: var(--fs-sm); color: var(--muted); margin-top: 10px; }
 
 /* result cards grid */
 .save-cards,
 .save-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-top: 18px;
+  gap: 16px;
+  margin-top: 16px;
 }
 @media (max-width: 540px) {
   .save-cards,
@@ -486,8 +583,8 @@ button.cta.secondary:hover {
   box-shadow: var(--shadow-sm);
 }
 .save-card .tagline {
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--faint);
@@ -496,24 +593,26 @@ button.cta.secondary:hover {
 .save-card.best .tagline { color: var(--success-strong); }
 .save-card .big {
   font-size: 1.625rem;
-  font-weight: 800;
+  font-weight: var(--fw-bold);
   color: var(--success-strong);
   margin: 4px 0;
   font-variant-numeric: tabular-nums;
 }
 .save-card .meta {
-  font-size: 0.8125rem;
-  line-height: 1.5;
+  font-size: var(--fs-xs);
+  line-height: var(--lh-snug);
   color: var(--muted);
 }
 
 .save-summary {
-  font-size: 0.875rem;
-  line-height: 1.55;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
   color: var(--muted);
-  margin-top: 16px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
 }
-.save-summary b { color: var(--fg); font-weight: 600; }
+.save-summary b { color: var(--fg); font-weight: var(--fw-medium); }
 
 /* =============================================================================
    Utility / state
@@ -522,7 +621,7 @@ button.cta.secondary:hover {
   color: var(--danger);
   background: color-mix(in srgb, var(--danger) 8%, var(--surface));
   border: 1px solid color-mix(in srgb, var(--danger) 24%, transparent);
-  font-size: 0.8125rem;
+  font-size: var(--fs-xs);
   padding: 10px 13px;
   border-radius: var(--radius-field);
   margin-top: 10px;
@@ -531,8 +630,8 @@ button.cta.secondary:hover {
 .hidden { display: none; }
 
 footer.disc {
-  font-size: 0.75rem;
-  line-height: 1.6;
+  font-size: var(--fs-xs);
+  line-height: var(--lh-normal);
   color: var(--faint);
   margin-top: 32px;
   text-align: center;

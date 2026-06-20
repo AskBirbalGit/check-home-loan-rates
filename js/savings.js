@@ -16,11 +16,14 @@
      }
 
    LAYOUT (this revision): a single full-width HERO box on top shows the MAX
-   total savings (the larger of the two strategies), then a 2-up grid below with
-   a "reduce EMI" box and a "reduce tenure" box. The "new rate" the savings are
-   computed against is NOT user-entered — it is sourced from setContext.bestRate
-   (the lowest fair rate for the user's suggested profile) and shown read-only.
-   Keep the public contract intact.
+   total rupees saved (the larger of the two strategies) — this is the headline
+   "total saved". Below it a 2-up grid shows the TWO WAYS to take that benefit:
+   a "reduce EMI" box headlined in ₹/month relief, and a "reduce tenure" box
+   headlined in time saved. Each box keeps its own lifetime total in the small
+   meta line so the hero rupee figure is never duplicated as a box headline.
+   The "new rate" the savings are computed against is NOT user-entered — it is
+   sourced from setContext.bestRate (the lowest fair rate for the user's
+   suggested profile) and shown read-only. Keep the public contract intact.
 ============================================================================= */
 (function () {
   "use strict";
@@ -74,16 +77,12 @@
             <span class="lbl">Remaining / outstanding amount (₹)</span>
             <input id="outstanding" type="number" min="1" placeholder="e.g. 4000000" />
           </label>
-          <label class="field" style="margin:0">
-            <span class="lbl">New rate (from best profile match)</span>
-            <input id="newRate" type="number" step="0.01" readonly />
-          </label>
         </div>
         <button class="cta" id="calcSavingsBtn">Show my savings</button>
         <div id="savingsErr" class="err hidden"></div>
         <div id="savingsResult" class="hidden">
           <div class="save-card save-hero" id="saveHero">
-            <div class="tagline">Maximum total savings</div>
+            <div class="tagline">Total you could save</div>
             <div class="big" id="saveMaxAmt"></div>
             <div class="meta" id="saveMaxMeta"></div>
           </div>
@@ -107,6 +106,10 @@
       const p = root.querySelector("#savingsPanel");
       const hidden = p.classList.toggle("hidden");
       root.querySelector("#savingsToggle").textContent = hidden ? "Check my savings" : "Hide savings";
+      // Once the user has engaged with savings, the footer nudge to "check yours"
+      // no longer makes sense — hide it.
+      const footer = document.getElementById("discFooter");
+      if (footer) footer.classList.add("hidden");
     });
     root.querySelector("#calcSavingsBtn").addEventListener("click", calc);
   }
@@ -114,10 +117,9 @@
   function setContext(next) {
     ctx = Object.assign({}, ctx, next);
     // The "new rate" is driven entirely by setContext.bestRate — never typed by
-    // the user. Mirror it into both the read-only input and the context line.
+    // the user. Mirror it into the read-only context line above the inputs.
     if (root && ctx.bestRate != null) {
       const v = Number(ctx.bestRate).toFixed(2);
-      root.querySelector("#newRate").value = v;
       root.querySelector("#saveNewRateVal").textContent = v + "%";
     }
   }
@@ -143,8 +145,8 @@
     const P = parseFloat(root.querySelector("#outstanding").value);
     const curRate = parseFloat(root.querySelector("#curRate").value);
     const years = parseFloat(root.querySelector("#tenure").value);
-    // newRate comes from setContext.bestRate (read-only field), not user input.
-    const newRate = parseFloat(root.querySelector("#newRate").value);
+    // newRate comes from setContext.bestRate, not user input.
+    const newRate = ctx.bestRate != null ? Number(ctx.bestRate) : NaN;
 
     if (!(P > 0) || !(curRate > 0) || !(years > 0)) {
       return showErr("Please fill your current rate, remaining tenure and outstanding amount with valid values.");
@@ -176,21 +178,21 @@
     const maxSaving = Math.max(reduceTenureTotal, reduceEmiTotal);
     const maxIsTenure = reduceTenureTotal >= reduceEmiTotal;
 
-    // Hero — max savings.
+    // Hero — the single headline figure: the most rupees you can save.
     root.querySelector("#saveMaxAmt").textContent = "₹" + inr0(maxSaving);
     root.querySelector("#saveMaxMeta").textContent = maxIsTenure
-      ? `Most you can save — by keeping your EMI the same and closing the loan ${fmtMonths(monthsSaved)} sooner.`
-      : `Most you can save — by keeping your tenure the same and lowering your monthly EMI.`;
+      ? `Switching to ${newRate.toFixed(2)}% saves you the most by keeping your EMI the same and closing the loan ${fmtMonths(monthsSaved)} sooner. Here are both ways to take it.`
+      : `Switching to ${newRate.toFixed(2)}% saves you the most by keeping your tenure the same and lowering your monthly EMI. Here are both ways to take it.`;
 
-    // Reduce-EMI box.
-    root.querySelector("#saveEmiAmt").textContent = "₹" + inr0(reduceEmiTotal);
+    // Reduce-EMI box — headline the monthly relief, lifetime total in the meta.
+    root.querySelector("#saveEmiAmt").textContent = "₹" + inr0(monthlySave) + "/mo";
     root.querySelector("#saveEmiMeta").textContent =
-      `EMI drops ₹${inr0(monthlySave)}/mo (₹${inr0(emiOld)} → ₹${inr0(emiNew)}), tenure unchanged over ${years} yrs.`;
+      `EMI drops ₹${inr0(emiOld)} → ₹${inr0(emiNew)} over the same ${years} yrs — about ₹${inr0(reduceEmiTotal)} saved in all.`;
 
-    // Reduce-tenure box.
-    root.querySelector("#saveTenureAmt").textContent = "₹" + inr0(reduceTenureTotal);
+    // Reduce-tenure box — headline the time saved, lifetime total in the meta.
+    root.querySelector("#saveTenureAmt").textContent = fmtMonths(monthsSaved) + " sooner";
     root.querySelector("#saveTenureMeta").textContent =
-      `EMI stays ₹${inr0(emiOld)}; loan closes ${fmtMonths(monthsSaved)} sooner.`;
+      `EMI stays ₹${inr0(emiOld)}; closing early saves about ₹${inr0(reduceTenureTotal)} in all.`;
 
     // Highlight whichever box matches the headline strategy.
     root.querySelector("#saveEmiCard").classList.toggle("best", !maxIsTenure);

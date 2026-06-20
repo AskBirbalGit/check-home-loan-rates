@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>See Today's Best Home Loan Rates</title>
+<!-- Brand fonts: EB Garamond (title + headings) + Figtree (all UI/body). -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&family=Figtree:wght@400;600;700&display=swap" />
+<!-- Base design system (tokens + shared components), then v2 layout overrides. -->
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/styles-v2.css" />
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>Are you Paying the Right Home Loan Rate?</h1>
+    <p class="sub">Birbal suggests the best interest rate for you in seconds.</p>
+  </header>
+
+  <!-- BOX 1 — INPUTS. One full-width rectangle: bank, CIBIL, employment, CTA. -->
+  <div class="box">
+    <h2 class="box-head">Your details</h2>
+    <section class="card input-bar">
+      <div class="input-row">
+        <label class="field">
+          <span class="lbl">Bank name</span>
+          <!-- Searchable bank picker. The visible #bankInput is a type-to-filter
+               combobox; #bank holds the chosen lender name for the rate engine. -->
+          <div class="combo" id="bankCombo">
+            <input id="bankInput" type="text" class="combo-input" role="combobox"
+                   aria-expanded="false" aria-controls="bankList" aria-autocomplete="list"
+                   autocomplete="off" placeholder="Search your bank" />
+            <input id="bank" type="hidden" />
+            <ul class="combo-list hidden" id="bankList" role="listbox" aria-label="Banks"></ul>
+          </div>
+        </label>
+        <label class="field">
+          <span class="lbl">CIBIL score</span>
+          <input id="cibil" type="number" min="650" max="850" value="810" placeholder="e.g. 810" />
+        </label>
+        <label class="field">
+          <span class="lbl">Employment type</span>
+          <div class="seg" id="empSeg">
+            <button type="button" data-emp="sal" class="active">Salaried</button>
+            <button type="button" data-emp="se">Self-employed</button>
+          </div>
+        </label>
+        <button class="cta" id="checkBtn">Check my rates</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- BOX 2 — RATE RESULTS. Current institution (left) vs others (right),
+       then a copy line on the left with the savings CTA on the right. -->
+  <div class="box hidden" id="resultsCard">
+    <h2 class="box-head">Rates for your profile</h2>
+    <section class="card results-card">
+      <div class="results-split">
+        <div class="rate-col">
+          <h3>In current institutions</h3>
+          <div id="currentRate"></div>
+        </div>
+        <div class="rate-col">
+          <h3>Similar institutions</h3>
+          <div id="otherRates"></div>
+        </div>
+      </div>
+      <div class="results-foot">
+        <p class="foot-note">These are today's fair rates for your profile. If your current rate is higher, you can save on your home loan.</p>
+        <button class="cta" id="savingsCta">Check my savings</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- BOX 3 — SAVINGS INPUTS. One wide rectangle: current rate, tenure,
+       outstanding, and the action button on the right. -->
+  <div class="box hidden" id="savingsInputCard">
+    <h2 class="box-head">Additional loan details for savings</h2>
+    <section class="card savings-input-card">
+      <div class="save-newrate">
+        New rate from your best profile match: <b id="saveNewRateVal">—</b>
+      </div>
+      <div class="savings-input-row">
+        <label class="field">
+          <span class="lbl">Your current rate (%)</span>
+          <input id="curRate" type="number" step="0.01" min="1" placeholder="e.g. 8.60" />
+        </label>
+        <label class="field">
+          <span class="lbl">Remaining tenure (years)</span>
+          <input id="tenure" type="number" min="1" max="35" placeholder="e.g. 18" />
+        </label>
+        <label class="field">
+          <span class="lbl">Outstanding amount (₹)</span>
+          <input id="outstanding" type="number" min="1" placeholder="e.g. 4000000" />
+        </label>
+        <button class="cta" id="calcSavingsBtn">Show my savings</button>
+      </div>
+      <div id="savingsErr" class="err hidden"></div>
+    </section>
+  </div>
+
+  <!-- BOX 4 — SAVINGS RESULT. Navy headline hero + two detailed strategy cards
+       (light "More Cash Monthly" / dark "Debt-Free Faster"). -->
+  <div class="box hidden" id="savingsResult">
+    <h2 class="box-head">Savings on rate reduction</h2>
+    <section class="savings-result-stage">
+      <div class="sv-hero" id="svHero">
+        <div class="sv-hero-line">A <span id="svRateCut"></span> Interest Rate Cut =</div>
+        <div class="sv-hero-amt"><span id="svHeroAmt"></span> Saved.</div>
+      </div>
+
+    <div class="sv-cards">
+      <!-- Reduce EMI, keep tenure -->
+      <div class="sv-card sv-card-light">
+        <span class="sv-badge">Reduce EMI Keeping Tenure Same</span>
+        <h3 class="sv-title">More Cash Monthly</h3>
+        <p class="sv-sub" id="svEmiSub"></p>
+        <div class="sv-metric">
+          <div class="sv-metric-label">Total Saved</div>
+          <div class="sv-metric-val" id="svEmiTotal"></div>
+        </div>
+        <div class="sv-metric">
+          <div class="sv-metric-label">Monthly Savings</div>
+          <div class="sv-metric-val" id="svEmiMonthly"></div>
+        </div>
+        <div class="sv-facts">
+          <div class="sv-fact">
+            <span class="sv-fact-key">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M9 13l9 8M6 13h3a5 5 0 0 0 0-10"/></svg>
+              EMI
+            </span>
+            <span class="sv-fact-val" id="svEmiEmi"></span>
+          </div>
+          <div class="sv-fact">
+            <span class="sv-fact-key">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              Tenure
+            </span>
+            <span class="sv-fact-val" id="svEmiTenure"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reduce tenure, keep EMI -->
+      <div class="sv-card sv-card-dark">
+        <span class="sv-badge">Reduce Tenure Keeping EMI Same</span>
+        <h3 class="sv-title">Debt-Free Faster</h3>
+        <p class="sv-sub" id="svTenureSub"></p>
+        <div class="sv-metric">
+          <div class="sv-metric-label">Total Saved</div>
+          <div class="sv-metric-val" id="svTenureTotal"></div>
+        </div>
+        <div class="sv-metric">
+          <div class="sv-metric-label">Time Saved</div>
+          <div class="sv-metric-val" id="svTenureTime"></div>
+        </div>
+        <div class="sv-facts">
+          <div class="sv-fact">
+            <span class="sv-fact-key">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M9 13l9 8M6 13h3a5 5 0 0 0 0-10"/></svg>
+              EMI
+            </span>
+            <span class="sv-fact-val" id="svTenureEmi"></span>
+          </div>
+          <div class="sv-fact">
+            <span class="sv-fact-key">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              Tenure
+            </span>
+            <span class="sv-fact-val" id="svTenureTenure"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="save-summary" id="saveSummary"></div>
+    </section>
+  </div>
+
+  <footer class="disc" id="discFooter">
+    Lower home loan rates are out there. Check yours above and see what you could save.
+  </footer>
+</div>
+
+<!-- Rate engine, then the v2 glue (handles rates + savings in one file). -->
+<script src="js/data.js"></script>
+<script src="js/app-v2.js"></script>
+</body>
+</html>
