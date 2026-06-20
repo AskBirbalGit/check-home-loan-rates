@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>See Today's Best Home Loan Rates</title>
+<style>
+  :root {
+    --bg: #f5f7fb;
+    --card: #ffffff;
+    --ink: #0f1b2d;
+    --muted: #5b6b82;
+    --line: #e3e8f0;
+    --brand: #1857c4;
+    --brand-dark: #103f8f;
+    --good: #0a8f4f;
+    --good-bg: #e7f7ee;
+    --warn-bg: #fff6e5;
+    --warn-ink: #8a5a00;
+    --shadow: 0 10px 30px rgba(16, 33, 61, .08);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 40px 20px 80px; }
+  header.hero { text-align: center; margin-bottom: 32px; }
+  header.hero h1 { font-size: 34px; line-height: 1.2; margin: 0 0 10px; letter-spacing: -.5px; }
+  header.hero p.sub { font-size: 17px; color: var(--muted); margin: 0 auto 18px; max-width: 620px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .tag {
+    background: #eef3fc; color: var(--brand-dark); border: 1px solid #dbe6fb;
+    padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .tag svg { width: 14px; height: 14px; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 24px; align-items: start; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    box-shadow: var(--shadow); padding: 26px;
+  }
+  .card h2 { font-size: 18px; margin: 0 0 18px; }
+
+  label.field { display: block; margin-bottom: 16px; }
+  label.field span.lbl { display: block; font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+  select, input {
+    width: 100%; padding: 12px 14px; font-size: 15px; border: 1px solid var(--line);
+    border-radius: 10px; background: #fff; color: var(--ink); appearance: none; -webkit-appearance: none;
+  }
+  select:focus, input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(24,87,196,.12); }
+  .seg { display: flex; gap: 8px; }
+  .seg button {
+    flex: 1; padding: 11px; border: 1px solid var(--line); background: #fff; border-radius: 10px;
+    font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer; transition: .15s;
+  }
+  .seg button.active { background: var(--brand); border-color: var(--brand); color: #fff; }
+
+  button.cta {
+    width: 100%; padding: 14px; font-size: 16px; font-weight: 700; color: #fff; background: var(--brand);
+    border: none; border-radius: 10px; cursor: pointer; margin-top: 4px; transition: .15s;
+  }
+  button.cta:hover { background: var(--brand-dark); }
+  button.cta.secondary { background: #fff; color: var(--brand); border: 1.5px solid var(--brand); }
+  button.cta.secondary:hover { background: #eef3fc; }
+
+  /* Output */
+  .out-empty { color: var(--muted); font-size: 15px; text-align: center; padding: 40px 10px; }
+  .out-empty svg { width: 46px; height: 46px; opacity: .3; margin-bottom: 12px; }
+
+  .rate-block { margin-bottom: 22px; }
+  .rate-block h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin: 0 0 10px; }
+  .rate-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 13px 16px; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px;
+  }
+  .rate-row .bank { font-weight: 600; }
+  .rate-row .bank small { display: block; font-weight: 500; color: var(--muted); font-size: 12px; }
+  .rate-row .rate { font-weight: 700; font-size: 16px; color: var(--ink); white-space: nowrap; }
+  .rate-row.current { background: var(--good-bg); border-color: #bce6cf; }
+  .rate-row.current .rate { color: var(--good); }
+
+  .out-note { background: var(--warn-bg); color: var(--warn-ink); font-size: 13.5px; padding: 12px 14px; border-radius: 10px; margin-bottom: 20px; }
+
+  /* Savings */
+  .savings-panel { border-top: 1px dashed var(--line); padding-top: 20px; margin-top: 4px; }
+  .savings-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  @media (max-width: 480px) { .savings-inputs { grid-template-columns: 1fr; } }
+
+  .save-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  @media (max-width: 540px) { .save-cards { grid-template-columns: 1fr; } }
+  .save-card { border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .save-card.best { border-color: #bce6cf; background: var(--good-bg); }
+  .save-card .tagline { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-bottom: 6px; }
+  .save-card .big { font-size: 24px; font-weight: 800; color: var(--good); margin: 4px 0; }
+  .save-card .meta { font-size: 13px; color: var(--muted); }
+  .save-summary { font-size: 14px; color: var(--muted); margin-top: 14px; }
+  .save-summary b { color: var(--ink); }
+  .err { color: #c0392b; font-size: 13px; margin-top: 8px; }
+  .hidden { display: none; }
+  footer.disc { font-size: 12px; color: var(--muted); margin-top: 26px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>See Today's Best Home Loan Rates</h1>
+    <p class="sub">Check your current home loan interest rate against today's real-time market rates.</p>
+    <div class="tags">
+      <span class="tag">100+ lenders covered</span>
+      <span class="tag">Live home loan rates</span>
+      <span class="tag">No login, No spam</span>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- INPUTS -->
+    <section class="card">
+      <h2>Your profile</h2>
+      <label class="field">
+        <span class="lbl">Bank name</span>
+        <select id="bank"></select>
+      </label>
+      <label class="field">
+        <span class="lbl">CIBIL score</span>
+        <input id="cibil" type="number" min="300" max="900" value="810" placeholder="e.g. 810" />
+      </label>
+      <label class="field">
+        <span class="lbl">Employment type</span>
+        <div class="seg" id="empSeg">
+          <button type="button" data-emp="sal" class="active">Salaried</button>
+          <button type="button" data-emp="se">Self-employed</button>
+        </div>
+      </label>
+      <button class="cta" id="checkBtn">Check my rates</button>
+    </section>
+
+    <!-- OUTPUT -->
+    <section class="card">
+      <h2>Rates for your profile</h2>
+      <div id="outEmpty" class="out-empty">
+        <div>Enter your details and tap <b>Check my rates</b> to see today's fair rates for your profile.</div>
+      </div>
+
+      <div id="outResult" class="hidden">
+        <div class="rate-block">
+          <h3>In your current institution</h3>
+          <div id="currentRate"></div>
+        </div>
+        <div class="rate-block">
+          <h3>Other institutions for your profile</h3>
+          <div id="otherRates"></div>
+        </div>
+        <div class="out-note">These are today's fair rates for your profile. If your active rate is higher, you are likely overpaying.</div>
+
+        <button class="cta secondary" id="savingsToggle">Check my savings</button>
+
+        <div id="savingsPanel" class="savings-panel hidden">
+          <div class="savings-inputs">
+            <label class="field" style="margin:0">
+              <span class="lbl">Outstanding amount (₹)</span>
+              <input id="outstanding" type="number" min="1" placeholder="e.g. 4000000" />
+            </label>
+            <label class="field" style="margin:0">
+              <span class="lbl">Your current rate (%)</span>
+              <input id="curRate" type="number" step="0.01" min="1" placeholder="e.g. 8.60" />
+            </label>
+            <label class="field" style="margin:0">
+              <span class="lbl">Remaining tenure (years)</span>
+              <input id="tenure" type="number" min="1" max="35" placeholder="e.g. 18" />
+            </label>
+            <label class="field" style="margin:0">
+              <span class="lbl">New rate available (%)</span>
+              <input id="newRate" type="number" step="0.01" readonly />
+            </label>
+          </div>
+          <button class="cta" id="calcSavingsBtn">Show my savings</button>
+          <div id="savingsErr" class="err hidden"></div>
+
+          <div id="savingsResult" class="hidden">
+            <div class="save-cards">
+              <div class="save-card best">
+                <div class="tagline">Keep EMI same, cut tenure</div>
+                <div class="big" id="saveTenureAmt"></div>
+                <div class="meta" id="saveTenureMeta"></div>
+              </div>
+              <div class="save-card">
+                <div class="tagline">Keep tenure same, cut EMI</div>
+                <div class="big" id="saveEmiAmt"></div>
+                <div class="meta" id="saveEmiMeta"></div>
+              </div>
+            </div>
+            <div class="save-summary" id="saveSummary"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="disc">
+    Rates are indicative, sourced June 2026 (Urban Money, Business Standard / Paisabazaar, official rate sheets).
+    Always get a personalised quote before applying.
+  </footer>
+</div>
+
+<script>
+/* ---------- Rate data (from sheet: Online CIBIL-wise ROI, Jun 2026) ----------
+   bands order: [800+ Sal, 800+ SE, 750-799 Sal, 750-799 SE, 700-749 Sal, 700-749 SE, <700 Sal, <700 SE] */
+const LENDERS = [
+  { name: "SBI", type: "PSB", b: ["7.25–7.65","7.25–7.65","7.65–8.05","7.75–8.15","8.05–8.40","8.15–8.55","8.40–8.70","8.55–8.90"] },
+  { name: "Bank of India", type: "PSB", b: ["7.10–7.50","7.10–7.50","7.50–8.00","7.60–8.10","8.00–8.50","8.10–8.65","8.50–10.00","8.65–10.25"] },
+  { name: "Bank of Baroda", type: "PSB", b: ["7.20–7.60","7.20–7.60","7.60–8.10","7.70–8.20","8.10–8.60","8.20–8.70","8.60–9.10","8.70–9.20"] },
+  { name: "Canara Bank", type: "PSB", b: ["7.15–7.55","7.15–7.55","7.55–8.00","7.65–8.15","8.00–8.50","8.15–8.65","8.50–10.00","8.65–10.25"] },
+  { name: "Union Bank of India", type: "PSB", b: ["7.15","7.15","7.35","7.50","7.95","8.10","8.85+","9.00+"] },
+  { name: "Central Bank of India", type: "PSB", b: ["7.10–7.50","7.10–7.50","7.50–7.90","7.60–8.00","7.90–8.30","8.00–8.45","8.30–9.15","8.45–9.30"] },
+  { name: "ICICI Bank", type: "PVT", b: ["7.45–7.85","7.60–8.00","7.85–8.25","8.00–8.40","8.25–8.65","8.40–8.80","8.65–9.05+","8.80–9.20+"] },
+  { name: "HDFC Bank", type: "PVT", b: ["7.15–7.55","7.30–7.70","7.55–7.95","7.70–8.10","7.95–8.35","8.10–8.50","8.35–8.75","8.50–8.90"] },
+  { name: "Axis Bank", type: "PVT", b: ["7.30–7.70","7.45–7.85","7.70–8.10","7.85–8.25","8.10–8.50","8.25–8.65","8.50–8.90","8.65–9.05"] },
+  { name: "Kotak Mahindra Bank", type: "PVT", b: ["7.60–7.70","7.60–7.80","7.70–8.00","7.80–8.10","8.00–8.50","8.10–8.60","8.50–9.25","8.60–9.50"] },
+  { name: "IDFC First Bank", type: "PVT", b: ["7.75–8.10","7.90–8.25","8.00–8.40","8.10–8.50","8.40–9.00","8.50–9.25","9.00–10.00","9.25–10.25"] },
+  { name: "Yes Bank", type: "PVT", b: ["9.00–9.40","9.15–9.55","9.40–9.80","9.55–9.95","9.80–10.20","9.95–10.35","10.20–10.60+","10.35–10.75+"] },
+  { name: "RBL Bank", type: "PVT", b: ["8.20–8.60","8.35–8.75","8.60–9.00","8.75–9.15","9.00–9.40","9.15–9.55","9.40–9.80+","9.55–9.95+"] },
+  { name: "AU Small Finance Bank", type: "SFB", b: ["8.25–8.65","8.50–8.90","8.65–9.05","8.90–9.30","9.05–9.45","9.30–9.70","9.45–9.85+","9.70–10.10+"] },
+  { name: "Ujjivan SFB", type: "SFB", b: ["8.75–9.15","9.00–9.40","9.15–9.55","9.40–9.80","9.55–9.95","9.80–10.20","9.95–10.35+","10.20–10.60+"] },
+  { name: "Jana SFB", type: "SFB", b: ["9.00–9.40","9.25–9.65","9.40–9.80","9.65–10.05","9.80–10.20","10.05–10.45","10.20–10.60+","10.45–10.85+"] },
+  { name: "Equitas SFB", type: "SFB", b: ["9.00–9.40","9.25–9.65","9.40–9.80","9.65–10.05","9.80–10.20","10.05–10.45","10.20–10.60+","10.45–10.85+"] },
+  { name: "Bajaj Housing Finance", type: "HFC", b: ["7.25–7.65","7.35–7.80","7.65–8.10","7.80–8.30","8.10–8.75","8.30–9.00","8.75–10.00+","9.00–20.00+"] },
+  { name: "Tata Capital", type: "HFC", b: ["7.50–8.00","7.70–8.25","8.00–8.50","8.25–8.75","8.50–9.00","8.75–9.25","9.00–10.00+","9.25–10.00+"] },
+  { name: "LIC Housing Finance", type: "HFC", b: ["7.15–7.55","7.50–7.90","7.55–8.00","7.90–8.40","8.00–8.50","8.40–8.90","8.50–9.50+","8.90–11.00+"] },
+  { name: "PNB Housing Finance", type: "HFC", b: ["7.90–8.30","7.90–8.35","8.30–8.75","8.35–8.85","8.75–9.25","8.85–9.40","9.25–10.50+","9.40–12.00+"] },
+  { name: "Sammaan Capital (Indiabulls)", type: "HFC", b: ["8.75–9.25","9.00–9.50","9.25–9.75","9.50–10.00","9.75–10.50","10.00–10.75","10.50–12.00+","10.75–12.50+"] },
+  { name: "Muthoot Housing Finance", type: "HFC", b: ["11.25–11.75","12.50–13.00","11.75–12.25","13.00–13.50","12.25–12.75","13.50–14.00","12.75–14.00+","14.00–15.50+"] },
+  { name: "Aavas Financiers", type: "HFC", b: ["9.00–9.75","9.50–10.25","9.75–10.50","10.25–11.00","10.50–11.25","11.00–11.75","11.25–13.00+","11.75–13.50+"] },
+  { name: "Hinduja Housing Finance", type: "HFC", b: ["10.00–10.75","10.50–11.25","10.75–11.50","11.25–12.00","11.50–12.25","12.00–12.75","12.25–14.00+","12.75–14.50+"] },
+  { name: "Home First Finance", type: "HFC", b: ["11.00–11.50","11.50–12.00","11.50–12.00","12.00–12.50","12.00–12.75","12.50–13.25","12.75–14.00+","13.25–14.50+"] },
+  { name: "Aadhar Housing Finance", type: "HFC", b: ["11.75–12.25","12.25–12.75","12.25–12.75","12.75–13.25","12.75–13.50","13.25–14.00","13.50–15.00+","14.00–16.00+"] },
+  { name: "Cholamandalam Finance", type: "HFC", b: ["10.50–11.00","10.75–11.25","11.00–11.75","11.25–12.00","11.75–12.50","12.00–12.75","12.50–14.00+","12.75–14.50+"] },
+  { name: "SK Finance", type: "HFC", b: ["12.00–12.75","12.50–13.25","12.75–13.50","13.25–14.00","13.50–14.25","14.00–14.75","14.25–16.00+","14.75–17.00+"] },
+  { name: "MAS Financial", type: "HFC", b: ["11.00–11.75","11.50–12.25","11.75–12.50","12.25–13.00","12.50–13.25","13.00–13.75","13.25–15.00+","13.75–15.50+"] },
+  { name: "JM Financial Services", type: "HFC", b: ["10.00–10.75","10.50–11.25","10.75–11.50","11.25–12.00","11.50–12.25","12.00–12.75","12.25–13.50+","12.75–14.00+"] },
+  { name: "Axis Finance", type: "HFC", b: ["10.25–10.75","10.50–11.00","10.75–11.50","11.00–11.75","11.50–12.25","11.75–12.50","12.25–13.75+","12.50–14.00+"] }
+];
+
+const TYPE_LABEL = { PSB: "Public Sector Bank", PVT: "Private Bank", SFB: "Small Finance Bank", HFC: "Housing Finance Co." };
+
+/* ---------- Helpers ---------- */
+function cibilBandIndex(score) {
+  // returns base index into b[] for the salaried column
+  if (score >= 800) return 0;
+  if (score >= 750) return 2;
+  if (score >= 700) return 4;
+  return 6;
+}
+function cibilBandLabel(score) {
+  if (score >= 800) return "CIBIL 800+";
+  if (score >= 750) return "CIBIL 750–799";
+  if (score >= 700) return "CIBIL 700–749";
+  return "CIBIL below 700";
+}
+// numeric lower bound of a band string like "7.10–7.50", "7.15", "8.85+"
+function lowBound(str) {
+  const m = String(str).match(/[\d.]+/);
+  return m ? parseFloat(m[0]) : Infinity;
+}
+
+let emp = "sal";
+
+/* ---------- Populate bank dropdown ---------- */
+const bankSel = document.getElementById("bank");
+LENDERS.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(l => {
+  const o = document.createElement("option");
+  o.value = l.name; o.textContent = l.name;
+  bankSel.appendChild(o);
+});
+bankSel.value = "HDFC Bank";
+
+/* ---------- Employment segmented control ---------- */
+document.getElementById("empSeg").addEventListener("click", e => {
+  const btn = e.target.closest("button");
+  if (!btn) return;
+  emp = btn.dataset.emp;
+  [...e.currentTarget.children].forEach(b => b.classList.toggle("active", b === btn));
+});
+
+/* ---------- Check rates ---------- */
+document.getElementById("checkBtn").addEventListener("click", () => {
+  const score = parseInt(document.getElementById("cibil").value, 10);
+  if (isNaN(score) || score < 300 || score > 900) {
+    alert("Please enter a valid CIBIL score (300–900).");
+    return;
+  }
+  const bankName = bankSel.value;
+  const base = cibilBandIndex(score);
+  const col = base + (emp === "se" ? 1 : 0);
+
+  const current = LENDERS.find(l => l.name === bankName);
+  const currentRateStr = current.b[col];
+
+  // Other institutions: 3 lenders (excluding current) with lowest low-bound for this profile
+  const others = LENDERS
+    .filter(l => l.name !== bankName)
+    .map(l => ({ name: l.name, type: l.type, rate: l.b[col], low: lowBound(l.b[col]) }))
+    .sort((a,b) => a.low - b.low || a.name.localeCompare(b.name))
+    .slice(0, 3);
+
+  renderRates(current, currentRateStr, others, score);
+
+  // Pre-fill the "new rate available" with the best (lowest) low-bound on screen
+  const bestLow = Math.min(lowBound(currentRateStr), ...others.map(o => o.low));
+  document.getElementById("newRate").value = bestLow.toFixed(2);
+
+  // Reset savings panel state
+  document.getElementById("savingsPanel").classList.add("hidden");
+  document.getElementById("savingsResult").classList.add("hidden");
+  document.getElementById("savingsToggle").textContent = "Check my savings";
+});
+
+function renderRates(current, currentRateStr, others, score) {
+  document.getElementById("outEmpty").classList.add("hidden");
+  document.getElementById("outResult").classList.remove("hidden");
+
+  document.getElementById("currentRate").innerHTML = `
+    <div class="rate-row current">
+      <div class="bank">${current.name}<small>${TYPE_LABEL[current.type]} · ${cibilBandLabel(score)} · ${emp === "se" ? "Self-employed" : "Salaried"}</small></div>
+      <div class="rate">${formatRate(currentRateStr)}</div>
+    </div>`;
+
+  document.getElementById("otherRates").innerHTML = others.map(o => `
+    <div class="rate-row">
+      <div class="bank">${o.name}<small>${TYPE_LABEL[o.type]}</small></div>
+      <div class="rate">${formatRate(o.rate)}</div>
+    </div>`).join("");
+}
+function formatRate(str) {
+  // single value -> show as flat %, range -> show with %
+  return /[–-]/.test(str) ? str + "%" : str + "%";
+}
+
+/* ---------- Savings ---------- */
+document.getElementById("savingsToggle").addEventListener("click", () => {
+  const p = document.getElementById("savingsPanel");
+  const hidden = p.classList.toggle("hidden");
+  document.getElementById("savingsToggle").textContent = hidden ? "Check my savings" : "Hide savings";
+});
+
+document.getElementById("calcSavingsBtn").addEventListener("click", () => {
+  const errEl = document.getElementById("savingsErr");
+  const resEl = document.getElementById("savingsResult");
+  errEl.classList.add("hidden"); resEl.classList.add("hidden");
+
+  const P = parseFloat(document.getElementById("outstanding").value);
+  const curRate = parseFloat(document.getElementById("curRate").value);
+  const years = parseFloat(document.getElementById("tenure").value);
+  const newRate = parseFloat(document.getElementById("newRate").value);
+
+  if (!(P > 0) || !(curRate > 0) || !(years > 0) || !(newRate > 0)) {
+    return showErr("Please fill outstanding amount, current rate and remaining tenure with valid values.");
+  }
+  if (newRate >= curRate) {
+    return showErr("Your current rate is already at or below today's best fair rate for your profile. No switching savings to show.");
+  }
+
+  const n = Math.round(years * 12);
+  const rOld = curRate / 1200;
+  const rNew = newRate / 1200;
+
+  const emiOld = emi(P, rOld, n);
+  const totalOld = emiOld * n;
+
+  // Option A: keep EMI same, reduce tenure (apply EMI at new rate)
+  // n_new = -ln(1 - P*rNew/EMI) / ln(1+rNew)
+  const nNew = Math.ceil(-Math.log(1 - (P * rNew) / emiOld) / Math.log(1 + rNew));
+  const totalA = emiOld * nNew;
+  const saveA = totalOld - totalA;
+  const monthsSaved = n - nNew;
+
+  // Option B: keep tenure same, reduce EMI
+  const emiNew = emi(P, rNew, n);
+  const monthlySave = emiOld - emiNew;
+  const saveB = monthlySave * n;
+
+  document.getElementById("saveTenureAmt").textContent = inr(saveA);
+  document.getElementById("saveTenureMeta").textContent =
+    `Loan closes ${fmtMonths(monthsSaved)} sooner. EMI stays ₹${inr0(emiOld)}.`;
+
+  document.getElementById("saveEmiAmt").textContent = inr(saveB);
+  document.getElementById("saveEmiMeta").textContent =
+    `EMI drops by ₹${inr0(monthlySave)} (₹${inr0(emiOld)} → ₹${inr0(emiNew)}) over ${years} yrs.`;
+
+  document.getElementById("saveSummary").innerHTML =
+    `Based on an outstanding of <b>₹${inr0(P)}</b>, moving from <b>${curRate.toFixed(2)}%</b> to <b>${newRate.toFixed(2)}%</b>. ` +
+    `Keeping your EMI the same and letting the tenure shrink saves the most.`;
+
+  resEl.classList.remove("hidden");
+
+  function showErr(msg){ errEl.textContent = msg; errEl.classList.remove("hidden"); }
+});
+
+function emi(P, r, n) {
+  if (r === 0) return P / n;
+  const f = Math.pow(1 + r, n);
+  return P * r * f / (f - 1);
+}
+function inr(x) {
+  // round to nearest, group Indian style
+  return inr0(Math.round(x));
+}
+function inr0(x) {
+  x = Math.round(x);
+  const s = x.toString();
+  const last3 = s.slice(-3);
+  const rest = s.slice(0, -3);
+  return rest ? rest.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + "," + last3 : last3;
+}
+function fmtMonths(m) {
+  if (m <= 0) return "0 months";
+  const y = Math.floor(m / 12), mo = m % 12;
+  const parts = [];
+  if (y) parts.push(y + (y === 1 ? " yr" : " yrs"));
+  if (mo) parts.push(mo + (mo === 1 ? " mo" : " mos"));
+  return parts.join(" ");
+}
+
+function showErr(msg) {
+  const errEl = document.getElementById("savingsErr");
+  errEl.textContent = msg; errEl.classList.remove("hidden");
+}
+</script>
+</body>
+</html>

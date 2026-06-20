@@ -1,0 +1,7 @@
+# macOS
+.DS_Store
+
+# Editor / temp
+*.swp
+*.tmp
+*.bak
