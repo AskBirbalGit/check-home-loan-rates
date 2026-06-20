@@ -88,8 +88,14 @@ export function computeSavings(
   const totalOld = emiOld * n;
 
   // Reduce-tenure: keep paying the OLD EMI at the NEW rate; loan closes sooner.
+  // The final month is a partial payment, so the true amount paid is
+  // (nNew-1) full EMIs + the residual balance grown one month. Using emiOld*nNew
+  // would overstate what's paid and understate the savings by up to ~half an EMI.
   const nNew = Math.ceil(-Math.log(1 - (P * rNew) / emiOld) / Math.log(1 + rNew));
-  const reduceTenureTotal = totalOld - emiOld * nNew;
+  const fNew = Math.pow(1 + rNew, nNew - 1);
+  const balBeforeLast = P * fNew - (emiOld * (fNew - 1)) / rNew;
+  const lastPayment = balBeforeLast * (1 + rNew);
+  const reduceTenureTotal = totalOld - (emiOld * (nNew - 1) + lastPayment);
   const monthsSaved = n - nNew;
 
   // Reduce-EMI: keep the SAME tenure, pay a lower EMI at the NEW rate.
