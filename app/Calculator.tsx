@@ -290,7 +290,7 @@ export default function Calculator() {
   return (
     <div className="wrap">
       <header className="hero">
-        <h1>Are you Paying the Right Home Loan Rate?</h1>
+        <h1>Are You Paying the Right Home Loan Rate?</h1>
         <p className="sub">Birbal suggests the best interest rate for you in seconds.</p>
       </header>
 

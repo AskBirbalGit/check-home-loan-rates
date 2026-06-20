@@ -22,7 +22,7 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
-  title: "Are you Paying the Right Home Loan Rate?",
+  title: "Are You Paying the Right Home Loan Rate?",
   description: "Birbal suggests the best interest rate for you in seconds.",
 };
 

@@ -75,24 +75,39 @@
   --font-head: var(--font-eb-garamond), Georgia, "Times New Roman", serif;
   --font-body: var(--font-figtree), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
-  /* weights (Figtree 400/600/700; EB Garamond 500) */
+  /* weights (4) — Figtree 400/600/700; EB Garamond 500.
+     Weight is the emphasis axis on top of a size, not a new size per role. */
   --fw-head: 500;     /* EB Garamond — title + headings */
   --fw-body: 400;     /* Figtree — body / paragraphs */
-  --fw-medium: 600;   /* Figtree — labels, tags, buttons, segmented control */
+  --fw-medium: 600;   /* Figtree — labels, controls */
   --fw-bold: 700;     /* Figtree — emphasis: rate numbers, savings amounts */
 
-  /* sizes */
-  --fs-display: clamp(2.25rem, 4.5vw, 3rem);  /* Garamond — big hero title */
-  --fs-title: 1.5rem;                          /* Garamond — card/section headings */
-  --fs-lead: 1.1875rem;                        /* Figtree — subtitle, prominent numbers */
-  --fs-body: 1.0625rem;                        /* Figtree — base body */
-  --fs-sm: 0.9375rem;                          /* Figtree — notes, secondary text */
-  --fs-xs: 0.8125rem;                          /* Figtree — labels, tags, captions */
+  /* sizes (7) — one ramp. The big four use clamp() so they step down on phone
+     (this is a phone-first product) instead of holding their desktop px.
+       display  hero h1 + the one showcase savings ₹ amount
+       heading  section/card titles
+       money    data figures you compare (metric values, big rates)
+       lead     hero sub + savings hero line
+       body     all running UI/body text (controls, names, notes)
+       label    static labels, badges, captions
+       eyebrow  uppercase tracked micro-labels */
+  --fs-display: clamp(2.25rem, 1.2rem + 4.5vw, 3rem);      /* 36 → 48 */
+  --fs-heading: clamp(1.375rem, 1rem + 1.2vw, 1.5rem);     /* 22 → 24 */
+  --fs-money:   clamp(1.75rem, 1.5rem + 0.8vw, 1.9375rem); /* 28 → 31 */
+  --fs-lead:    clamp(1rem, 0.8rem + 0.6vw, 1.1875rem);    /* 16 → 19 */
+  --fs-body:    1rem;        /* 16 */
+  --fs-label:   0.8125rem;   /* 13 */
+  --fs-eyebrow: 0.75rem;     /* 12 */
 
-  /* line-heights */
-  --lh-tight: 1.1;    /* headings */
-  --lh-snug: 1.3;     /* subtitles / amounts */
-  --lh-normal: 1.6;   /* body */
+  /* line-heights (3) */
+  --lh-tight: 1.1;    /* headings + display */
+  --lh-snug: 1.4;     /* leads, card subs, captions */
+  --lh-normal: 1.55;  /* running body */
+
+  /* letter-spacing (3) — one token per intent, em-based so it scales */
+  --ls-display: -0.02em;  /* large serif headings + display */
+  --ls-tight: -0.01em;    /* lead / control text */
+  --ls-eyebrow: 0.08em;   /* uppercase micro-labels */
 }
 
 * { box-sizing: border-box; }
@@ -145,12 +160,13 @@ header.hero h1 {
   font-weight: var(--fw-head);
   font-size: var(--fs-display);
   line-height: var(--lh-tight);
-  letter-spacing: -0.03em;
+  letter-spacing: var(--ls-display);
   color: var(--fg-strong);
   margin: 0 0 14px;
 }
 header.hero p.sub {
   font-size: var(--fs-lead);
+  line-height: var(--lh-snug);
   color: var(--muted);
   margin: 0 auto 22px;
   max-width: 40rem;
@@ -169,8 +185,8 @@ header.hero p.sub {
   border: 1px solid color-mix(in srgb, var(--muted) 22%, transparent);
   padding: 5px 13px;
   border-radius: 999px;
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-regular, 400);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-body);
   letter-spacing: 0.01em;
   display: inline-flex;
   align-items: center;
@@ -228,8 +244,8 @@ header.hero p.sub {
 .card h2 {
   font-family: var(--font-head);
   font-weight: var(--fw-head);
-  font-size: var(--fs-title);
-  letter-spacing: -0.02em;
+  font-size: var(--fs-heading);
+  letter-spacing: var(--ls-display);
   line-height: var(--lh-tight);
   color: var(--fg-strong);
   margin: 0 0 22px;
@@ -241,7 +257,7 @@ header.hero p.sub {
 label.field { display: block; margin-bottom: 18px; }
 .field span.lbl {
   display: block;
-  font-size: var(--fs-xs);
+  font-size: var(--fs-label);
   font-weight: var(--fw-medium);
   color: var(--fg);
   margin-bottom: 7px;
@@ -252,7 +268,7 @@ input {
   width: 100%;
   padding: 12px 14px;
   font-family: inherit;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-body);
   font-weight: var(--fw-medium);
   color: var(--fg);
   background: var(--bg);
@@ -307,7 +323,7 @@ input[readonly] {
   background: transparent;
   border-radius: 0.5rem;
   font-family: inherit;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-body);
   font-weight: var(--fw-medium);
   color: var(--muted);
   cursor: pointer;
@@ -334,7 +350,7 @@ button.cta {
   font-family: inherit;
   font-size: var(--fs-body);
   font-weight: var(--fw-medium);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--ls-tight);
   color: var(--primary-fg);
   background: var(--primary);
   border: none;
@@ -369,7 +385,7 @@ button.cta.secondary:hover {
 ============================================================================= */
 .out-empty {
   color: var(--muted);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-body);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -392,10 +408,10 @@ button.cta.secondary:hover {
 .rate-block:last-of-type { margin-bottom: 18px; }
 .rate-block h3 {
   font-family: var(--font-body);
-  font-size: var(--fs-xs);
+  font-size: var(--fs-eyebrow);
   font-weight: var(--fw-bold);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--ls-eyebrow);
   color: var(--faint);
   margin: 0 0 10px;
 }
@@ -447,7 +463,7 @@ button.cta.secondary:hover {
 }
 .bank-logo-fallback {
   font-family: var(--font-body);
-  font-size: var(--fs-xs);
+  font-size: var(--fs-label);
   font-weight: var(--fw-bold);
   letter-spacing: 0.02em;
   color: var(--muted);
@@ -457,7 +473,7 @@ button.cta.secondary:hover {
   margin-top: 2px;
   font-weight: var(--fw-body);
   color: var(--muted);
-  font-size: var(--fs-xs);
+  font-size: var(--fs-label);
 }
 .rate-row .rate {
   font-weight: var(--fw-bold);
@@ -489,7 +505,7 @@ button.cta.secondary:hover {
   background: var(--gold-soft);
   color: color-mix(in srgb, var(--gold) 78%, var(--fg-strong));
   border: 1px solid color-mix(in srgb, var(--gold) 32%, transparent);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-body);
   line-height: var(--lh-snug);
   padding: 13px 15px;
   border-radius: var(--radius-field);
@@ -516,7 +532,7 @@ button.cta.secondary:hover {
 
 /* "new rate from best profile match" context line above the savings inputs */
 .save-newrate {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-body);
   color: var(--muted);
   background: var(--primary-soft);
   border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
@@ -540,21 +556,21 @@ button.cta.secondary:hover {
   box-shadow: var(--shadow-md);
 }
 .save-hero .tagline {
-  font-size: var(--fs-xs);
+  font-size: var(--fs-eyebrow);
   font-weight: var(--fw-bold);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--ls-eyebrow);
   color: var(--success-strong);
   margin-bottom: 8px;
 }
 .save-hero .big {
-  font-size: clamp(2.25rem, 6vw, 3rem);
+  font-size: var(--fs-display);
   font-weight: var(--fw-bold);
-  line-height: 1;
+  line-height: var(--lh-tight);
   color: var(--success-strong);
   font-variant-numeric: tabular-nums;
 }
-.save-hero .meta { font-size: var(--fs-sm); color: var(--muted); margin-top: 10px; }
+.save-hero .meta { font-size: var(--fs-body); color: var(--muted); margin-top: 10px; }
 
 /* result cards grid */
 .save-cards,
@@ -585,29 +601,29 @@ button.cta.secondary:hover {
   box-shadow: var(--shadow-sm);
 }
 .save-card .tagline {
-  font-size: var(--fs-xs);
+  font-size: var(--fs-eyebrow);
   font-weight: var(--fw-bold);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--ls-eyebrow);
   color: var(--faint);
   margin-bottom: 8px;
 }
 .save-card.best .tagline { color: var(--success-strong); }
 .save-card .big {
-  font-size: 1.625rem;
+  font-size: var(--fs-money);
   font-weight: var(--fw-bold);
   color: var(--success-strong);
   margin: 4px 0;
   font-variant-numeric: tabular-nums;
 }
 .save-card .meta {
-  font-size: var(--fs-xs);
+  font-size: var(--fs-label);
   line-height: var(--lh-snug);
   color: var(--muted);
 }
 
 .save-summary {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-body);
   line-height: var(--lh-snug);
   color: var(--muted);
   margin-top: 20px;
@@ -623,7 +639,7 @@ button.cta.secondary:hover {
   color: var(--danger);
   background: color-mix(in srgb, var(--danger) 8%, var(--surface));
   border: 1px solid color-mix(in srgb, var(--danger) 24%, transparent);
-  font-size: var(--fs-xs);
+  font-size: var(--fs-label);
   padding: 10px 13px;
   border-radius: var(--radius-field);
   margin-top: 10px;
@@ -632,8 +648,8 @@ button.cta.secondary:hover {
 .hidden { display: none; }
 
 footer.disc {
-  font-size: var(--fs-xs);
-  line-height: var(--lh-normal);
+  font-size: var(--fs-label);
+  line-height: var(--lh-snug);
   color: var(--faint);
   margin-top: 32px;
   text-align: center;
