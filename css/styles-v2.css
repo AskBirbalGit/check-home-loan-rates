@@ -195,6 +195,16 @@
   pointer-events: none;
   z-index: 1;
 }
+/* The BankLogo wrapper span is passed an empty class here, so default it to a
+   filling flex box; otherwise the inline span aligns the <img> to the text
+   baseline and the logo rides the top of the chip instead of centering. */
+.combo-selected-logo > span {
+  display: inline-flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
 .combo-selected-logo img { width: 100%; height: 100%; object-fit: contain; padding: 2px; }
 .combo-selected-logo .combo-logo-fb {
   width: 100%;

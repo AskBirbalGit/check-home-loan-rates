@@ -190,7 +190,6 @@ export default function Calculator() {
   // ── Results + savings state ────────────────────────────────────────────────
   const [rateView, setRateView] = useState<RateView | null>(null);
   const [newRate, setNewRate] = useState<number | null>(null);
-  const [profileLabel, setProfileLabel] = useState("");
   const [footerText, setFooterText] = useState(FOOTER_FULL);
   const [footerHidden, setFooterHidden] = useState(false);
 
@@ -229,9 +228,6 @@ export default function Calculator() {
 
     const best = bestRate(bankName, score, emp);
     setNewRate(best);
-    setProfileLabel(
-      `${bankName} · CIBIL ${score} · ${emp === "se" ? "Self-employed" : "Salaried"}`
-    );
     setFooterText(FOOTER_TRIMMED);
 
     // A fresh rate check resets any prior savings output/inputs.
@@ -698,19 +694,6 @@ export default function Calculator() {
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="save-summary" id="saveSummary">
-              Based on an outstanding of <b>₹{inr0(parseFloat(outstanding))}</b>, moving from{" "}
-              <b>{parseFloat(curRate).toFixed(2)}%</b> to{" "}
-              <b>{(newRate ?? 0).toFixed(2)}%</b>
-              {profileLabel ? (
-                <>
-                  {" "}
-                  for <b>{profileLabel}</b>
-                </>
-              ) : null}
-              .
             </div>
           </section>
         </div>
