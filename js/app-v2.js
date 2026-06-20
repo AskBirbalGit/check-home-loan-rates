@@ -106,6 +106,7 @@
   const bankInput = document.getElementById("bankInput"); // visible search box
   const bankList = document.getElementById("bankList");   // dropdown <ul>
   const bankCombo = document.getElementById("bankCombo");
+  const bankSelLogo = document.getElementById("bankSelLogo"); // leading logo chip
   let comboActive = -1; // keyboard-highlighted option index within the open list
 
   // Render the dropdown options for a given filter query.
@@ -142,15 +143,35 @@
   function commitBank(name) {
     bankSel.value = name;
     bankInput.value = name;
+    showSelectedLogo(name);
     closeBankList();
   }
 
-  // Open on focus/click and show the ranked list (top disbursers first).
-  bankInput.addEventListener("focus", openBankList);
-  bankInput.addEventListener("click", openBankList);
+  // Render the committed bank's logo into the input's leading slot (replacing
+  // the search-glass icon); falls back to an initials chip if the file is gone.
+  function showSelectedLogo(name) {
+    if (!name) { bankSelLogo.classList.add("hidden"); return; }
+    bankSelLogo.innerHTML =
+      `<img src="logos/${logoSlug(name)}.png" alt="" width="22" height="22" ` +
+      `onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'combo-logo-fb',textContent:'${initials(name)}'}))" />`;
+    bankSelLogo.classList.remove("hidden");
+  }
 
-  // Type to filter.
+  // Open on focus/click. Clearing the visible text on focus means typing starts
+  // fresh (not appended after the committed name like "HDFC Bank…"); the chosen
+  // bank stays safe in #bank and is restored on click-away if nothing new is
+  // picked. The full ranked list shows since the query is now empty.
+  function focusBank() {
+    bankInput.value = "";
+    openBankList();
+  }
+  bankInput.addEventListener("focus", focusBank);
+  bankInput.addEventListener("click", focusBank);
+
+  // Type to filter. Hide the selected-bank logo while searching so the leading
+  // slot reverts to the search glass; commitBank restores it on a fresh pick.
   bankInput.addEventListener("input", () => {
+    bankSelLogo.classList.add("hidden");
     renderBankList(bankInput.value);
     bankList.classList.remove("hidden");
     bankInput.setAttribute("aria-expanded", "true");
@@ -181,19 +202,29 @@
       act.scrollIntoView({ block: "nearest" });
     } else if (e.key === "Enter") {
       if (!bankList.classList.contains("hidden") && comboActive >= 0 && opts[comboActive]) {
+        // A list option is highlighted — Enter picks it (doesn't run the check yet).
         e.preventDefault();
         commitBank(opts[comboActive].dataset.name);
+      } else {
+        // No active option (list closed or nothing highlighted) — Enter means
+        // "go": restore the committed bank into the box, then run the rate check.
+        e.preventDefault();
+        bankInput.value = bankSel.value || "";
+        showSelectedLogo(bankSel.value);
+        closeBankList();
+        document.getElementById("checkBtn").click();
       }
     } else if (e.key === "Escape") {
       closeBankList();
     }
   });
 
-  // Clicking away closes the list; restore the committed value if the user left
-  // a half-typed query that doesn't match the chosen bank.
+  // Clicking away closes the list; restore the committed value (+ its logo) if
+  // the user left a half-typed query that doesn't match the chosen bank.
   document.addEventListener("mousedown", e => {
     if (!bankCombo.contains(e.target)) {
       bankInput.value = bankSel.value || "";
+      showSelectedLogo(bankSel.value);
       closeBankList();
     }
   });
@@ -277,6 +308,14 @@
     document.getElementById("savingsInputCard").classList.add("hidden");
     document.getElementById("savingsResult").classList.add("hidden");
     document.getElementById("savingsErr").classList.add("hidden");
+  });
+
+  // Enter inside the CIBIL field runs the rate check (mirrors the bank combobox).
+  document.getElementById("cibil").addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      document.getElementById("checkBtn").click();
+    }
   });
 
   function renderRates(current, currentResult, others, score) {
@@ -415,5 +454,15 @@
 
     resEl.classList.remove("hidden");
     resEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+
+  // Enter in any of the three savings fields runs the savings calculation.
+  ["curRate", "tenure", "outstanding"].forEach(id => {
+    document.getElementById(id).addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        document.getElementById("calcSavingsBtn").click();
+      }
+    });
   });
 })();

@@ -3,7 +3,7 @@
    -----------------------------------------------------------------------------
    This module owns the CIBIL-wise rate dataset and the lookup logic.
 
-   PUBLIC CONTRACT (do not change these signatures — app.js & savings.js depend
+   PUBLIC CONTRACT (do not change these signatures — app-v2.js depends
    on them):
 
      window.RateEngine = {
@@ -23,14 +23,14 @@
        others(bankName, score, emp, count=3): Array<...>
 
        // Lowest available numeric rate across the on-screen options (current + others).
-       // Used by savings.js to pre-fill the "new rate".
+       // Used by app-v2.js to pre-fill the "new rate".
        bestRate(bankName, score, emp): number
      }
 
    RateResult is either:
      - a number (preferred, the averaged granular rate), or
      - { low: number, high: number } for legacy range display.
-   Helpers below normalise both, so app.js / savings.js can stay agnostic.
+   Helpers below normalise both, so app-v2.js can stay agnostic.
 
    GRANULAR-AVERAGING ENGINE (10x granularity, single averaged rate)
    -----------------------------------------------------------------------------

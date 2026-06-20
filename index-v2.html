@@ -29,6 +29,9 @@
           <!-- Searchable bank picker. The visible #bankInput is a type-to-filter
                combobox; #bank holds the chosen lender name for the rate engine. -->
           <div class="combo" id="bankCombo">
+            <!-- Logo of the committed bank sits over the input's leading slot;
+                 hidden (so the search glass shows) until a bank is chosen. -->
+            <span class="combo-selected-logo hidden" id="bankSelLogo" aria-hidden="true"></span>
             <input id="bankInput" type="text" class="combo-input" role="combobox"
                    aria-expanded="false" aria-controls="bankList" aria-autocomplete="list"
                    autocomplete="off" placeholder="Search your bank" />

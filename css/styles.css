@@ -5,9 +5,8 @@
    /Users/karan/Drive/Birbal/repo/website/src/app/globals.css — the light
    "royal" theme: warm-ivory page, deep-navy ink, turquoise accent, success
    green for savings, gold for the warning note. Tokens below are mirrored from
-   that reference (no Tailwind, no web fonts — system stacks only so the static
-   page stays offline-safe). Class names are the fixed markup contract from
-   index.html + the JS-rendered fragments (js/app.js, js/savings.js); every one
+   that reference. Class names are the fixed markup contract from
+   index-v2.html + the JS-rendered fragments (js/app-v2.js); every one
    is styled here and none are renamed.
 ============================================================================= */
 
