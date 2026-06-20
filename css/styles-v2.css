@@ -306,13 +306,15 @@
   text-align: center;
   padding: 38px 32px;
   border-radius: var(--radius-card);
+  /* Same teal wash as the Box 1–3 section cards (`.box .card`) so the savings
+     hero reads in the same family — an `accent-bright` radial bloom over a 152°
+     `accent 12% → surface` gradient. Kept at shadow-md (one notch above the
+     shadow-sm sections) as the single allowed accent for the payoff. */
   background:
-    radial-gradient(40rem 22rem at 85% -30%,
-      color-mix(in srgb, var(--band-accent) 22%, transparent), transparent 60%),
-    linear-gradient(140deg, var(--band-2) 0%, var(--band) 100%);
-  /* Unified frame: same accent hairline as the section cards. Kept at shadow-md
-     (one notch above the shadow-sm sections) as the single allowed accent so the
-     savings payoff still reads as the climax without floating away. */
+    radial-gradient(40rem 24rem at 88% -16%,
+      color-mix(in srgb, var(--accent-bright) 20%, transparent), transparent 60%),
+    linear-gradient(152deg,
+      color-mix(in srgb, var(--accent) 12%, var(--surface)) 0%, var(--surface) 78%);
   border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
   box-shadow: var(--shadow-md);
   margin-bottom: 26px;
@@ -363,7 +365,11 @@
   box-shadow: var(--shadow-sm);
 }
 .sv-card-dark {
-  background: linear-gradient(150deg, var(--band-2) 0%, var(--band) 100%);
+  background:
+    radial-gradient(40rem 24rem at 88% -16%,
+      color-mix(in srgb, var(--accent-bright) 20%, transparent), transparent 60%),
+    linear-gradient(152deg,
+      color-mix(in srgb, var(--accent) 12%, var(--surface)) 0%, var(--surface) 78%);
   border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
   box-shadow: var(--shadow-sm);
 }

@@ -449,8 +449,7 @@
 
     document.getElementById("saveSummary").innerHTML =
       `Based on an outstanding of <b>₹${inr0(P)}</b>, moving from <b>${curRate.toFixed(2)}%</b> to <b>${newRate.toFixed(2)}%</b>` +
-      (ctx.profileLabel ? ` for <b>${ctx.profileLabel}</b>` : "") + `. ` +
-      `${reduceTenureTotal >= reduceEmiTotal ? "Keeping your EMI the same and letting the tenure shrink" : "Keeping your tenure the same and lowering the EMI"} saves the most.`;
+      (ctx.profileLabel ? ` for <b>${ctx.profileLabel}</b>` : "") + `.`;
 
     resEl.classList.remove("hidden");
     resEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
