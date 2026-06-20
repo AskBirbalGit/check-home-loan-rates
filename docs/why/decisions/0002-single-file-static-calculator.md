@@ -1,6 +1,6 @@
 # 0002 — Single-file static calculator with embedded rate data
 
-- **Status:** Accepted
+- **Status:** Superseded by 0005
 - **Date:** 2026-06-20
 - **Tags:** calculator, home-loan, rates, architecture
 - **Touches:** index.html, data/cibil-roi-bands

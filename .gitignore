@@ -5,3 +5,13 @@
 *.swp
 *.tmp
 *.bak
+
+# Next.js / Node
+/node_modules
+/.next
+/out
+next-env.d.ts
+*.tsbuildinfo
+.vercel
+npm-debug.log*
+yarn-error.log*

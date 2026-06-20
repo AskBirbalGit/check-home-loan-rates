@@ -11,16 +11,16 @@ fields) is always the source of truth. See `SEARCH.md`.
 | Tag | Where | Summary |
 |-----|-------|---------|
 | meta | [journal](journal/), [0001](decisions/0001-record-architecture-decisions.md) | why-journal setup and conventions |
-| calculator | [journal](journal/), [0002](decisions/0002-single-file-static-calculator.md) | home loan rate + savings calculator |
+| calculator | [journal](journal/), [0002](decisions/0002-single-file-static-calculator.md), [0005](decisions/0005-migrate-to-nextjs-for-vercel.md) | home loan rate + savings calculator (now a Next.js app — app/Calculator.tsx) |
 | home-loan | [journal](journal/) | rate bands, CIBIL/employment lookup |
-| rates | [journal](journal/) | CIBIL-wise ROI data (Jun 2026); 10x-granular averaged lookup (650–850) |
-| savings | [journal](journal/) | EMI/tenure savings math; "total saved" hero + two-ways boxes (reduce-EMI ₹/mo, reduce-tenure time) in js/savings.js |
-| ui | [journal](journal/) | v2 (`index-v2.html`) is now the only page — stacked-box layout, one full-width rectangle per step, each with a section `<h2>` heading above its card (Your details / Rates for your profile / Additional loan details for savings / Savings on rate reduction; cols "In current institutions" / "Similar institutions"); Birbal design-system restyle; section cards carry a light-teal wash (`.box .card`) mirroring the hero panel; the Box 4 savings panels (`.sv-hero`/`.sv-card-*`) share that same frame — accent-24% border + shadow-sm, with the hero alone at shadow-md as the one allowed accent; the old side-by-side v1 (`index.html` + `app.js`/`savings.js`) was removed |
-| typography | [journal](journal/) | global two-font system (EB Garamond title+headings, Figtree body/UI) on a small token set (4 weights, 6 sizes, 3 line-heights) in css/styles.css :root; fonts loaded via Google Fonts `<link>` in both HTML heads |
-| architecture | [journal](journal/), [0003](decisions/0003-modular-files-for-parallel-agents.md) | modular files (RateEngine/Savings contracts) for parallel agents |
-| logos | [journal](journal/) | lender logos fetched from logo.dev into `logos/`; rendered on rate rows via slug match in js/app.js |
-| banks | [journal](journal/), [0004](decisions/0004-hardcoded-disbursement-ranking.md) | v2 bank picker: searchable combobox, disbursement-ranked open order, type-to-filter, alias matching (e.g. "state bank of india"→SBI) in js/app-v2.js |
-| deploy | [journal](journal/) | Vercel static deploy (no build); `/` rewritten to index-v2.html (the only page); security + cache headers; `.vercelignore` drops source/tooling |
+| rates | [journal](journal/) | CIBIL-wise ROI data (Jun 2026); 10x-granular averaged lookup (650–850) in lib/rate-engine.ts |
+| savings | [journal](journal/) | EMI/tenure savings math; "total saved" hero + two-ways boxes (reduce-EMI ₹/mo, reduce-tenure time) in lib/savings.ts |
+| ui | [journal](journal/) | stacked-box layout (now app/Calculator.tsx, a React client component), one full-width rectangle per step, each with a section `<h2>` heading above its card (Your details / Rates for your profile / Additional loan details for savings / Savings on rate reduction; cols "In current institutions" / "Similar institutions"); Birbal design-system restyle; section cards carry a light-teal wash (`.box .card`) mirroring the hero panel; the Box 4 savings panels (`.sv-hero`/`.sv-card-*`) share that same frame — accent-24% border + shadow-sm, with the hero alone at shadow-md as the one allowed accent |
+| typography | [journal](journal/) | global two-font system (EB Garamond title+headings, Figtree body/UI) on a small token set (4 weights, 6 sizes, 3 line-heights) in css/styles.css :root; fonts now loaded via `next/font` (app/layout.tsx), self-hosted at build |
+| architecture | [journal](journal/), [0003](decisions/0003-modular-files-for-parallel-agents.md), [0005](decisions/0005-migrate-to-nextjs-for-vercel.md) | Next.js (App Router) + React + TS; rate/savings logic in typed lib/*.ts modules |
+| logos | [journal](journal/) | lender logos fetched from logo.dev into `public/logos/`; rendered on rate rows + picker via slug match in app/Calculator.tsx |
+| banks | [journal](journal/), [0004](decisions/0004-hardcoded-disbursement-ranking.md) | bank picker: searchable combobox, disbursement-ranked open order, type-to-filter, alias matching (e.g. "state bank of india"→SBI) in lib/banks.ts + app/Calculator.tsx |
+| deploy | [journal](journal/), [0005](decisions/0005-migrate-to-nextjs-for-vercel.md) | Vercel-native Next.js deploy (auto-detected, no vercel.json); security + cache headers in next.config.ts; static prerender + client hydration |
 
 ## Entities
 
@@ -32,25 +32,30 @@ fields) is always the source of truth. See `SEARCH.md`.
 | RateEngine.rateFor | [journal](journal/) | 10x-granular averaged rate within 50-pt CIBIL bands |
 | calc/emi | [journal](journal/) | EMI amortisation function |
 | calc/savings | [journal](journal/) | Two-option savings calculation |
-| css/styles.css | [journal](journal/) | Shared tokens + component styles (v2 reuses them); global type tokens (font families + fw/fs/lh) live in its `:root`; active segmented-control pill is a raised white/navy-text pill (not navy fill) so it doesn't clash with the navy CTA |
-| font/eb-garamond, font/figtree | [journal](journal/) | Brand fonts loaded via Google Fonts `<link>`; EB Garamond → title + headings, Figtree → all body/UI |
-| js/savings.js | [journal](journal/) | Removed with v1 — was the mounted savings sub-calculator UI for index.html; v2 does savings inline in app-v2.js |
-| js/data.js | [journal](journal/) | Rate engine module; `window.RateEngine` contract (shared, used by app-v2.js) |
+| css/styles.css | [journal](journal/) | Shared tokens + component styles (v2 reuses them); global type tokens (font families + fw/fs/lh) live in its `:root`; `--font-head`/`--font-body` now point at `next/font` CSS vars; active segmented-control pill is a raised white/navy-text pill (not navy fill) so it doesn't clash with the navy CTA |
+| font/eb-garamond, font/figtree | [journal](journal/) | Brand fonts loaded via `next/font` (app/layout.tsx), self-hosted at build; EB Garamond → title + headings, Figtree → all body/UI |
+| js/savings.js | [journal](journal/) | Removed with v1 — was the mounted savings sub-calculator UI for index.html |
+| js/data.js | [journal](journal/) | Removed in the Next.js migration — `RateEngine` logic ported verbatim to lib/rate-engine.ts |
 | js/app.js | [journal](journal/) | Removed with v1 — was the page glue for index.html |
 | data/cibil-roi-rates.csv | [journal](journal/) | Source ROI sheet copied into the repo |
 | scripts/fetch-logos.sh | [journal](journal/) | Reproducible logo.dev downloader (name→domain→slug, 128px PNG) |
-| logos/ | [journal](journal/) | 32 lender logos pulled from logo.dev |
-| vercel.json | [journal](journal/) | Static deploy config: `/`→index-v2.html rewrite, security headers, css/js/logos cache rules |
-| .vercelignore | [journal](journal/) | Excludes data/, scripts/, docs/, git/OS cruft from the Vercel deploy bundle |
-| index-v2.html | [journal](journal/) | Stacked-box layout variant: one full-width rectangle per step (inputs → rates → savings inputs → savings result) |
+| public/logos/ | [journal](journal/) | 32 lender logos pulled from logo.dev (moved from logos/ into Next's static root) |
+| vercel.json | [journal](journal/) | Removed in the Next.js migration — Vercel auto-detects the framework; headers moved to next.config.ts |
+| .vercelignore | [journal](journal/) | Removed in the Next.js migration |
+| app/Calculator.tsx | [journal](journal/) | The whole stacked-box flow as a React client component (ported from index-v2.html + js/app-v2.js); owns the bank combobox state + journey-aware footer |
+| app/layout.tsx, app/page.tsx | [journal](journal/) | Next App Router root: layout loads next/font + the two stylesheets; page renders Calculator |
+| lib/rate-engine.ts | [journal](journal/) | Typed port of the RateEngine: 10x-granular averaged rate within 50-pt CIBIL bands |
+| lib/banks.ts | [journal](journal/) | DISBURSE_RANK + ALIASES + ALL_BANKS + logoSlug/initials for the picker |
+| lib/savings.ts | [journal](journal/) | EMI amortisation + two-strategy switching-savings math (verbatim port) |
+| next.config.ts | [journal](journal/) | Security + logo cache headers (ported from the old vercel.json) |
 | css/styles-v2.css | [journal](journal/) | Stacked-layout overrides on top of styles.css tokens/components; `.box .card` light-teal section wash mirroring the hero panel |
-| js/app-v2.js | [journal](journal/) | Self-contained glue for index-v2: RateEngine lookup + inline savings math; trims #discFooter on rate check, hides it on the savings CTA; owns the searchable bank combobox (DISBURSE_RANK + ALIASES + ALL_BANKS) |
 
 ## Decisions
 
 | # | Title | Status |
 |---|-------|--------|
 | [0001](decisions/0001-record-architecture-decisions.md) | Record architecture decisions | Accepted |
-| [0002](decisions/0002-single-file-static-calculator.md) | Single-file static calculator with embedded rate data | Accepted |
+| [0002](decisions/0002-single-file-static-calculator.md) | Single-file static calculator with embedded rate data | Superseded by 0005 |
 | [0003](decisions/0003-modular-files-for-parallel-agents.md) | Modular files so multiple agents can work in parallel | Accepted |
 | [0004](decisions/0004-hardcoded-disbursement-ranking.md) | Hand-maintained disbursement ranking for the bank picker | Accepted |
+| [0005](decisions/0005-migrate-to-nextjs-for-vercel.md) | Migrate to Next.js (App Router) for first-class Vercel deployment | Accepted (supersedes 0002) |

@@ -69,8 +69,11 @@
      title and section/card headings — everything else is Figtree. System
      stacks stay as graceful fallbacks if the Google Fonts link is blocked.
      Variations are deliberately limited: 4 weights, 6 sizes, 3 line-heights. */
-  --font-head: "EB Garamond", Georgia, "Times New Roman", serif;
-  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* The two brand families are loaded via next/font (app/layout.tsx), which
+     exposes them as --font-eb-garamond / --font-figtree. System stacks stay as
+     graceful fallbacks if the font fails to load. */
+  --font-head: var(--font-eb-garamond), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-figtree), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   /* weights (Figtree 400/600/700; EB Garamond 500) */
   --fw-head: 500;     /* EB Garamond — title + headings */
