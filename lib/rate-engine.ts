@@ -31,8 +31,15 @@ export interface Lender {
   name: string;
   type: LenderType;
   /* bands order: [800+ Sal, 800+ SE, 750-799 Sal, 750-799 SE,
-                   700-749 Sal, 700-749 SE, <700 Sal, <700 SE] */
-  b: string[];
+                   700-749 Sal, 700-749 SE, <700 Sal, <700 SE]
+     Optional: a lender with no own bands can `mirror` another lender by name,
+     inheriting that lender's rate cells (see resolveBands). */
+  b?: string[];
+  /* Name of an existing lender whose bands this lender inherits. Used for the
+     long tail of institutions we don't have first-party rate sheets for: each
+     is mapped to the closest comparable lender (same type/tier), which in
+     practice price very similarly. */
+  mirror?: string;
 }
 
 export interface OtherRate {
@@ -75,6 +82,88 @@ const LENDERS: Lender[] = [
   { name: "MAS Financial", type: "HFC", b: ["11.00–11.75", "11.50–12.25", "11.75–12.50", "12.25–13.00", "12.50–13.25", "13.00–13.75", "13.25–15.00+", "13.75–15.50+"] },
   { name: "JM Financial Services", type: "HFC", b: ["10.00–10.75", "10.50–11.25", "10.75–11.50", "11.25–12.00", "11.50–12.25", "12.00–12.75", "12.25–13.50+", "12.75–14.00+"] },
   { name: "Axis Finance", type: "HFC", b: ["10.25–10.75", "10.50–11.00", "10.75–11.50", "11.00–11.75", "11.50–12.25", "11.75–12.50", "12.25–13.75+", "12.50–14.00+"] },
+
+  /* ── Long tail (mirrored) ──────────────────────────────────────────────
+     The institutions below carry NO first-party rate sheet of their own; each
+     `mirror`s the closest comparable lender (same type + tier) above, since
+     institutions in the same bracket price very similarly. Rates resolve via
+     resolveBands(). Ordered to round the picker out to the top ~100 lenders. */
+
+  // Public-sector banks -> priced like their PSB peers.
+  { name: "Punjab National Bank", type: "PSB", mirror: "SBI" },
+  { name: "Indian Bank", type: "PSB", mirror: "Canara Bank" },
+  { name: "Indian Overseas Bank", type: "PSB", mirror: "Bank of India" },
+  { name: "UCO Bank", type: "PSB", mirror: "Central Bank of India" },
+  { name: "Bank of Maharashtra", type: "PSB", mirror: "Bank of Baroda" },
+  { name: "Punjab & Sind Bank", type: "PSB", mirror: "Central Bank of India" },
+
+  // Private banks -> priced like their private peers.
+  { name: "IndusInd Bank", type: "PVT", mirror: "Axis Bank" },
+  { name: "Federal Bank", type: "PVT", mirror: "Kotak Mahindra Bank" },
+  { name: "South Indian Bank", type: "PVT", mirror: "RBL Bank" },
+  { name: "Karur Vysya Bank", type: "PVT", mirror: "RBL Bank" },
+  { name: "Karnataka Bank", type: "PVT", mirror: "RBL Bank" },
+  { name: "City Union Bank", type: "PVT", mirror: "RBL Bank" },
+  { name: "DCB Bank", type: "PVT", mirror: "RBL Bank" },
+  { name: "Tamilnad Mercantile Bank", type: "PVT", mirror: "RBL Bank" },
+  { name: "CSB Bank", type: "PVT", mirror: "RBL Bank" },
+  { name: "Bandhan Bank", type: "PVT", mirror: "IDFC First Bank" },
+  { name: "Dhanlaxmi Bank", type: "PVT", mirror: "RBL Bank" },
+  { name: "Jammu & Kashmir Bank", type: "PVT", mirror: "Union Bank of India" },
+  { name: "Nainital Bank", type: "PVT", mirror: "Union Bank of India" },
+
+  // Small finance banks -> priced like the SFB peers.
+  { name: "Utkarsh Small Finance Bank", type: "SFB", mirror: "Ujjivan SFB" },
+  { name: "Suryoday Small Finance Bank", type: "SFB", mirror: "Jana SFB" },
+  { name: "ESAF Small Finance Bank", type: "SFB", mirror: "Jana SFB" },
+  { name: "Capital Small Finance Bank", type: "SFB", mirror: "AU Small Finance Bank" },
+  { name: "Unity Small Finance Bank", type: "SFB", mirror: "Jana SFB" },
+  { name: "Shivalik Small Finance Bank", type: "SFB", mirror: "Jana SFB" },
+  { name: "North East Small Finance Bank", type: "SFB", mirror: "Jana SFB" },
+  { name: "Fincare Small Finance Bank", type: "SFB", mirror: "Ujjivan SFB" },
+
+  // Housing-finance cos + NBFCs -> priced like the closest HFC/NBFC above.
+  { name: "ICICI Home Finance", type: "HFC", mirror: "ICICI Bank" },
+  { name: "Repco Home Finance", type: "HFC", mirror: "Aavas Financiers" },
+  { name: "GIC Housing Finance", type: "HFC", mirror: "LIC Housing Finance" },
+  { name: "Can Fin Homes", type: "HFC", mirror: "LIC Housing Finance" },
+  { name: "India Shelter Finance", type: "HFC", mirror: "Aavas Financiers" },
+  { name: "Aptus Value Housing Finance", type: "HFC", mirror: "Aavas Financiers" },
+  { name: "Shriram Housing Finance", type: "HFC", mirror: "Hinduja Housing Finance" },
+  { name: "Vastu Housing Finance", type: "HFC", mirror: "Aavas Financiers" },
+  { name: "Motilal Oswal Home Finance", type: "HFC", mirror: "Hinduja Housing Finance" },
+  { name: "Godrej Housing Finance", type: "HFC", mirror: "Bajaj Housing Finance" },
+  { name: "Piramal Capital & Housing Finance", type: "HFC", mirror: "PNB Housing Finance" },
+  { name: "IIFL Home Finance", type: "HFC", mirror: "Sammaan Capital (Indiabulls)" },
+  { name: "L&T Finance", type: "HFC", mirror: "Tata Capital" },
+  { name: "Sundaram Home Finance", type: "HFC", mirror: "LIC Housing Finance" },
+  { name: "Cent Bank Home Finance", type: "HFC", mirror: "LIC Housing Finance" },
+  { name: "SRG Housing Finance", type: "HFC", mirror: "Home First Finance" },
+  { name: "Manappuram Home Finance", type: "HFC", mirror: "Muthoot Housing Finance" },
+  { name: "Poonawalla Fincorp", type: "HFC", mirror: "Cholamandalam Finance" },
+  { name: "Edelweiss Housing Finance", type: "HFC", mirror: "JM Financial Services" },
+  { name: "Capri Global Housing Finance", type: "HFC", mirror: "Cholamandalam Finance" },
+  { name: "Star Housing Finance", type: "HFC", mirror: "Home First Finance" },
+  { name: "Altum Credo Home Finance", type: "HFC", mirror: "Aavas Financiers" },
+  { name: "Five-Star Business Finance", type: "HFC", mirror: "SK Finance" },
+  { name: "Bajaj Finance", type: "HFC", mirror: "Bajaj Housing Finance" },
+  { name: "Aditya Birla Housing Finance", type: "HFC", mirror: "Bajaj Housing Finance" },
+  { name: "Hero Housing Finance", type: "HFC", mirror: "Hinduja Housing Finance" },
+  { name: "SMFG India Credit", type: "HFC", mirror: "Tata Capital" },
+  { name: "Hinduja Leyland Finance", type: "HFC", mirror: "Cholamandalam Finance" },
+  { name: "Nido Home Finance", type: "HFC", mirror: "JM Financial Services" },
+  { name: "DMI Housing Finance", type: "HFC", mirror: "Hinduja Housing Finance" },
+  { name: "Vridhi Home Finance", type: "HFC", mirror: "Home First Finance" },
+  { name: "Easy Home Finance", type: "HFC", mirror: "Home First Finance" },
+  { name: "Roha Housing Finance", type: "HFC", mirror: "Aavas Financiers" },
+  { name: "Svatantra Micro Housing Finance", type: "HFC", mirror: "Home First Finance" },
+  { name: "Muthoot Fincorp", type: "HFC", mirror: "Muthoot Housing Finance" },
+  { name: "Shubham Housing Finance", type: "HFC", mirror: "Aadhar Housing Finance" },
+  { name: "Ummeed Housing Finance", type: "HFC", mirror: "Aadhar Housing Finance" },
+  { name: "Aviom India Housing Finance", type: "HFC", mirror: "Aadhar Housing Finance" },
+  { name: "Mahindra Rural Housing Finance", type: "HFC", mirror: "Aavas Financiers" },
+  { name: "Indostar Home Finance", type: "HFC", mirror: "Cholamandalam Finance" },
+  { name: "Centrum Housing Finance", type: "HFC", mirror: "Hinduja Housing Finance" },
 ];
 
 const TYPE_LABEL: Record<string, string> = {
@@ -126,6 +215,16 @@ function lowBound(str: string): number {
   return m ? parseFloat(m[0]) : Infinity;
 }
 
+// Resolve a lender's rate cells, following a `mirror` chain to the closest
+// comparable lender when the lender has no own bands. Guards against cycles.
+function resolveBands(l: Lender, seen: Set<string> = new Set()): string[] | null {
+  if (l.b) return l.b;
+  if (!l.mirror || seen.has(l.name)) return null;
+  seen.add(l.name);
+  const src = LENDERS.find((x) => x.name === l.mirror);
+  return src ? resolveBands(src, seen) : null;
+}
+
 export function lenders(): { name: string; type: LenderType }[] {
   return LENDERS.map((l) => ({ name: l.name, type: l.type }));
 }
@@ -137,8 +236,10 @@ export function typeLabel(t: string): string {
 export function rateFor(bankName: string, score: number, emp: EmploymentType): number | null {
   const l = LENDERS.find((x) => x.name === bankName);
   if (!l) return null;
+  const bands = resolveBands(l);
+  if (!bands) return null;
   const band = bandFor(score);
-  const cell = l.b[band.col + (emp === "se" ? 1 : 0)] as string;
+  const cell = bands[band.col + (emp === "se" ? 1 : 0)] as string;
   const { lo, hi } = parseCell(cell);
   return averagedRate(score, band.cMin, band.cMax, lo, hi);
 }
@@ -153,6 +254,12 @@ export function numericLow(result: number | null): number {
   return result;
 }
 
+function suggestionTypeRank(type: LenderType): number {
+  if (type === "PSB") return 0;
+  if (type === "PVT") return 1;
+  return 2;
+}
+
 export function others(
   bankName: string,
   score: number,
@@ -164,7 +271,12 @@ export function others(
       const r = rateFor(l.name, score, emp);
       return { name: l.name, type: l.type, result: r, low: numericLow(r) };
     })
-    .sort((a, b) => a.low - b.low || a.name.localeCompare(b.name))
+    .sort(
+      (a, b) =>
+        a.low - b.low ||
+        suggestionTypeRank(a.type) - suggestionTypeRank(b.type) ||
+        a.name.localeCompare(b.name)
+    )
     .slice(0, count);
 }
 

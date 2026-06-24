@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # =============================================================================
-# fetch-logos.sh — download lender logos via logo.dev into ./logos/
+# fetch-logos.sh — download lender logos via logo.dev into public/logos/
 # -----------------------------------------------------------------------------
-# The institutions we model live in js/data.js (name + type only, no domain).
-# This script attaches a domain to each lender and pulls a 128px PNG logo from
-# logo.dev. Filenames are name-derived slugs (logos/<slug>.png) so they're
-# readable and stable regardless of any future domain changes.
+# The institutions we model live in lib/rate-engine.ts (name + type only, no
+# domain). This script attaches a domain to each lender and pulls a 128px PNG
+# logo from logo.dev. Filenames are name-derived slugs (public/logos/<slug>.png)
+# so they're readable and stable regardless of any future domain changes.
 #
 # logo.dev returns HTTP 200 with a REAL logo, or HTTP 202 with a tiny generated
 # monogram when it has no logo for the domain. We treat 202 (and suspiciously
@@ -21,9 +21,10 @@ TOKEN="${LOGO_DEV_TOKEN:-pk_SWusOBiJTFmmYOALCrh-zg}"
 SIZE=128
 FORMAT=png
 
-# Resolve repo root (this script lives in scripts/).
+# Resolve repo root (this script lives in scripts/). Logos live under Next's
+# static root so they're served at /logos/<slug>.png.
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-OUT="$ROOT/logos"
+OUT="$ROOT/public/logos"
 mkdir -p "$OUT"
 
 # slug|domain — one lender per line. Slugs match js/data.js names.
@@ -43,7 +44,7 @@ idfc-first-bank|idfcfirstbank.com
 yes-bank|yesbank.in
 rbl-bank|rblbank.com
 au-small-finance-bank|aubank.in
-ujjivan-sfb|ujjivansfb.in
+ujjivan-sfb|ujjivansfb.com
 jana-sfb|janabank.com
 equitas-sfb|equitasbank.com
 bajaj-housing-finance|bajajhousingfinance.in
@@ -61,6 +62,74 @@ sk-finance|skfin.in
 mas-financial|mas.co.in
 jm-financial-services|jmfl.com
 axis-finance|axisfinance.in
+punjab-national-bank|netpnb.com
+indian-bank|indianbank.in
+indian-overseas-bank|iobnet.com
+uco-bank|ucobank.co.in
+bank-of-maharashtra|bankofmaharashtra.in
+punjab-sind-bank|punjabandsindbank.co.in
+indusind-bank|indusind.com
+federal-bank|federalbank.co.in
+south-indian-bank|southindianbank.com
+karur-vysya-bank|kvb.co.in
+karnataka-bank|karnatakabank.com
+city-union-bank|cityunionbank.com
+dcb-bank|dcbbank.com
+tamilnad-mercantile-bank|tmb.in
+csb-bank|csb.co.in
+bandhan-bank|bandhanbank.com
+dhanlaxmi-bank|dhanbank.com
+jammu-kashmir-bank|jkbank.net
+nainital-bank|nainitalbank.co.in
+utkarsh-small-finance-bank|utkarsh.bank
+suryoday-small-finance-bank|suryodaybank.com
+esaf-small-finance-bank|esafbank.com
+capital-small-finance-bank|capitalbank.co.in
+unity-small-finance-bank|theunitybank.com
+shivalik-small-finance-bank|shivalikbank.in
+north-east-small-finance-bank|nesfb.com
+fincare-small-finance-bank|fincarebank.com
+icici-home-finance|icicihfc.com
+repco-home-finance|repcohome.com
+gic-housing-finance|gichfindia.com
+can-fin-homes|canfinhomes.com
+india-shelter-finance|indiashelter.in
+aptus-value-housing-finance|aptusindia.com
+shriram-housing-finance|shriramhousing.in
+vastu-housing-finance|vastuhfc.com
+motilal-oswal-home-finance|motilaloswalhf.com
+godrej-housing-finance|godrejcapital.com
+piramal-capital-housing-finance|piramalfinance.com
+iifl-home-finance|iiflhomeloans.com
+l-t-finance|ltfinance.com
+sundaram-home-finance|sundaramhome.in
+cent-bank-home-finance|cbhfl.com
+srg-housing-finance|srghousing.com
+manappuram-home-finance|manappuramhomefin.com
+poonawalla-fincorp|poonawallafincorp.com
+edelweiss-housing-finance|edelweisshousingfin.com
+capri-global-housing-finance|capriglobal.in
+star-housing-finance|starhfl.com
+altum-credo-home-finance|altumcredo.com
+five-star-business-finance|fivestargroup.in
+bajaj-finance|bajajfinserv.in
+aditya-birla-housing-finance|adityabirlacapital.com
+hero-housing-finance|herohousingfinance.com
+smfg-india-credit|smfgindiacredit.com
+hinduja-leyland-finance|hindujaleylandfinance.com
+nido-home-finance|nidohomefin.com
+dmi-housing-finance|dmihousingfinance.in
+vridhi-home-finance|vridhihomefinance.com
+easy-home-finance|easyhomefinance.in
+roha-housing-finance|rohahousing.com
+svatantra-micro-housing-finance|svatantramhfc.com
+muthoot-fincorp|muthootfincorp.com
+shubham-housing-finance|shubham.co
+ummeed-housing-finance|ummeedhfc.com
+aviom-india-housing-finance|aviom.in
+mahindra-rural-housing-finance|mahindrahomefinance.com
+indostar-home-finance|indostarhfc.com
+centrum-housing-finance|centrumhousing.com
 EOF
 
 echo "Downloading logos -> $OUT (size=${SIZE}px, format=${FORMAT})"
