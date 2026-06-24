@@ -272,18 +272,23 @@ export function numericLow(result: number | null): number {
 // Lender hierarchy, best (cheapest tier) → worst:
 //   PSU (PSB) > Private (PVT) > Small Finance Bank (SFB) > NBFC/HFC (HFC).
 // A customer in a given tier can realistically move within their tier, and
-// has a slimmer chance one tier up. So suggestions are tier-aware: two
-// same-tier options + one from the next-better tier (see decision 0008).
-const TIER_ORDER: LenderType[] = ["PSB", "PVT", "SFB", "HFC"];
+// has a slimmer chance at a better tier. So suggestions are tier-aware: two
+// same-tier options + one "stretch" option from a better tier (decision 0008).
+//
+// The stretch slot can draw from MORE THAN ONE candidate tier, and we take the
+// single cheapest lender across those candidates ("whichever is lower"):
+//   HFC → SFB or PVT      SFB → PVT or HFC      PVT → PSB      PSB → (none)
+// HFC and SFB each get a same-tier-adjacent and a cross-tier candidate so the
+// stretch row is genuinely the best realistic alternative, not a fixed rung.
+const STRETCH_TIERS: Record<LenderType, LenderType[]> = {
+  PSB: [],
+  PVT: ["PSB"],
+  SFB: ["PVT", "HFC"],
+  HFC: ["SFB", "PVT"],
+};
 
-function tierRank(type: LenderType): number {
-  return TIER_ORDER.indexOf(type);
-}
-
-// The tier one step better than `type`, or null if `type` is already the top.
-function betterTier(type: LenderType): LenderType | null {
-  const i = tierRank(type);
-  return i > 0 ? (TIER_ORDER[i - 1] as LenderType) : null;
+function stretchTiers(type: LenderType): LenderType[] {
+  return STRETCH_TIERS[type];
 }
 
 export function others(
@@ -308,9 +313,13 @@ export function others(
   // No identifiable current type → fall back to the global cheapest.
   if (!currentType) return pool.slice(0, count);
 
-  const better = betterTier(currentType);
+  const stretch = stretchTiers(currentType);
   const sameTierPicks = pool.filter((o) => o.type === currentType);
-  const betterTierPicks = better ? pool.filter((o) => o.type === better) : [];
+  // Candidate stretch lenders across all stretch tiers, cheapest-first
+  // ("whichever is lower" rate wins, regardless of which tier it came from).
+  const stretchPicks = stretch.length
+    ? pool.filter((o) => stretch.includes(o.type))
+    : [];
 
   const picks: OtherRate[] = [];
   const taken = new Set<string>();
@@ -321,20 +330,20 @@ export function others(
     }
   };
 
-  if (!better) {
+  if (!stretch.length) {
     // Top tier (PSB): no better tier exists, so fill all slots same-tier.
     for (const o of sameTierPicks) {
       if (picks.length >= count) break;
       take(o);
     }
   } else {
-    // Two same-tier, then one from the next-better tier.
+    // Two same-tier, then one stretch option (cheapest across stretch tiers).
     const sameWanted = Math.max(count - 1, 0);
     for (const o of sameTierPicks) {
       if (picks.length >= sameWanted) break;
       take(o);
     }
-    take(betterTierPicks[0]);
+    take(stretchPicks[0]);
   }
 
   // Top up from the rest of the pool (cheapest-first) if a tier ran short,

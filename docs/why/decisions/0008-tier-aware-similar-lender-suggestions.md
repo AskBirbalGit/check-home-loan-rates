@@ -23,18 +23,27 @@ actually move.
 ## Decision
 
 `others()` in `lib/rate-engine.ts` is now **tier-aware**. For a customer in tier T it returns
-**two same-tier** suggestions plus **one from the next-better tier** (T−1). The top tier (PSB)
-has no better tier, so it returns **three same-tier** instead.
+**two same-tier** suggestions plus **one "stretch" option** drawn from a better tier. The top
+tier (PSB) has no better tier, so it returns **three same-tier** instead.
 
-- HFC customer → 2 HFC + 1 SFB
-- SFB customer → 2 SFB + 1 PVT
+The stretch slot can draw from **more than one candidate tier**, and we take the single
+cheapest lender across those candidates ("whichever is lower"):
+
+- HFC customer → 2 HFC + 1 from SFB **or** PVT (whichever is cheaper)
+- SFB customer → 2 SFB + 1 from PVT **or** HFC (whichever is cheaper)
 - PVT customer → 2 PVT + 1 PSB
 - PSB customer → 3 PSB
+
+HFC and SFB each reach across two candidate tiers because their realistic best alternative
+isn't a fixed rung — an NBFC/HFC borrower may find a cheaper private bank than any SFB, and an
+SFB borrower may find a cheaper private bank or HFC. Letting the stretch row be the cheapest
+across both candidate tiers surfaces the genuinely better option instead of a fixed tier.
 
 Mechanics:
 - Eligible pool = all first-party lenders except the current bank; **mirrored lenders stay
   excluded** so we never show a duplicate-rate row (e.g. PNB mirrors SBI's exact sheet).
-- Same-tier and better-tier picks are each chosen cheapest-first.
+- Same-tier picks and stretch candidates are each chosen cheapest-first; the stretch slot
+  takes the single cheapest lender across all that tier's stretch candidates.
 - Same-tier picks are the two cheapest in-tier **regardless** of whether they beat the
   customer's current rate, so the column always renders consistently.
 - A fallback tops up from the rest of the pool (cheapest-first) if a tier runs short of
@@ -62,8 +71,8 @@ The `OtherRate` shape is unchanged, so `app/Calculator.tsx` needs no edits and k
   savings calculation is a **realistic switch target**, not the absolute market floor. Displayed
   savings may be marginally lower than under the old logic. This is intentional and more
   defensible, but it does change the savings number for some profiles.
-- The tier ladder (PSB > PVT > SFB > HFC) is encoded as `TIER_ORDER`; reordering tiers or
-  adding a new `LenderType` requires updating it.
+- The tier ladder (PSB > PVT > SFB > HFC) and the per-tier stretch candidates are encoded as
+  `STRETCH_TIERS`; reordering tiers or adding a new `LenderType` requires updating it.
 - For PSB customers there are six first-party PSBs, so the three-row cap (chosen over listing
   all PSUs) means the cheapest three PSBs show. This supersedes an initial "show all PSUs"
   framing in the request.
