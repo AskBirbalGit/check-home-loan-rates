@@ -266,7 +266,7 @@ export function others(
   emp: EmploymentType,
   count = 3
 ): OtherRate[] {
-  return LENDERS.filter((l) => l.name !== bankName)
+  return LENDERS.filter((l) => l.name !== bankName && !l.mirror)
     .map((l) => {
       const r = rateFor(l.name, score, emp);
       return { name: l.name, type: l.type, result: r, low: numericLow(r) };

@@ -530,18 +530,6 @@ button.cta.secondary:hover {
   .savings-inputs { grid-template-columns: 1fr; }
 }
 
-/* "new rate from best profile match" context line above the savings inputs */
-.save-newrate {
-  font-size: var(--fs-body);
-  color: var(--muted);
-  background: var(--primary-soft);
-  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
-  border-radius: 10px;
-  padding: 12px 16px;
-  margin-bottom: 18px;
-}
-.save-newrate b { color: var(--primary-strong); font-weight: var(--fw-bold); }
-
 /* optional "max savings" hero box (Agent 4 may add it) */
 .save-hero {
   margin-top: 4px;

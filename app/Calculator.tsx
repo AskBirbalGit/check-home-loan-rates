@@ -481,12 +481,6 @@ export default function Calculator() {
         <div className="box" id="savingsInputCard" ref={savingsInputRef}>
           <h2 className="box-head">Additional loan details for savings</h2>
           <section className="card savings-input-card">
-            <div className="save-newrate">
-              New rate from your best profile match:{" "}
-              <b id="saveNewRateVal">
-                {newRate != null ? Number(newRate).toFixed(2) + "%" : "—"}
-              </b>
-            </div>
             <div className="savings-input-row">
               <label className="field">
                 <span className="lbl">Your current rate (%)</span>
