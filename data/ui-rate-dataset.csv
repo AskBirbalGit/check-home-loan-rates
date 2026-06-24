@@ -1,0 +1,449 @@
+institution,employment_type,base_cibil_score,cibil_score_used,cibil_band_shown,current_rate,better_lender_1,better_rate_1,better_lender_2,better_rate_2,better_lender_3,better_rate_3
+SBI,Salaried,600,600,CIBIL 600–649,9.20%,Bank of Baroda,9.60%,Central Bank of India,9.65%,Bank of India,10.50%
+SBI,Self-employed,600,600,CIBIL 600–649,9.40%,Bank of Baroda,9.70%,Central Bank of India,9.80%,Bank of India,10.75%
+SBI,Salaried,625,610,CIBIL 600–649,9.20%,Bank of Baroda,9.60%,Central Bank of India,9.65%,Bank of India,10.50%
+SBI,Self-employed,625,610,CIBIL 600–649,9.40%,Bank of Baroda,9.70%,Central Bank of India,9.80%,Bank of India,10.75%
+SBI,Salaried,675,668,CIBIL below 700,8.55%,Central Bank of India,8.85%,Bank of Baroda,8.90%,Bank of India,9.45%
+SBI,Self-employed,675,668,CIBIL below 700,8.75%,Bank of Baroda,9.00%,Central Bank of India,9.00%,Bank of India,9.65%
+SBI,Salaried,725,723,CIBIL 700–749,8.20%,Central Bank of India,8.10%,Bank of India,8.25%,Canara Bank,8.25%
+SBI,Self-employed,725,723,CIBIL 700–749,8.35%,Central Bank of India,8.20%,Bank of India,8.40%,Canara Bank,8.40%
+SBI,Salaried,775,764,CIBIL 750–799,7.95%,Central Bank of India,7.80%,Bank of India,7.85%,Canara Bank,7.85%
+SBI,Self-employed,775,764,CIBIL 750–799,8.05%,Central Bank of India,7.90%,Bank of India,7.95%,Canara Bank,8.00%
+SBI,Salaried,825,832,CIBIL 800+,7.35%,Bank of India,7.20%,Central Bank of India,7.20%,Canara Bank,7.25%
+SBI,Self-employed,825,832,CIBIL 800+,7.35%,Bank of India,7.20%,Central Bank of India,7.20%,Canara Bank,7.25%
+SBI,Salaried,850,850,CIBIL 800+,7.25%,Bank of India,7.10%,Central Bank of India,7.10%,Canara Bank,7.15%
+SBI,Self-employed,850,850,CIBIL 800+,7.25%,Bank of India,7.10%,Central Bank of India,7.10%,Canara Bank,7.15%
+Bank of India,Salaried,600,600,CIBIL 600–649,10.50%,SBI,9.20%,Bank of Baroda,9.60%,Central Bank of India,9.65%
+Bank of India,Self-employed,600,600,CIBIL 600–649,10.75%,SBI,9.40%,Bank of Baroda,9.70%,Central Bank of India,9.80%
+Bank of India,Salaried,625,610,CIBIL 600–649,10.50%,SBI,9.20%,Bank of Baroda,9.60%,Central Bank of India,9.65%
+Bank of India,Self-employed,625,610,CIBIL 600–649,10.75%,SBI,9.40%,Bank of Baroda,9.70%,Central Bank of India,9.80%
+Bank of India,Salaried,675,668,CIBIL below 700,9.45%,SBI,8.55%,Central Bank of India,8.85%,Bank of Baroda,8.90%
+Bank of India,Self-employed,675,668,CIBIL below 700,9.65%,SBI,8.75%,Bank of Baroda,9.00%,Central Bank of India,9.00%
+Bank of India,Salaried,725,723,CIBIL 700–749,8.25%,Central Bank of India,8.10%,SBI,8.20%,Canara Bank,8.25%
+Bank of India,Self-employed,725,723,CIBIL 700–749,8.40%,Central Bank of India,8.20%,SBI,8.35%,Canara Bank,8.40%
+Bank of India,Salaried,775,764,CIBIL 750–799,7.85%,Central Bank of India,7.80%,Canara Bank,7.85%,Union Bank of India,7.85%
+Bank of India,Self-employed,775,764,CIBIL 750–799,7.95%,Central Bank of India,7.90%,Canara Bank,8.00%,Union Bank of India,8.00%
+Bank of India,Salaried,825,832,CIBIL 800+,7.20%,Central Bank of India,7.20%,Canara Bank,7.25%,Union Bank of India,7.25%
+Bank of India,Self-employed,825,832,CIBIL 800+,7.20%,Central Bank of India,7.20%,Canara Bank,7.25%,Union Bank of India,7.25%
+Bank of India,Salaried,850,850,CIBIL 800+,7.10%,Central Bank of India,7.10%,Canara Bank,7.15%,Union Bank of India,7.15%
+Bank of India,Self-employed,850,850,CIBIL 800+,7.10%,Central Bank of India,7.10%,Canara Bank,7.15%,Union Bank of India,7.15%
+Bank of Baroda,Salaried,600,600,CIBIL 600–649,9.60%,SBI,9.20%,Central Bank of India,9.65%,Bank of India,10.50%
+Bank of Baroda,Self-employed,600,600,CIBIL 600–649,9.70%,SBI,9.40%,Central Bank of India,9.80%,Bank of India,10.75%
+Bank of Baroda,Salaried,625,610,CIBIL 600–649,9.60%,SBI,9.20%,Central Bank of India,9.65%,Bank of India,10.50%
+Bank of Baroda,Self-employed,625,610,CIBIL 600–649,9.70%,SBI,9.40%,Central Bank of India,9.80%,Bank of India,10.75%
+Bank of Baroda,Salaried,675,668,CIBIL below 700,8.90%,SBI,8.55%,Central Bank of India,8.85%,Bank of India,9.45%
+Bank of Baroda,Self-employed,675,668,CIBIL below 700,9.00%,SBI,8.75%,Central Bank of India,9.00%,Bank of India,9.65%
+Bank of Baroda,Salaried,725,723,CIBIL 700–749,8.35%,Central Bank of India,8.10%,SBI,8.20%,Bank of India,8.25%
+Bank of Baroda,Self-employed,725,723,CIBIL 700–749,8.45%,Central Bank of India,8.20%,SBI,8.35%,Bank of India,8.40%
+Bank of Baroda,Salaried,775,764,CIBIL 750–799,7.95%,Central Bank of India,7.80%,Bank of India,7.85%,Canara Bank,7.85%
+Bank of Baroda,Self-employed,775,764,CIBIL 750–799,8.05%,Central Bank of India,7.90%,Bank of India,7.95%,Canara Bank,8.00%
+Bank of Baroda,Salaried,825,832,CIBIL 800+,7.30%,Bank of India,7.20%,Central Bank of India,7.20%,Canara Bank,7.25%
+Bank of Baroda,Self-employed,825,832,CIBIL 800+,7.30%,Bank of India,7.20%,Central Bank of India,7.20%,Canara Bank,7.25%
+Bank of Baroda,Salaried,850,850,CIBIL 800+,7.20%,Bank of India,7.10%,Central Bank of India,7.10%,Canara Bank,7.15%
+Bank of Baroda,Self-employed,850,850,CIBIL 800+,7.20%,Bank of India,7.10%,Central Bank of India,7.10%,Canara Bank,7.15%
+Canara Bank,Salaried,600,600,CIBIL 600–649,10.50%,SBI,9.20%,Bank of Baroda,9.60%,Central Bank of India,9.65%
+Canara Bank,Self-employed,600,600,CIBIL 600–649,10.75%,SBI,9.40%,Bank of Baroda,9.70%,Central Bank of India,9.80%
+Canara Bank,Salaried,625,610,CIBIL 600–649,10.50%,SBI,9.20%,Bank of Baroda,9.60%,Central Bank of India,9.65%
+Canara Bank,Self-employed,625,610,CIBIL 600–649,10.75%,SBI,9.40%,Bank of Baroda,9.70%,Central Bank of India,9.80%
+Canara Bank,Salaried,675,668,CIBIL below 700,9.45%,SBI,8.55%,Central Bank of India,8.85%,Bank of Baroda,8.90%
+Canara Bank,Self-employed,675,668,CIBIL below 700,9.65%,SBI,8.75%,Bank of Baroda,9.00%,Central Bank of India,9.00%
+Canara Bank,Salaried,725,723,CIBIL 700–749,8.25%,Central Bank of India,8.10%,SBI,8.20%,Bank of India,8.25%
+Canara Bank,Self-employed,725,723,CIBIL 700–749,8.40%,Central Bank of India,8.20%,SBI,8.35%,Bank of India,8.40%
+Canara Bank,Salaried,775,764,CIBIL 750–799,7.85%,Central Bank of India,7.80%,Bank of India,7.85%,Union Bank of India,7.85%
+Canara Bank,Self-employed,775,764,CIBIL 750–799,8.00%,Central Bank of India,7.90%,Bank of India,7.95%,Union Bank of India,8.00%
+Canara Bank,Salaried,825,832,CIBIL 800+,7.25%,Bank of India,7.20%,Central Bank of India,7.20%,Union Bank of India,7.25%
+Canara Bank,Self-employed,825,832,CIBIL 800+,7.25%,Bank of India,7.20%,Central Bank of India,7.20%,Union Bank of India,7.25%
+Canara Bank,Salaried,850,850,CIBIL 800+,7.15%,Bank of India,7.10%,Central Bank of India,7.10%,Union Bank of India,7.15%
+Canara Bank,Self-employed,850,850,CIBIL 800+,7.15%,Bank of India,7.10%,Central Bank of India,7.10%,Union Bank of India,7.15%
+Union Bank of India,Salaried,600,600,CIBIL 600–649,10.50%,SBI,9.20%,Bank of Baroda,9.60%,Central Bank of India,9.65%
+Union Bank of India,Self-employed,600,600,CIBIL 600–649,10.75%,SBI,9.40%,Bank of Baroda,9.70%,Central Bank of India,9.80%
+Union Bank of India,Salaried,625,610,CIBIL 600–649,10.50%,SBI,9.20%,Bank of Baroda,9.60%,Central Bank of India,9.65%
+Union Bank of India,Self-employed,625,610,CIBIL 600–649,10.75%,SBI,9.40%,Bank of Baroda,9.70%,Central Bank of India,9.80%
+Union Bank of India,Salaried,675,668,CIBIL below 700,9.45%,SBI,8.55%,Central Bank of India,8.85%,Bank of Baroda,8.90%
+Union Bank of India,Self-employed,675,668,CIBIL below 700,9.65%,SBI,8.75%,Bank of Baroda,9.00%,Central Bank of India,9.00%
+Union Bank of India,Salaried,725,723,CIBIL 700–749,8.25%,Central Bank of India,8.10%,SBI,8.20%,Bank of India,8.25%
+Union Bank of India,Self-employed,725,723,CIBIL 700–749,8.40%,Central Bank of India,8.20%,SBI,8.35%,Bank of India,8.40%
+Union Bank of India,Salaried,775,764,CIBIL 750–799,7.85%,Central Bank of India,7.80%,Bank of India,7.85%,Canara Bank,7.85%
+Union Bank of India,Self-employed,775,764,CIBIL 750–799,8.00%,Central Bank of India,7.90%,Bank of India,7.95%,Canara Bank,8.00%
+Union Bank of India,Salaried,825,832,CIBIL 800+,7.25%,Bank of India,7.20%,Central Bank of India,7.20%,Canara Bank,7.25%
+Union Bank of India,Self-employed,825,832,CIBIL 800+,7.25%,Bank of India,7.20%,Central Bank of India,7.20%,Canara Bank,7.25%
+Union Bank of India,Salaried,850,850,CIBIL 800+,7.15%,Bank of India,7.10%,Central Bank of India,7.10%,Canara Bank,7.15%
+Union Bank of India,Self-employed,850,850,CIBIL 800+,7.15%,Bank of India,7.10%,Central Bank of India,7.10%,Canara Bank,7.15%
+Central Bank of India,Salaried,600,600,CIBIL 600–649,9.65%,SBI,9.20%,Bank of Baroda,9.60%,Bank of India,10.50%
+Central Bank of India,Self-employed,600,600,CIBIL 600–649,9.80%,SBI,9.40%,Bank of Baroda,9.70%,Bank of India,10.75%
+Central Bank of India,Salaried,625,610,CIBIL 600–649,9.65%,SBI,9.20%,Bank of Baroda,9.60%,Bank of India,10.50%
+Central Bank of India,Self-employed,625,610,CIBIL 600–649,9.80%,SBI,9.40%,Bank of Baroda,9.70%,Bank of India,10.75%
+Central Bank of India,Salaried,675,668,CIBIL below 700,8.85%,SBI,8.55%,Bank of Baroda,8.90%,Bank of India,9.45%
+Central Bank of India,Self-employed,675,668,CIBIL below 700,9.00%,SBI,8.75%,Bank of Baroda,9.00%,Bank of India,9.65%
+Central Bank of India,Salaried,725,723,CIBIL 700–749,8.10%,SBI,8.20%,Bank of India,8.25%,Canara Bank,8.25%
+Central Bank of India,Self-employed,725,723,CIBIL 700–749,8.20%,SBI,8.35%,Bank of India,8.40%,Canara Bank,8.40%
+Central Bank of India,Salaried,775,764,CIBIL 750–799,7.80%,Bank of India,7.85%,Canara Bank,7.85%,Union Bank of India,7.85%
+Central Bank of India,Self-employed,775,764,CIBIL 750–799,7.90%,Bank of India,7.95%,Canara Bank,8.00%,Union Bank of India,8.00%
+Central Bank of India,Salaried,825,832,CIBIL 800+,7.20%,Bank of India,7.20%,Canara Bank,7.25%,Union Bank of India,7.25%
+Central Bank of India,Self-employed,825,832,CIBIL 800+,7.20%,Bank of India,7.20%,Canara Bank,7.25%,Union Bank of India,7.25%
+Central Bank of India,Salaried,850,850,CIBIL 800+,7.10%,Bank of India,7.10%,Canara Bank,7.15%,Union Bank of India,7.15%
+Central Bank of India,Self-employed,850,850,CIBIL 800+,7.10%,Bank of India,7.10%,Canara Bank,7.15%,Union Bank of India,7.15%
+ICICI Bank,Salaried,600,600,CIBIL 600–649,9.55%,SBI,9.20%,HDFC Bank,9.25%,Axis Bank,9.40%
+ICICI Bank,Self-employed,600,600,CIBIL 600–649,9.70%,HDFC Bank,9.40%,SBI,9.40%,Axis Bank,9.55%
+ICICI Bank,Salaried,625,610,CIBIL 600–649,9.55%,SBI,9.20%,HDFC Bank,9.25%,Axis Bank,9.40%
+ICICI Bank,Self-employed,625,610,CIBIL 600–649,9.70%,HDFC Bank,9.40%,SBI,9.40%,Axis Bank,9.55%
+ICICI Bank,Salaried,675,668,CIBIL below 700,8.90%,SBI,8.55%,HDFC Bank,8.60%,Axis Bank,8.75%
+ICICI Bank,Self-employed,675,668,CIBIL below 700,9.05%,HDFC Bank,8.75%,SBI,8.75%,Axis Bank,8.90%
+ICICI Bank,Salaried,725,723,CIBIL 700–749,8.45%,Central Bank of India,8.10%,HDFC Bank,8.15%,Kotak Mahindra Bank,8.25%
+ICICI Bank,Self-employed,725,723,CIBIL 700–749,8.60%,Central Bank of India,8.20%,HDFC Bank,8.30%,Kotak Mahindra Bank,8.35%
+ICICI Bank,Salaried,775,764,CIBIL 750–799,8.15%,Central Bank of India,7.80%,HDFC Bank,7.85%,Kotak Mahindra Bank,7.90%
+ICICI Bank,Self-employed,775,764,CIBIL 750–799,8.30%,Central Bank of India,7.90%,HDFC Bank,8.00%,Kotak Mahindra Bank,8.00%
+ICICI Bank,Salaried,825,832,CIBIL 800+,7.55%,Bank of India,7.20%,HDFC Bank,7.25%,Axis Bank,7.40%
+ICICI Bank,Self-employed,825,832,CIBIL 800+,7.70%,Bank of India,7.20%,HDFC Bank,7.40%,Axis Bank,7.55%
+ICICI Bank,Salaried,850,850,CIBIL 800+,7.45%,Bank of India,7.10%,HDFC Bank,7.15%,Axis Bank,7.30%
+ICICI Bank,Self-employed,850,850,CIBIL 800+,7.60%,Bank of India,7.10%,HDFC Bank,7.30%,Axis Bank,7.45%
+HDFC Bank,Salaried,600,600,CIBIL 600–649,9.25%,SBI,9.20%,Axis Bank,9.40%,ICICI Bank,9.55%
+HDFC Bank,Self-employed,600,600,CIBIL 600–649,9.40%,SBI,9.40%,Axis Bank,9.55%,ICICI Bank,9.70%
+HDFC Bank,Salaried,625,610,CIBIL 600–649,9.25%,SBI,9.20%,Axis Bank,9.40%,ICICI Bank,9.55%
+HDFC Bank,Self-employed,625,610,CIBIL 600–649,9.40%,SBI,9.40%,Axis Bank,9.55%,ICICI Bank,9.70%
+HDFC Bank,Salaried,675,668,CIBIL below 700,8.60%,SBI,8.55%,Axis Bank,8.75%,ICICI Bank,8.90%
+HDFC Bank,Self-employed,675,668,CIBIL below 700,8.75%,SBI,8.75%,Axis Bank,8.90%,ICICI Bank,9.05%
+HDFC Bank,Salaried,725,723,CIBIL 700–749,8.15%,Central Bank of India,8.10%,Kotak Mahindra Bank,8.25%,Axis Bank,8.30%
+HDFC Bank,Self-employed,725,723,CIBIL 700–749,8.30%,Central Bank of India,8.20%,Kotak Mahindra Bank,8.35%,Axis Bank,8.45%
+HDFC Bank,Salaried,775,764,CIBIL 750–799,7.85%,Central Bank of India,7.80%,Kotak Mahindra Bank,7.90%,Axis Bank,8.00%
+HDFC Bank,Self-employed,775,764,CIBIL 750–799,8.00%,Central Bank of India,7.90%,Kotak Mahindra Bank,8.00%,Axis Bank,8.15%
+HDFC Bank,Salaried,825,832,CIBIL 800+,7.25%,Bank of India,7.20%,Axis Bank,7.40%,ICICI Bank,7.55%
+HDFC Bank,Self-employed,825,832,CIBIL 800+,7.40%,Bank of India,7.20%,Axis Bank,7.55%,Kotak Mahindra Bank,7.65%
+HDFC Bank,Salaried,850,850,CIBIL 800+,7.15%,Bank of India,7.10%,Axis Bank,7.30%,ICICI Bank,7.45%
+HDFC Bank,Self-employed,850,850,CIBIL 800+,7.30%,Bank of India,7.10%,Axis Bank,7.45%,ICICI Bank,7.60%
+Axis Bank,Salaried,600,600,CIBIL 600–649,9.40%,SBI,9.20%,HDFC Bank,9.25%,ICICI Bank,9.55%
+Axis Bank,Self-employed,600,600,CIBIL 600–649,9.55%,HDFC Bank,9.40%,SBI,9.40%,ICICI Bank,9.70%
+Axis Bank,Salaried,625,610,CIBIL 600–649,9.40%,SBI,9.20%,HDFC Bank,9.25%,ICICI Bank,9.55%
+Axis Bank,Self-employed,625,610,CIBIL 600–649,9.55%,HDFC Bank,9.40%,SBI,9.40%,ICICI Bank,9.70%
+Axis Bank,Salaried,675,668,CIBIL below 700,8.75%,SBI,8.55%,HDFC Bank,8.60%,ICICI Bank,8.90%
+Axis Bank,Self-employed,675,668,CIBIL below 700,8.90%,HDFC Bank,8.75%,SBI,8.75%,ICICI Bank,9.05%
+Axis Bank,Salaried,725,723,CIBIL 700–749,8.30%,Central Bank of India,8.10%,HDFC Bank,8.15%,Kotak Mahindra Bank,8.25%
+Axis Bank,Self-employed,725,723,CIBIL 700–749,8.45%,Central Bank of India,8.20%,HDFC Bank,8.30%,Kotak Mahindra Bank,8.35%
+Axis Bank,Salaried,775,764,CIBIL 750–799,8.00%,Central Bank of India,7.80%,HDFC Bank,7.85%,Kotak Mahindra Bank,7.90%
+Axis Bank,Self-employed,775,764,CIBIL 750–799,8.15%,Central Bank of India,7.90%,HDFC Bank,8.00%,Kotak Mahindra Bank,8.00%
+Axis Bank,Salaried,825,832,CIBIL 800+,7.40%,Bank of India,7.20%,HDFC Bank,7.25%,ICICI Bank,7.55%
+Axis Bank,Self-employed,825,832,CIBIL 800+,7.55%,Bank of India,7.20%,HDFC Bank,7.40%,Kotak Mahindra Bank,7.65%
+Axis Bank,Salaried,850,850,CIBIL 800+,7.30%,Bank of India,7.10%,HDFC Bank,7.15%,ICICI Bank,7.45%
+Axis Bank,Self-employed,850,850,CIBIL 800+,7.45%,Bank of India,7.10%,HDFC Bank,7.30%,ICICI Bank,7.60%
+Kotak Mahindra Bank,Salaried,600,600,CIBIL 600–649,9.75%,SBI,9.20%,HDFC Bank,9.25%,Axis Bank,9.40%
+Kotak Mahindra Bank,Self-employed,600,600,CIBIL 600–649,10.00%,HDFC Bank,9.40%,SBI,9.40%,Axis Bank,9.55%
+Kotak Mahindra Bank,Salaried,625,610,CIBIL 600–649,9.75%,SBI,9.20%,HDFC Bank,9.25%,Axis Bank,9.40%
+Kotak Mahindra Bank,Self-employed,625,610,CIBIL 600–649,10.00%,HDFC Bank,9.40%,SBI,9.40%,Axis Bank,9.55%
+Kotak Mahindra Bank,Salaried,675,668,CIBIL below 700,8.95%,SBI,8.55%,HDFC Bank,8.60%,Axis Bank,8.75%
+Kotak Mahindra Bank,Self-employed,675,668,CIBIL below 700,9.15%,HDFC Bank,8.75%,SBI,8.75%,Axis Bank,8.90%
+Kotak Mahindra Bank,Salaried,725,723,CIBIL 700–749,8.25%,Central Bank of India,8.10%,HDFC Bank,8.15%,Axis Bank,8.30%
+Kotak Mahindra Bank,Self-employed,725,723,CIBIL 700–749,8.35%,Central Bank of India,8.20%,HDFC Bank,8.30%,Axis Bank,8.45%
+Kotak Mahindra Bank,Salaried,775,764,CIBIL 750–799,7.90%,Central Bank of India,7.80%,HDFC Bank,7.85%,Axis Bank,8.00%
+Kotak Mahindra Bank,Self-employed,775,764,CIBIL 750–799,8.00%,Central Bank of India,7.90%,HDFC Bank,8.00%,Axis Bank,8.15%
+Kotak Mahindra Bank,Salaried,825,832,CIBIL 800+,7.60%,Bank of India,7.20%,HDFC Bank,7.25%,Axis Bank,7.40%
+Kotak Mahindra Bank,Self-employed,825,832,CIBIL 800+,7.65%,Bank of India,7.20%,HDFC Bank,7.40%,Axis Bank,7.55%
+Kotak Mahindra Bank,Salaried,850,850,CIBIL 800+,7.60%,Bank of India,7.10%,HDFC Bank,7.15%,Axis Bank,7.30%
+Kotak Mahindra Bank,Self-employed,850,850,CIBIL 800+,7.60%,Bank of India,7.10%,HDFC Bank,7.30%,Axis Bank,7.45%
+IDFC First Bank,Salaried,600,600,CIBIL 600–649,10.50%,SBI,9.20%,HDFC Bank,9.25%,Axis Bank,9.40%
+IDFC First Bank,Self-employed,600,600,CIBIL 600–649,10.75%,HDFC Bank,9.40%,SBI,9.40%,Axis Bank,9.55%
+IDFC First Bank,Salaried,625,610,CIBIL 600–649,10.50%,SBI,9.20%,HDFC Bank,9.25%,Axis Bank,9.40%
+IDFC First Bank,Self-employed,625,610,CIBIL 600–649,10.75%,HDFC Bank,9.40%,SBI,9.40%,Axis Bank,9.55%
+IDFC First Bank,Salaried,675,668,CIBIL below 700,9.65%,SBI,8.55%,HDFC Bank,8.60%,Axis Bank,8.75%
+IDFC First Bank,Self-employed,675,668,CIBIL below 700,9.90%,HDFC Bank,8.75%,SBI,8.75%,Axis Bank,8.90%
+IDFC First Bank,Salaried,725,723,CIBIL 700–749,8.70%,Central Bank of India,8.10%,HDFC Bank,8.15%,Kotak Mahindra Bank,8.25%
+IDFC First Bank,Self-employed,725,723,CIBIL 700–749,8.90%,Central Bank of India,8.20%,HDFC Bank,8.30%,Kotak Mahindra Bank,8.35%
+IDFC First Bank,Salaried,775,764,CIBIL 750–799,8.30%,Central Bank of India,7.80%,HDFC Bank,7.85%,Kotak Mahindra Bank,7.90%
+IDFC First Bank,Self-employed,775,764,CIBIL 750–799,8.40%,Central Bank of India,7.90%,HDFC Bank,8.00%,Kotak Mahindra Bank,8.00%
+IDFC First Bank,Salaried,825,832,CIBIL 800+,7.85%,Bank of India,7.20%,HDFC Bank,7.25%,Axis Bank,7.40%
+IDFC First Bank,Self-employed,825,832,CIBIL 800+,8.00%,Bank of India,7.20%,HDFC Bank,7.40%,Axis Bank,7.55%
+IDFC First Bank,Salaried,850,850,CIBIL 800+,7.75%,Bank of India,7.10%,HDFC Bank,7.15%,Axis Bank,7.30%
+IDFC First Bank,Self-employed,850,850,CIBIL 800+,7.90%,Bank of India,7.10%,HDFC Bank,7.30%,Axis Bank,7.45%
+Yes Bank,Salaried,600,600,CIBIL 600–649,11.10%,SBI,9.20%,HDFC Bank,9.25%,Axis Bank,9.40%
+Yes Bank,Self-employed,600,600,CIBIL 600–649,11.25%,HDFC Bank,9.40%,SBI,9.40%,Axis Bank,9.55%
+Yes Bank,Salaried,625,610,CIBIL 600–649,11.10%,SBI,9.20%,HDFC Bank,9.25%,Axis Bank,9.40%
+Yes Bank,Self-employed,625,610,CIBIL 600–649,11.25%,HDFC Bank,9.40%,SBI,9.40%,Axis Bank,9.55%
+Yes Bank,Salaried,675,668,CIBIL below 700,10.45%,SBI,8.55%,HDFC Bank,8.60%,Axis Bank,8.75%
+Yes Bank,Self-employed,675,668,CIBIL below 700,10.60%,HDFC Bank,8.75%,SBI,8.75%,Axis Bank,8.90%
+Yes Bank,Salaried,725,723,CIBIL 700–749,10.00%,Central Bank of India,8.10%,HDFC Bank,8.15%,Kotak Mahindra Bank,8.25%
+Yes Bank,Self-employed,725,723,CIBIL 700–749,10.15%,Central Bank of India,8.20%,HDFC Bank,8.30%,Kotak Mahindra Bank,8.35%
+Yes Bank,Salaried,775,764,CIBIL 750–799,9.70%,Central Bank of India,7.80%,HDFC Bank,7.85%,Kotak Mahindra Bank,7.90%
+Yes Bank,Self-employed,775,764,CIBIL 750–799,9.85%,Central Bank of India,7.90%,HDFC Bank,8.00%,Kotak Mahindra Bank,8.00%
+Yes Bank,Salaried,825,832,CIBIL 800+,9.10%,Bank of India,7.20%,HDFC Bank,7.25%,Axis Bank,7.40%
+Yes Bank,Self-employed,825,832,CIBIL 800+,9.25%,Bank of India,7.20%,HDFC Bank,7.40%,Axis Bank,7.55%
+Yes Bank,Salaried,850,850,CIBIL 800+,9.00%,Bank of India,7.10%,HDFC Bank,7.15%,Axis Bank,7.30%
+Yes Bank,Self-employed,850,850,CIBIL 800+,9.15%,Bank of India,7.10%,HDFC Bank,7.30%,Axis Bank,7.45%
+RBL Bank,Salaried,600,600,CIBIL 600–649,10.30%,SBI,9.20%,HDFC Bank,9.25%,Axis Bank,9.40%
+RBL Bank,Self-employed,600,600,CIBIL 600–649,10.45%,HDFC Bank,9.40%,SBI,9.40%,Axis Bank,9.55%
+RBL Bank,Salaried,625,610,CIBIL 600–649,10.30%,SBI,9.20%,HDFC Bank,9.25%,Axis Bank,9.40%
+RBL Bank,Self-employed,625,610,CIBIL 600–649,10.45%,HDFC Bank,9.40%,SBI,9.40%,Axis Bank,9.55%
+RBL Bank,Salaried,675,668,CIBIL below 700,9.65%,SBI,8.55%,HDFC Bank,8.60%,Axis Bank,8.75%
+RBL Bank,Self-employed,675,668,CIBIL below 700,9.80%,HDFC Bank,8.75%,SBI,8.75%,Axis Bank,8.90%
+RBL Bank,Salaried,725,723,CIBIL 700–749,9.20%,Central Bank of India,8.10%,HDFC Bank,8.15%,Kotak Mahindra Bank,8.25%
+RBL Bank,Self-employed,725,723,CIBIL 700–749,9.35%,Central Bank of India,8.20%,HDFC Bank,8.30%,Kotak Mahindra Bank,8.35%
+RBL Bank,Salaried,775,764,CIBIL 750–799,8.90%,Central Bank of India,7.80%,HDFC Bank,7.85%,Kotak Mahindra Bank,7.90%
+RBL Bank,Self-employed,775,764,CIBIL 750–799,9.05%,Central Bank of India,7.90%,HDFC Bank,8.00%,Kotak Mahindra Bank,8.00%
+RBL Bank,Salaried,825,832,CIBIL 800+,8.30%,Bank of India,7.20%,HDFC Bank,7.25%,Axis Bank,7.40%
+RBL Bank,Self-employed,825,832,CIBIL 800+,8.45%,Bank of India,7.20%,HDFC Bank,7.40%,Axis Bank,7.55%
+RBL Bank,Salaried,850,850,CIBIL 800+,8.20%,Bank of India,7.10%,HDFC Bank,7.15%,Axis Bank,7.30%
+RBL Bank,Self-employed,850,850,CIBIL 800+,8.35%,Bank of India,7.10%,HDFC Bank,7.30%,Axis Bank,7.45%
+AU Small Finance Bank,Salaried,600,600,CIBIL 600–649,10.60%,HDFC Bank,9.25%,Ujjivan SFB,11.10%,Equitas SFB,11.35%
+AU Small Finance Bank,Self-employed,600,600,CIBIL 600–649,10.85%,HDFC Bank,9.40%,Ujjivan SFB,11.35%,Equitas SFB,11.60%
+AU Small Finance Bank,Salaried,625,610,CIBIL 600–649,10.60%,HDFC Bank,9.25%,Ujjivan SFB,11.10%,Equitas SFB,11.35%
+AU Small Finance Bank,Self-employed,625,610,CIBIL 600–649,10.85%,HDFC Bank,9.40%,Ujjivan SFB,11.35%,Equitas SFB,11.60%
+AU Small Finance Bank,Salaried,675,668,CIBIL below 700,9.70%,HDFC Bank,8.60%,Ujjivan SFB,10.20%,Equitas SFB,10.45%
+AU Small Finance Bank,Self-employed,675,668,CIBIL below 700,9.95%,HDFC Bank,8.75%,Ujjivan SFB,10.45%,Equitas SFB,10.70%
+AU Small Finance Bank,Salaried,725,723,CIBIL 700–749,9.25%,HDFC Bank,8.15%,Ujjivan SFB,9.75%,Equitas SFB,10.00%
+AU Small Finance Bank,Self-employed,725,723,CIBIL 700–749,9.50%,HDFC Bank,8.30%,Ujjivan SFB,10.00%,Equitas SFB,10.25%
+AU Small Finance Bank,Salaried,775,764,CIBIL 750–799,8.95%,HDFC Bank,7.85%,Ujjivan SFB,9.45%,Equitas SFB,9.70%
+AU Small Finance Bank,Self-employed,775,764,CIBIL 750–799,9.20%,HDFC Bank,8.00%,Ujjivan SFB,9.70%,Equitas SFB,9.95%
+AU Small Finance Bank,Salaried,825,832,CIBIL 800+,8.35%,HDFC Bank,7.25%,Ujjivan SFB,8.85%,Equitas SFB,9.10%
+AU Small Finance Bank,Self-employed,825,832,CIBIL 800+,8.60%,HDFC Bank,7.40%,Ujjivan SFB,9.10%,Equitas SFB,9.35%
+AU Small Finance Bank,Salaried,850,850,CIBIL 800+,8.25%,HDFC Bank,7.15%,Ujjivan SFB,8.75%,Equitas SFB,9.00%
+AU Small Finance Bank,Self-employed,850,850,CIBIL 800+,8.50%,HDFC Bank,7.30%,Ujjivan SFB,9.00%,Equitas SFB,9.25%
+Ujjivan SFB,Salaried,600,600,CIBIL 600–649,11.10%,HDFC Bank,9.25%,AU Small Finance Bank,10.60%,Equitas SFB,11.35%
+Ujjivan SFB,Self-employed,600,600,CIBIL 600–649,11.35%,HDFC Bank,9.40%,AU Small Finance Bank,10.85%,Equitas SFB,11.60%
+Ujjivan SFB,Salaried,625,610,CIBIL 600–649,11.10%,HDFC Bank,9.25%,AU Small Finance Bank,10.60%,Equitas SFB,11.35%
+Ujjivan SFB,Self-employed,625,610,CIBIL 600–649,11.35%,HDFC Bank,9.40%,AU Small Finance Bank,10.85%,Equitas SFB,11.60%
+Ujjivan SFB,Salaried,675,668,CIBIL below 700,10.20%,HDFC Bank,8.60%,AU Small Finance Bank,9.70%,Equitas SFB,10.45%
+Ujjivan SFB,Self-employed,675,668,CIBIL below 700,10.45%,HDFC Bank,8.75%,AU Small Finance Bank,9.95%,Equitas SFB,10.70%
+Ujjivan SFB,Salaried,725,723,CIBIL 700–749,9.75%,HDFC Bank,8.15%,AU Small Finance Bank,9.25%,Equitas SFB,10.00%
+Ujjivan SFB,Self-employed,725,723,CIBIL 700–749,10.00%,HDFC Bank,8.30%,AU Small Finance Bank,9.50%,Equitas SFB,10.25%
+Ujjivan SFB,Salaried,775,764,CIBIL 750–799,9.45%,HDFC Bank,7.85%,AU Small Finance Bank,8.95%,Equitas SFB,9.70%
+Ujjivan SFB,Self-employed,775,764,CIBIL 750–799,9.70%,HDFC Bank,8.00%,AU Small Finance Bank,9.20%,Equitas SFB,9.95%
+Ujjivan SFB,Salaried,825,832,CIBIL 800+,8.85%,HDFC Bank,7.25%,AU Small Finance Bank,8.35%,Equitas SFB,9.10%
+Ujjivan SFB,Self-employed,825,832,CIBIL 800+,9.10%,HDFC Bank,7.40%,AU Small Finance Bank,8.60%,Equitas SFB,9.35%
+Ujjivan SFB,Salaried,850,850,CIBIL 800+,8.75%,HDFC Bank,7.15%,AU Small Finance Bank,8.25%,Equitas SFB,9.00%
+Ujjivan SFB,Self-employed,850,850,CIBIL 800+,9.00%,HDFC Bank,7.30%,AU Small Finance Bank,8.50%,Equitas SFB,9.25%
+Jana SFB,Salaried,600,600,CIBIL 600–649,11.35%,HDFC Bank,9.25%,AU Small Finance Bank,10.60%,Ujjivan SFB,11.10%
+Jana SFB,Self-employed,600,600,CIBIL 600–649,11.60%,HDFC Bank,9.40%,AU Small Finance Bank,10.85%,Ujjivan SFB,11.35%
+Jana SFB,Salaried,625,610,CIBIL 600–649,11.35%,HDFC Bank,9.25%,AU Small Finance Bank,10.60%,Ujjivan SFB,11.10%
+Jana SFB,Self-employed,625,610,CIBIL 600–649,11.60%,HDFC Bank,9.40%,AU Small Finance Bank,10.85%,Ujjivan SFB,11.35%
+Jana SFB,Salaried,675,668,CIBIL below 700,10.45%,HDFC Bank,8.60%,AU Small Finance Bank,9.70%,Ujjivan SFB,10.20%
+Jana SFB,Self-employed,675,668,CIBIL below 700,10.70%,HDFC Bank,8.75%,AU Small Finance Bank,9.95%,Ujjivan SFB,10.45%
+Jana SFB,Salaried,725,723,CIBIL 700–749,10.00%,HDFC Bank,8.15%,AU Small Finance Bank,9.25%,Ujjivan SFB,9.75%
+Jana SFB,Self-employed,725,723,CIBIL 700–749,10.25%,HDFC Bank,8.30%,AU Small Finance Bank,9.50%,Ujjivan SFB,10.00%
+Jana SFB,Salaried,775,764,CIBIL 750–799,9.70%,HDFC Bank,7.85%,AU Small Finance Bank,8.95%,Ujjivan SFB,9.45%
+Jana SFB,Self-employed,775,764,CIBIL 750–799,9.95%,HDFC Bank,8.00%,AU Small Finance Bank,9.20%,Ujjivan SFB,9.70%
+Jana SFB,Salaried,825,832,CIBIL 800+,9.10%,HDFC Bank,7.25%,AU Small Finance Bank,8.35%,Ujjivan SFB,8.85%
+Jana SFB,Self-employed,825,832,CIBIL 800+,9.35%,HDFC Bank,7.40%,AU Small Finance Bank,8.60%,Ujjivan SFB,9.10%
+Jana SFB,Salaried,850,850,CIBIL 800+,9.00%,HDFC Bank,7.15%,AU Small Finance Bank,8.25%,Ujjivan SFB,8.75%
+Jana SFB,Self-employed,850,850,CIBIL 800+,9.25%,HDFC Bank,7.30%,AU Small Finance Bank,8.50%,Ujjivan SFB,9.00%
+Equitas SFB,Salaried,600,600,CIBIL 600–649,11.35%,HDFC Bank,9.25%,AU Small Finance Bank,10.60%,Ujjivan SFB,11.10%
+Equitas SFB,Self-employed,600,600,CIBIL 600–649,11.60%,HDFC Bank,9.40%,AU Small Finance Bank,10.85%,Ujjivan SFB,11.35%
+Equitas SFB,Salaried,625,610,CIBIL 600–649,11.35%,HDFC Bank,9.25%,AU Small Finance Bank,10.60%,Ujjivan SFB,11.10%
+Equitas SFB,Self-employed,625,610,CIBIL 600–649,11.60%,HDFC Bank,9.40%,AU Small Finance Bank,10.85%,Ujjivan SFB,11.35%
+Equitas SFB,Salaried,675,668,CIBIL below 700,10.45%,HDFC Bank,8.60%,AU Small Finance Bank,9.70%,Ujjivan SFB,10.20%
+Equitas SFB,Self-employed,675,668,CIBIL below 700,10.70%,HDFC Bank,8.75%,AU Small Finance Bank,9.95%,Ujjivan SFB,10.45%
+Equitas SFB,Salaried,725,723,CIBIL 700–749,10.00%,HDFC Bank,8.15%,AU Small Finance Bank,9.25%,Ujjivan SFB,9.75%
+Equitas SFB,Self-employed,725,723,CIBIL 700–749,10.25%,HDFC Bank,8.30%,AU Small Finance Bank,9.50%,Ujjivan SFB,10.00%
+Equitas SFB,Salaried,775,764,CIBIL 750–799,9.70%,HDFC Bank,7.85%,AU Small Finance Bank,8.95%,Ujjivan SFB,9.45%
+Equitas SFB,Self-employed,775,764,CIBIL 750–799,9.95%,HDFC Bank,8.00%,AU Small Finance Bank,9.20%,Ujjivan SFB,9.70%
+Equitas SFB,Salaried,825,832,CIBIL 800+,9.10%,HDFC Bank,7.25%,AU Small Finance Bank,8.35%,Ujjivan SFB,8.85%
+Equitas SFB,Self-employed,825,832,CIBIL 800+,9.35%,HDFC Bank,7.40%,AU Small Finance Bank,8.60%,Ujjivan SFB,9.10%
+Equitas SFB,Salaried,850,850,CIBIL 800+,9.00%,HDFC Bank,7.15%,AU Small Finance Bank,8.25%,Ujjivan SFB,8.75%
+Equitas SFB,Self-employed,850,850,CIBIL 800+,9.25%,HDFC Bank,7.30%,AU Small Finance Bank,8.50%,Ujjivan SFB,9.00%
+Bajaj Housing Finance,Salaried,600,600,CIBIL 600–649,11.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Tata Capital,11.00%
+Bajaj Housing Finance,Self-employed,600,600,CIBIL 600–649,12.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,LIC Housing Finance,12.00%
+Bajaj Housing Finance,Salaried,625,610,CIBIL 600–649,11.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Tata Capital,11.00%
+Bajaj Housing Finance,Self-employed,625,610,CIBIL 600–649,12.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,LIC Housing Finance,12.00%
+Bajaj Housing Finance,Salaried,675,668,CIBIL below 700,9.55%,LIC Housing Finance,9.15%,Tata Capital,9.65%,AU Small Finance Bank,9.70%
+Bajaj Housing Finance,Self-employed,675,668,CIBIL below 700,10.30%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+Bajaj Housing Finance,Salaried,725,723,CIBIL 700–749,8.45%,LIC Housing Finance,8.25%,Tata Capital,8.75%,AU Small Finance Bank,9.25%
+Bajaj Housing Finance,Self-employed,725,723,CIBIL 700–749,8.65%,LIC Housing Finance,8.65%,Tata Capital,9.00%,AU Small Finance Bank,9.50%
+Bajaj Housing Finance,Salaried,775,764,CIBIL 750–799,7.95%,LIC Housing Finance,7.85%,Tata Capital,8.35%,AU Small Finance Bank,8.95%
+Bajaj Housing Finance,Self-employed,775,764,CIBIL 750–799,8.15%,LIC Housing Finance,8.25%,Tata Capital,8.60%,AU Small Finance Bank,9.20%
+Bajaj Housing Finance,Salaried,825,832,CIBIL 800+,7.35%,LIC Housing Finance,7.25%,Tata Capital,7.65%,AU Small Finance Bank,8.35%
+Bajaj Housing Finance,Self-employed,825,832,CIBIL 800+,7.50%,LIC Housing Finance,7.60%,Tata Capital,7.85%,AU Small Finance Bank,8.60%
+Bajaj Housing Finance,Salaried,850,850,CIBIL 800+,7.25%,LIC Housing Finance,7.15%,Tata Capital,7.50%,AU Small Finance Bank,8.25%
+Bajaj Housing Finance,Self-employed,850,850,CIBIL 800+,7.35%,LIC Housing Finance,7.50%,Tata Capital,7.70%,AU Small Finance Bank,8.50%
+Tata Capital,Salaried,600,600,CIBIL 600–649,11.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Tata Capital,Self-employed,600,600,CIBIL 600–649,11.00%,AU Small Finance Bank,10.85%,Bajaj Housing Finance,12.00%,LIC Housing Finance,12.00%
+Tata Capital,Salaried,625,610,CIBIL 600–649,11.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Tata Capital,Self-employed,625,610,CIBIL 600–649,11.00%,AU Small Finance Bank,10.85%,Bajaj Housing Finance,12.00%,LIC Housing Finance,12.00%
+Tata Capital,Salaried,675,668,CIBIL below 700,9.65%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+Tata Capital,Self-employed,675,668,CIBIL below 700,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%,Bajaj Housing Finance,10.30%
+Tata Capital,Salaried,725,723,CIBIL 700–749,8.75%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+Tata Capital,Self-employed,725,723,CIBIL 700–749,9.00%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+Tata Capital,Salaried,775,764,CIBIL 750–799,8.35%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+Tata Capital,Self-employed,775,764,CIBIL 750–799,8.60%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+Tata Capital,Salaried,825,832,CIBIL 800+,7.65%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+Tata Capital,Self-employed,825,832,CIBIL 800+,7.85%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+Tata Capital,Salaried,850,850,CIBIL 800+,7.50%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+Tata Capital,Self-employed,850,850,CIBIL 800+,7.70%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%
+LIC Housing Finance,Salaried,600,600,CIBIL 600–649,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%,Tata Capital,11.00%
+LIC Housing Finance,Self-employed,600,600,CIBIL 600–649,12.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+LIC Housing Finance,Salaried,625,610,CIBIL 600–649,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%,Tata Capital,11.00%
+LIC Housing Finance,Self-employed,625,610,CIBIL 600–649,12.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+LIC Housing Finance,Salaried,675,668,CIBIL below 700,9.15%,Bajaj Housing Finance,9.55%,Tata Capital,9.65%,AU Small Finance Bank,9.70%
+LIC Housing Finance,Self-employed,675,668,CIBIL below 700,10.25%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,Bajaj Housing Finance,10.30%
+LIC Housing Finance,Salaried,725,723,CIBIL 700–749,8.25%,Bajaj Housing Finance,8.45%,Tata Capital,8.75%,AU Small Finance Bank,9.25%
+LIC Housing Finance,Self-employed,725,723,CIBIL 700–749,8.65%,Bajaj Housing Finance,8.65%,Tata Capital,9.00%,AU Small Finance Bank,9.50%
+LIC Housing Finance,Salaried,775,764,CIBIL 750–799,7.85%,Bajaj Housing Finance,7.95%,Tata Capital,8.35%,AU Small Finance Bank,8.95%
+LIC Housing Finance,Self-employed,775,764,CIBIL 750–799,8.25%,Bajaj Housing Finance,8.15%,Tata Capital,8.60%,AU Small Finance Bank,9.20%
+LIC Housing Finance,Salaried,825,832,CIBIL 800+,7.25%,Bajaj Housing Finance,7.35%,Tata Capital,7.65%,AU Small Finance Bank,8.35%
+LIC Housing Finance,Self-employed,825,832,CIBIL 800+,7.60%,Bajaj Housing Finance,7.50%,Tata Capital,7.85%,AU Small Finance Bank,8.60%
+LIC Housing Finance,Salaried,850,850,CIBIL 800+,7.15%,Bajaj Housing Finance,7.25%,Tata Capital,7.50%,AU Small Finance Bank,8.25%
+LIC Housing Finance,Self-employed,850,850,CIBIL 800+,7.50%,Bajaj Housing Finance,7.35%,Tata Capital,7.70%,AU Small Finance Bank,8.50%
+PNB Housing Finance,Salaried,600,600,CIBIL 600–649,11.50%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+PNB Housing Finance,Self-employed,600,600,CIBIL 600–649,13.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+PNB Housing Finance,Salaried,625,610,CIBIL 600–649,11.50%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+PNB Housing Finance,Self-employed,625,610,CIBIL 600–649,13.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+PNB Housing Finance,Salaried,675,668,CIBIL below 700,10.05%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+PNB Housing Finance,Self-employed,675,668,CIBIL below 700,11.05%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+PNB Housing Finance,Salaried,725,723,CIBIL 700–749,9.00%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+PNB Housing Finance,Self-employed,725,723,CIBIL 700–749,9.15%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+PNB Housing Finance,Salaried,775,764,CIBIL 750–799,8.60%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+PNB Housing Finance,Self-employed,775,764,CIBIL 750–799,8.70%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+PNB Housing Finance,Salaried,825,832,CIBIL 800+,8.00%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+PNB Housing Finance,Self-employed,825,832,CIBIL 800+,8.05%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+PNB Housing Finance,Salaried,850,850,CIBIL 800+,7.90%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+PNB Housing Finance,Self-employed,850,850,CIBIL 800+,7.90%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%
+Sammaan Capital (Indiabulls),Salaried,600,600,CIBIL 600–649,13.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Sammaan Capital (Indiabulls),Self-employed,600,600,CIBIL 600–649,13.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Sammaan Capital (Indiabulls),Salaried,625,610,CIBIL 600–649,13.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Sammaan Capital (Indiabulls),Self-employed,625,610,CIBIL 600–649,13.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Sammaan Capital (Indiabulls),Salaried,675,668,CIBIL below 700,11.45%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+Sammaan Capital (Indiabulls),Self-employed,675,668,CIBIL below 700,11.85%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+Sammaan Capital (Indiabulls),Salaried,725,723,CIBIL 700–749,10.15%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+Sammaan Capital (Indiabulls),Self-employed,725,723,CIBIL 700–749,10.40%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+Sammaan Capital (Indiabulls),Salaried,775,764,CIBIL 750–799,9.60%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+Sammaan Capital (Indiabulls),Self-employed,775,764,CIBIL 750–799,9.85%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+Sammaan Capital (Indiabulls),Salaried,825,832,CIBIL 800+,8.90%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+Sammaan Capital (Indiabulls),Self-employed,825,832,CIBIL 800+,9.15%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+Sammaan Capital (Indiabulls),Salaried,850,850,CIBIL 800+,8.75%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+Sammaan Capital (Indiabulls),Self-employed,850,850,CIBIL 800+,9.00%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%
+Muthoot Housing Finance,Salaried,600,600,CIBIL 600–649,15.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Muthoot Housing Finance,Self-employed,600,600,CIBIL 600–649,16.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Muthoot Housing Finance,Salaried,625,610,CIBIL 600–649,15.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Muthoot Housing Finance,Self-employed,625,610,CIBIL 600–649,16.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Muthoot Housing Finance,Salaried,675,668,CIBIL below 700,13.55%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+Muthoot Housing Finance,Self-employed,675,668,CIBIL below 700,14.95%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+Muthoot Housing Finance,Salaried,725,723,CIBIL 700–749,12.50%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+Muthoot Housing Finance,Self-employed,725,723,CIBIL 700–749,13.75%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+Muthoot Housing Finance,Salaried,775,764,CIBIL 750–799,12.10%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+Muthoot Housing Finance,Self-employed,775,764,CIBIL 750–799,13.35%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+Muthoot Housing Finance,Salaried,825,832,CIBIL 800+,11.40%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+Muthoot Housing Finance,Self-employed,825,832,CIBIL 800+,12.65%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+Muthoot Housing Finance,Salaried,850,850,CIBIL 800+,11.25%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+Muthoot Housing Finance,Self-employed,850,850,CIBIL 800+,12.50%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%
+Aavas Financiers,Salaried,600,600,CIBIL 600–649,14.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Aavas Financiers,Self-employed,600,600,CIBIL 600–649,14.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Aavas Financiers,Salaried,625,610,CIBIL 600–649,14.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Aavas Financiers,Self-employed,625,610,CIBIL 600–649,14.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Aavas Financiers,Salaried,675,668,CIBIL below 700,12.35%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+Aavas Financiers,Self-employed,675,668,CIBIL below 700,12.85%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+Aavas Financiers,Salaried,725,723,CIBIL 700–749,10.90%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+Aavas Financiers,Self-employed,725,723,CIBIL 700–749,11.40%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+Aavas Financiers,Salaried,775,764,CIBIL 750–799,10.30%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+Aavas Financiers,Self-employed,775,764,CIBIL 750–799,10.80%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+Aavas Financiers,Salaried,825,832,CIBIL 800+,9.25%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+Aavas Financiers,Self-employed,825,832,CIBIL 800+,9.75%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+Aavas Financiers,Salaried,850,850,CIBIL 800+,9.00%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+Aavas Financiers,Self-employed,850,850,CIBIL 800+,9.50%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%
+Hinduja Housing Finance,Salaried,600,600,CIBIL 600–649,15.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Hinduja Housing Finance,Self-employed,600,600,CIBIL 600–649,15.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Hinduja Housing Finance,Salaried,625,610,CIBIL 600–649,15.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Hinduja Housing Finance,Self-employed,625,610,CIBIL 600–649,15.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Hinduja Housing Finance,Salaried,675,668,CIBIL below 700,13.35%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+Hinduja Housing Finance,Self-employed,675,668,CIBIL below 700,13.85%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+Hinduja Housing Finance,Salaried,725,723,CIBIL 700–749,11.90%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+Hinduja Housing Finance,Self-employed,725,723,CIBIL 700–749,12.40%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+Hinduja Housing Finance,Salaried,775,764,CIBIL 750–799,11.30%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+Hinduja Housing Finance,Self-employed,775,764,CIBIL 750–799,11.80%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+Hinduja Housing Finance,Salaried,825,832,CIBIL 800+,10.25%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+Hinduja Housing Finance,Self-employed,825,832,CIBIL 800+,10.75%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+Hinduja Housing Finance,Salaried,850,850,CIBIL 800+,10.00%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+Hinduja Housing Finance,Self-employed,850,850,CIBIL 800+,10.50%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%
+Home First Finance,Salaried,600,600,CIBIL 600–649,15.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Home First Finance,Self-employed,600,600,CIBIL 600–649,15.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Home First Finance,Salaried,625,610,CIBIL 600–649,15.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Home First Finance,Self-employed,625,610,CIBIL 600–649,15.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Home First Finance,Salaried,675,668,CIBIL below 700,13.55%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+Home First Finance,Self-employed,675,668,CIBIL below 700,14.05%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+Home First Finance,Salaried,725,723,CIBIL 700–749,12.40%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+Home First Finance,Self-employed,725,723,CIBIL 700–749,12.90%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+Home First Finance,Salaried,775,764,CIBIL 750–799,11.85%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+Home First Finance,Self-employed,775,764,CIBIL 750–799,12.35%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+Home First Finance,Salaried,825,832,CIBIL 800+,11.15%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+Home First Finance,Self-employed,825,832,CIBIL 800+,11.65%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+Home First Finance,Salaried,850,850,CIBIL 800+,11.00%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+Home First Finance,Self-employed,850,850,CIBIL 800+,11.50%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%
+Aadhar Housing Finance,Salaried,600,600,CIBIL 600–649,16.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Aadhar Housing Finance,Self-employed,600,600,CIBIL 600–649,17.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Aadhar Housing Finance,Salaried,625,610,CIBIL 600–649,16.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Aadhar Housing Finance,Self-employed,625,610,CIBIL 600–649,17.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Aadhar Housing Finance,Salaried,675,668,CIBIL below 700,14.45%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+Aadhar Housing Finance,Self-employed,675,668,CIBIL below 700,15.30%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+Aadhar Housing Finance,Salaried,725,723,CIBIL 700–749,13.15%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+Aadhar Housing Finance,Self-employed,725,723,CIBIL 700–749,13.65%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+Aadhar Housing Finance,Salaried,775,764,CIBIL 750–799,12.60%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+Aadhar Housing Finance,Self-employed,775,764,CIBIL 750–799,13.10%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+Aadhar Housing Finance,Salaried,825,832,CIBIL 800+,11.90%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+Aadhar Housing Finance,Self-employed,825,832,CIBIL 800+,12.40%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+Aadhar Housing Finance,Salaried,850,850,CIBIL 800+,11.75%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+Aadhar Housing Finance,Self-employed,850,850,CIBIL 800+,12.25%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%
+Cholamandalam Finance,Salaried,600,600,CIBIL 600–649,15.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Cholamandalam Finance,Self-employed,600,600,CIBIL 600–649,15.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Cholamandalam Finance,Salaried,625,610,CIBIL 600–649,15.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Cholamandalam Finance,Self-employed,625,610,CIBIL 600–649,15.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Cholamandalam Finance,Salaried,675,668,CIBIL below 700,13.45%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+Cholamandalam Finance,Self-employed,675,668,CIBIL below 700,13.85%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+Cholamandalam Finance,Salaried,725,723,CIBIL 700–749,12.15%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+Cholamandalam Finance,Self-employed,725,723,CIBIL 700–749,12.40%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+Cholamandalam Finance,Salaried,775,764,CIBIL 750–799,11.55%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+Cholamandalam Finance,Self-employed,775,764,CIBIL 750–799,11.80%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+Cholamandalam Finance,Salaried,825,832,CIBIL 800+,10.65%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+Cholamandalam Finance,Self-employed,825,832,CIBIL 800+,10.90%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+Cholamandalam Finance,Salaried,850,850,CIBIL 800+,10.50%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+Cholamandalam Finance,Self-employed,850,850,CIBIL 800+,10.75%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%
+SK Finance,Salaried,600,600,CIBIL 600–649,17.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+SK Finance,Self-employed,600,600,CIBIL 600–649,18.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+SK Finance,Salaried,625,610,CIBIL 600–649,17.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+SK Finance,Self-employed,625,610,CIBIL 600–649,18.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+SK Finance,Salaried,675,668,CIBIL below 700,15.35%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+SK Finance,Self-employed,675,668,CIBIL below 700,16.20%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+SK Finance,Salaried,725,723,CIBIL 700–749,13.90%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+SK Finance,Self-employed,725,723,CIBIL 700–749,14.40%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+SK Finance,Salaried,775,764,CIBIL 750–799,13.30%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+SK Finance,Self-employed,775,764,CIBIL 750–799,13.80%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+SK Finance,Salaried,825,832,CIBIL 800+,12.25%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+SK Finance,Self-employed,825,832,CIBIL 800+,12.75%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+SK Finance,Salaried,850,850,CIBIL 800+,12.00%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+SK Finance,Self-employed,850,850,CIBIL 800+,12.50%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%
+MAS Financial,Salaried,600,600,CIBIL 600–649,16.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+MAS Financial,Self-employed,600,600,CIBIL 600–649,16.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+MAS Financial,Salaried,625,610,CIBIL 600–649,16.00%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+MAS Financial,Self-employed,625,610,CIBIL 600–649,16.50%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+MAS Financial,Salaried,675,668,CIBIL below 700,14.35%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+MAS Financial,Self-employed,675,668,CIBIL below 700,14.85%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+MAS Financial,Salaried,725,723,CIBIL 700–749,12.90%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+MAS Financial,Self-employed,725,723,CIBIL 700–749,13.40%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+MAS Financial,Salaried,775,764,CIBIL 750–799,12.30%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+MAS Financial,Self-employed,775,764,CIBIL 750–799,12.80%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+MAS Financial,Salaried,825,832,CIBIL 800+,11.25%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+MAS Financial,Self-employed,825,832,CIBIL 800+,11.75%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+MAS Financial,Salaried,850,850,CIBIL 800+,11.00%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+MAS Financial,Self-employed,850,850,CIBIL 800+,11.50%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%
+JM Financial Services,Salaried,600,600,CIBIL 600–649,14.50%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+JM Financial Services,Self-employed,600,600,CIBIL 600–649,15.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+JM Financial Services,Salaried,625,610,CIBIL 600–649,14.50%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+JM Financial Services,Self-employed,625,610,CIBIL 600–649,15.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+JM Financial Services,Salaried,675,668,CIBIL below 700,13.05%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+JM Financial Services,Self-employed,675,668,CIBIL below 700,13.55%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+JM Financial Services,Salaried,725,723,CIBIL 700–749,11.90%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+JM Financial Services,Self-employed,725,723,CIBIL 700–749,12.40%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+JM Financial Services,Salaried,775,764,CIBIL 750–799,11.30%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+JM Financial Services,Self-employed,775,764,CIBIL 750–799,11.80%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+JM Financial Services,Salaried,825,832,CIBIL 800+,10.25%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+JM Financial Services,Self-employed,825,832,CIBIL 800+,10.75%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+JM Financial Services,Salaried,850,850,CIBIL 800+,10.00%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+JM Financial Services,Self-employed,850,850,CIBIL 800+,10.50%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%
+Axis Finance,Salaried,600,600,CIBIL 600–649,14.75%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Axis Finance,Self-employed,600,600,CIBIL 600–649,15.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Axis Finance,Salaried,625,610,CIBIL 600–649,14.75%,LIC Housing Finance,10.50%,AU Small Finance Bank,10.60%,Bajaj Housing Finance,11.00%
+Axis Finance,Self-employed,625,610,CIBIL 600–649,15.00%,AU Small Finance Bank,10.85%,Tata Capital,11.00%,Bajaj Housing Finance,12.00%
+Axis Finance,Salaried,675,668,CIBIL below 700,13.20%,LIC Housing Finance,9.15%,Bajaj Housing Finance,9.55%,AU Small Finance Bank,9.70%
+Axis Finance,Self-employed,675,668,CIBIL below 700,13.45%,Tata Capital,9.70%,AU Small Finance Bank,9.95%,LIC Housing Finance,10.25%
+Axis Finance,Salaried,725,723,CIBIL 700–749,11.90%,LIC Housing Finance,8.25%,Bajaj Housing Finance,8.45%,AU Small Finance Bank,9.25%
+Axis Finance,Self-employed,725,723,CIBIL 700–749,12.15%,Bajaj Housing Finance,8.65%,LIC Housing Finance,8.65%,AU Small Finance Bank,9.50%
+Axis Finance,Salaried,775,764,CIBIL 750–799,11.30%,LIC Housing Finance,7.85%,Bajaj Housing Finance,7.95%,AU Small Finance Bank,8.95%
+Axis Finance,Self-employed,775,764,CIBIL 750–799,11.55%,Bajaj Housing Finance,8.15%,LIC Housing Finance,8.25%,AU Small Finance Bank,9.20%
+Axis Finance,Salaried,825,832,CIBIL 800+,10.40%,LIC Housing Finance,7.25%,Bajaj Housing Finance,7.35%,AU Small Finance Bank,8.35%
+Axis Finance,Self-employed,825,832,CIBIL 800+,10.65%,Bajaj Housing Finance,7.50%,LIC Housing Finance,7.60%,AU Small Finance Bank,8.60%
+Axis Finance,Salaried,850,850,CIBIL 800+,10.25%,LIC Housing Finance,7.15%,Bajaj Housing Finance,7.25%,AU Small Finance Bank,8.25%
+Axis Finance,Self-employed,850,850,CIBIL 800+,10.50%,Bajaj Housing Finance,7.35%,LIC Housing Finance,7.50%,AU Small Finance Bank,8.50%

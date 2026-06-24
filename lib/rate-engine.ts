@@ -269,10 +269,21 @@ export function numericLow(result: number | null): number {
   return result;
 }
 
-function suggestionTypeRank(type: LenderType): number {
-  if (type === "PSB") return 0;
-  if (type === "PVT") return 1;
-  return 2;
+// Lender hierarchy, best (cheapest tier) → worst:
+//   PSU (PSB) > Private (PVT) > Small Finance Bank (SFB) > NBFC/HFC (HFC).
+// A customer in a given tier can realistically move within their tier, and
+// has a slimmer chance one tier up. So suggestions are tier-aware: two
+// same-tier options + one from the next-better tier (see decision 0008).
+const TIER_ORDER: LenderType[] = ["PSB", "PVT", "SFB", "HFC"];
+
+function tierRank(type: LenderType): number {
+  return TIER_ORDER.indexOf(type);
+}
+
+// The tier one step better than `type`, or null if `type` is already the top.
+function betterTier(type: LenderType): LenderType | null {
+  const i = tierRank(type);
+  return i > 0 ? (TIER_ORDER[i - 1] as LenderType) : null;
 }
 
 export function others(
@@ -281,18 +292,62 @@ export function others(
   emp: EmploymentType,
   count = 3
 ): OtherRate[] {
-  return LENDERS.filter((l) => l.name !== bankName && !l.mirror)
+  const current = LENDERS.find((l) => l.name === bankName);
+  const currentType = current?.type;
+
+  // Eligible pool: every first-party lender except the current bank.
+  // Mirrored lenders are excluded so we never surface a duplicate-rate row
+  // (e.g. PNB mirrors SBI and would show SBI's exact number).
+  const pool: OtherRate[] = LENDERS.filter((l) => l.name !== bankName && !l.mirror)
     .map((l) => {
       const r = rateFor(l.name, score, emp);
       return { name: l.name, type: l.type, result: r, low: numericLow(r) };
     })
-    .sort(
-      (a, b) =>
-        a.low - b.low ||
-        suggestionTypeRank(a.type) - suggestionTypeRank(b.type) ||
-        a.name.localeCompare(b.name)
-    )
-    .slice(0, count);
+    .sort((a, b) => a.low - b.low || a.name.localeCompare(b.name));
+
+  // No identifiable current type → fall back to the global cheapest.
+  if (!currentType) return pool.slice(0, count);
+
+  const better = betterTier(currentType);
+  const sameTierPicks = pool.filter((o) => o.type === currentType);
+  const betterTierPicks = better ? pool.filter((o) => o.type === better) : [];
+
+  const picks: OtherRate[] = [];
+  const taken = new Set<string>();
+  const take = (o: OtherRate | undefined) => {
+    if (o && !taken.has(o.name)) {
+      picks.push(o);
+      taken.add(o.name);
+    }
+  };
+
+  if (!better) {
+    // Top tier (PSB): no better tier exists, so fill all slots same-tier.
+    for (const o of sameTierPicks) {
+      if (picks.length >= count) break;
+      take(o);
+    }
+  } else {
+    // Two same-tier, then one from the next-better tier.
+    const sameWanted = Math.max(count - 1, 0);
+    for (const o of sameTierPicks) {
+      if (picks.length >= sameWanted) break;
+      take(o);
+    }
+    take(betterTierPicks[0]);
+  }
+
+  // Top up from the rest of the pool (cheapest-first) if a tier ran short,
+  // so the column always renders `count` rows.
+  for (const o of pool) {
+    if (picks.length >= count) break;
+    take(o);
+  }
+
+  // Display order is cheapest-first regardless of tier grouping.
+  return picks
+    .slice(0, count)
+    .sort((a, b) => a.low - b.low || a.name.localeCompare(b.name));
 }
 
 export function bestRate(bankName: string, score: number, emp: EmploymentType): number {
