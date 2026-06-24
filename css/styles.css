@@ -342,7 +342,7 @@ input[readonly] {
 }
 
 /* =============================================================================
-   Buttons — primary = navy, secondary = outline
+   Buttons — primary = teal (#46b8c3) w/ white text, secondary = outline
 ============================================================================= */
 button.cta {
   width: 100%;
@@ -351,8 +351,8 @@ button.cta {
   font-size: var(--fs-body);
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-tight);
-  color: var(--primary-fg);
-  background: var(--primary);
+  color: #ffffff;
+  background: #46b8c3;
   border: none;
   border-radius: var(--radius-field);
   cursor: pointer;
@@ -363,7 +363,7 @@ button.cta {
               transform 0.2s var(--ease-out-soft);
 }
 button.cta:hover {
-  background: var(--primary-strong);
+  background: color-mix(in srgb, #46b8c3 88%, black);
   box-shadow: var(--shadow-md);
 }
 button.cta:active { transform: translateY(1px); }

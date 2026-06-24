@@ -27,9 +27,7 @@ import {
   computeSavings,
   inr0,
   inrLakh,
-  fmtMonths,
   fmtYM,
-  fmtYearsMonths,
   type SavingsResult,
 } from "@/lib/savings";
 import { logRateCheck, logSavings } from "@/lib/leads";
@@ -596,11 +594,8 @@ export default function Calculator() {
             <div className="sv-cards">
               {/* Reduce tenure, keep EMI */}
               <div className="sv-card sv-card-dark">
-                <span className="sv-badge">Reduce Tenure, Keep EMI Same</span>
                 <h3 className="sv-title">Debt-Free Faster</h3>
-                <p className="sv-sub" id="svTenureSub">
-                  Keep paying the same EMI and clear your loan years ahead of schedule.
-                </p>
+                <p className="sv-sub">Reduce Tenure, Keep EMI Same</p>
                 <div className="sv-metric">
                   <div className="sv-metric-label">Total Saved</div>
                   <div className="sv-metric-val" id="svTenureTotal">
@@ -613,55 +608,12 @@ export default function Calculator() {
                     {fmtYM(savings.monthsSaved)} <small>earlier</small>
                   </div>
                 </div>
-                <div className="sv-facts">
-                  <div className="sv-fact">
-                    <span className="sv-fact-key">
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M6 3h12M6 8h12M9 13l9 8M6 13h3a5 5 0 0 0 0-10" />
-                      </svg>
-                      EMI
-                    </span>
-                    <span className="sv-fact-val" id="svTenureEmi">
-                      ₹{inr0(savings.emiOld)} <em>(Same)</em>
-                    </span>
-                  </div>
-                  <div className="sv-fact">
-                    <span className="sv-fact-key">
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <circle cx="12" cy="12" r="9" />
-                        <path d="M12 7v5l3 2" />
-                      </svg>
-                      Tenure
-                    </span>
-                    <span className="sv-fact-val" id="svTenureTenure">
-                      {fmtYearsMonths(savings.nNew)}
-                    </span>
-                  </div>
-                </div>
               </div>
 
               {/* Reduce EMI, keep tenure */}
               <div className="sv-card sv-card-light">
-                <span className="sv-badge">Reduce EMI, Keep Tenure Same</span>
                 <h3 className="sv-title">More Cash Monthly</h3>
-                <p className="sv-sub" id="svEmiSub">
-                  Keep your {fmtMonths(savings.nMonths)} timeline and free up cash every
-                  month.
-                </p>
+                <p className="sv-sub">Reduce EMI, Keep Tenure Same</p>
                 <div className="sv-metric">
                   <div className="sv-metric-label">Total Saved</div>
                   <div className="sv-metric-val" id="svEmiTotal">
@@ -672,45 +624,6 @@ export default function Calculator() {
                   <div className="sv-metric-label">Monthly Savings</div>
                   <div className="sv-metric-val" id="svEmiMonthly">
                     ₹{inr0(savings.monthlySave)} <small>/ mo</small>
-                  </div>
-                </div>
-                <div className="sv-facts">
-                  <div className="sv-fact">
-                    <span className="sv-fact-key">
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M6 3h12M6 8h12M9 13l9 8M6 13h3a5 5 0 0 0 0-10" />
-                      </svg>
-                      EMI
-                    </span>
-                    <span className="sv-fact-val" id="svEmiEmi">
-                      ₹{inr0(savings.emiNew)}
-                    </span>
-                  </div>
-                  <div className="sv-fact">
-                    <span className="sv-fact-key">
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <circle cx="12" cy="12" r="9" />
-                        <path d="M12 7v5l3 2" />
-                      </svg>
-                      Tenure
-                    </span>
-                    <span className="sv-fact-val" id="svEmiTenure">
-                      {fmtMonths(savings.nMonths)} <em>(Same)</em>
-                    </span>
                   </div>
                 </div>
               </div>

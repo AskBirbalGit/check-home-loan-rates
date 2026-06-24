@@ -2,9 +2,19 @@
    leads.ts  —  Funnel logging into the loan_leads table.
    -----------------------------------------------------------------------------
    One row per session. We generate an unguessable UUID once per page load and
-   reuse it: `logRateCheck` upserts (insert-or-update) the row with the Box 1
-   inputs + Box 2 rate result; `logSavings` updates the SAME row with the Box 3
-   inputs + Box 4 result. Savings columns stay NULL until the user gets there.
+   reuse it across both steps.
+
+   Writes go through two SECURITY DEFINER RPCs (see supabase/schema.sql), NOT
+   direct table writes:
+     - log_rate_check()  upserts the row with Box 1 inputs + Box 2 rate result.
+     - log_savings()     updates the SAME row with Box 3 inputs + Box 4 result.
+
+   Why RPCs instead of .from(TABLE).update(): the table is write-only for anon
+   (no SELECT policy). But Postgres applies the SELECT policy when resolving an
+   UPDATE's WHERE clause, so an anon `update().eq("id", …)` silently matches 0
+   rows — savings never persisted. A SECURITY DEFINER function runs as the table
+   owner and bypasses RLS entirely, so the UPDATE finds the row; anon only gets
+   EXECUTE on the function, never direct table access.
 
    Everything is best-effort and fire-and-forget: a logging failure must never
    surface to the user or break the calculator, so errors are only console-warned
@@ -13,15 +23,8 @@
 import { getSupabase } from "./supabase";
 import type { EmploymentType } from "./rate-engine";
 
-const TABLE = "loan_leads";
-
 // One session id per page load, reused across both log calls.
 let sessionId: string | null = null;
-// Tracks whether the session row has been INSERTed yet. We deliberately avoid
-// upsert(): PostgREST's ON CONFLICT path needs a SELECT policy to read the
-// conflicting row back, but this table is write-only for anon by design. So we
-// INSERT once, then UPDATE the same row on every later write.
-let inserted = false;
 
 function getSessionId(): string {
   if (sessionId) return sessionId;
@@ -56,35 +59,20 @@ export interface SavingsLog {
 }
 
 /** Box 1 + Box 2: log the session row when the user checks their rates.
-    Re-clicking "Check my rates" updates the same row instead of inserting. */
+    Idempotent — re-checking rates updates the same row. */
 export async function logRateCheck(data: RateCheckLog): Promise<void> {
   const sb = getSupabase();
   if (!sb) return;
-  const row = {
-    checked_rates: true,
-    bank_name: data.bankName,
-    cibil: data.cibil,
-    employment: data.employment,
-    current_rate_shown: data.currentRateShown,
-    best_rate: data.bestRate,
-  };
   try {
-    if (inserted) {
-      const { error } = await sb
-        .from(TABLE)
-        .update(row)
-        .eq("id", getSessionId());
-      if (error) warn("logRateCheck(update)", error);
-    } else {
-      const { error } = await sb
-        .from(TABLE)
-        .insert({ id: getSessionId(), ...row });
-      if (error) {
-        warn("logRateCheck(insert)", error);
-      } else {
-        inserted = true;
-      }
-    }
+    const { error } = await sb.rpc("log_rate_check", {
+      p_id: getSessionId(),
+      p_bank_name: data.bankName,
+      p_cibil: data.cibil,
+      p_employment: data.employment,
+      p_current_rate_shown: data.currentRateShown,
+      p_best_rate: data.bestRate,
+    });
+    if (error) warn("logRateCheck", error);
   } catch (err) {
     warn("logRateCheck", err);
   }
@@ -95,17 +83,14 @@ export async function logSavings(data: SavingsLog): Promise<void> {
   const sb = getSupabase();
   if (!sb) return;
   try {
-    const { error } = await sb
-      .from(TABLE)
-      .update({
-        checked_savings: true,
-        current_rate_input: data.currentRateInput,
-        tenure_years: data.tenureYears,
-        outstanding: data.outstanding,
-        rate_cut: data.rateCut,
-        max_saving: data.maxSaving,
-      })
-      .eq("id", getSessionId());
+    const { error } = await sb.rpc("log_savings", {
+      p_id: getSessionId(),
+      p_current_rate_input: data.currentRateInput,
+      p_tenure_years: data.tenureYears,
+      p_outstanding: data.outstanding,
+      p_rate_cut: data.rateCut,
+      p_max_saving: data.maxSaving,
+    });
     if (error) warn("logSavings", error);
   } catch (err) {
     warn("logSavings", err);

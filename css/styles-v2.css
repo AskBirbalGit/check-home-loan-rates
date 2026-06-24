@@ -339,15 +339,15 @@
 .sv-hero-line span { color: var(--band-accent); font-weight: var(--fw-bold); }
 .sv-hero-amt {
   margin-top: 6px;
-  font-family: var(--brand-editorial);
+  font-family: var(--brand-sans);
   font-size: var(--fs-display);
-  font-weight: var(--fw-head);
+  font-weight: var(--fw-bold);
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-tight);
   color: var(--on-band);
   font-variant-numeric: tabular-nums;
 }
-.sv-hero-amt span { color: var(--band-accent); }
+.sv-hero-amt span { color: var(--primary); }
 
 /* ── Two strategy cards ────────────────────────────────────────────────── */
 .sv-cards {
@@ -452,7 +452,7 @@
   font-variant-numeric: tabular-nums;
 }
 .sv-card-light .sv-metric-val { color: var(--primary); }
-.sv-card-dark .sv-metric-val { color: var(--band-accent); }
+.sv-card-dark .sv-metric-val { color: var(--primary); }
 .sv-metric-val small {
   font-size: var(--fs-body);
   font-weight: var(--fw-medium);
