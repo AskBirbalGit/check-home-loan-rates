@@ -258,6 +258,7 @@
   border-top: 1px solid var(--border);
 }
 .results-foot .foot-note {
+  position: relative;
   margin: 0;
   font-size: var(--fs-body);
   line-height: var(--lh-snug);
@@ -275,6 +276,80 @@
 @media (max-width: 640px) {
   .results-foot { flex-direction: column; align-items: stretch; }
   .results-foot .cta { width: 100%; }
+}
+
+/* Foot-note asterisk + hover/tap tooltip explaining how rates are derived.
+   Desktop: reveal on hover/focus. Mobile: the span is focusable (tabIndex +
+   role=button), so a tap focuses it and shows the popover; tapping elsewhere
+   blurs it and hides it again. */
+.rate-note {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  margin-left: 2px;
+  cursor: help;
+  outline: none;
+}
+.rate-note-star {
+  color: var(--accent-strong, var(--accent));
+  font-weight: 600;
+  line-height: 1;
+  font-size: 0.9em;
+  vertical-align: super;
+}
+.rate-note-pop {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  z-index: 30;
+  width: max-content;
+  max-width: 280px;
+  padding: 12px 14px;
+  background: var(--surface);
+  color: var(--fg-strong);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+  font-size: var(--fs-small, 0.82rem);
+  line-height: var(--lh-snug, 1.4);
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.14s ease, transform 0.14s ease, visibility 0.14s;
+  pointer-events: none;
+}
+.rate-note-pop .rate-note-li {
+  display: block;
+  position: relative;
+  margin: 0 0 6px;
+  padding-left: 14px;
+  color: var(--fg-strong);
+}
+.rate-note-pop .rate-note-li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.rate-note-pop .rate-note-li:last-child { margin-bottom: 0; }
+.rate-note:hover .rate-note-pop,
+.rate-note:focus .rate-note-pop,
+.rate-note:focus-within .rate-note-pop {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+@media (max-width: 640px) {
+  /* Anchor the popover to the foot-note width so it can't overflow the card. */
+  .rate-note { position: static; }
+  .rate-note-pop {
+    left: 16px;
+    right: 16px;
+    width: auto;
+    max-width: none;
+  }
 }
 
 /* -----------------------------------------------------------------------------
@@ -344,10 +419,10 @@
   font-weight: var(--fw-bold);
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-tight);
-  color: var(--on-band);
+  color: #46b8c3;
   font-variant-numeric: tabular-nums;
 }
-.sv-hero-amt span { color: var(--primary); }
+.sv-hero-amt span { color: #46b8c3; }
 
 /* ── Two strategy cards ────────────────────────────────────────────────── */
 .sv-cards {
@@ -451,8 +526,8 @@
   line-height: var(--lh-tight);
   font-variant-numeric: tabular-nums;
 }
-.sv-card-light .sv-metric-val { color: var(--primary); }
-.sv-card-dark .sv-metric-val { color: var(--primary); }
+.sv-card-light .sv-metric-val { color: #46b8c3; }
+.sv-card-dark .sv-metric-val { color: #46b8c3; }
 .sv-metric-val small {
   font-size: var(--fs-body);
   font-weight: var(--fw-medium);

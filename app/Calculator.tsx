@@ -491,6 +491,28 @@ export default function Calculator() {
               <p className="foot-note">
                 These are today&apos;s fair rates for your profile. Paying more? See what
                 you could save.
+                <span
+                  className="rate-note"
+                  tabIndex={0}
+                  role="button"
+                  aria-label="How these rates are determined"
+                >
+                  <span className="rate-note-star" aria-hidden="true">
+                    *
+                  </span>
+                  <span className="rate-note-pop" role="tooltip">
+                    <span className="rate-note-li">
+                      Rates come from our own market research and direct bank contacts.
+                    </span>
+                    <span className="rate-note-li">
+                      Private banks tend to avoid cases below a 700 CIBIL score.
+                    </span>
+                    <span className="rate-note-li">
+                      Smaller loans (under &#8377;10 lakh) often see better approval odds
+                      with NBFCs and HFCs.
+                    </span>
+                  </span>
+                </span>
               </p>
               <button className="cta" id="savingsCta" onClick={openSavings}>
                 Show my savings
