@@ -13,8 +13,8 @@
    0.05 percentage-point display increment.
 
    CIBIL domain = 600–850. Source sheets provide four 50-point bands from
-   650–850; the 600–649 band is derived from the <700 source band using a
-   lender-type risk uplift.
+   650–850; the 600–649 band is derived from the high-rate endpoint of the
+   <700 source band using a lender-type risk uplift.
 
        score >= 800  -> "800+"     band, CIBIL coverage [800, 850]
        score >= 750  -> "750–799"  band, CIBIL coverage [750, 800]
@@ -71,7 +71,7 @@ const LENDERS: Lender[] = [
   { name: "Ujjivan SFB", type: "SFB", b: ["8.75–9.15", "9.00–9.40", "9.15–9.55", "9.40–9.80", "9.55–9.95", "9.80–10.20", "9.95–10.35+", "10.20–10.60+"] },
   { name: "Jana SFB", type: "SFB", b: ["9.00–9.40", "9.25–9.65", "9.40–9.80", "9.65–10.05", "9.80–10.20", "10.05–10.45", "10.20–10.60+", "10.45–10.85+"] },
   { name: "Equitas SFB", type: "SFB", b: ["9.00–9.40", "9.25–9.65", "9.40–9.80", "9.65–10.05", "9.80–10.20", "10.05–10.45", "10.20–10.60+", "10.45–10.85+"] },
-  { name: "Bajaj Housing Finance", type: "HFC", b: ["7.25–7.65", "7.35–7.80", "7.65–8.10", "7.80–8.30", "8.10–8.75", "8.30–9.00", "8.75–10.00+", "9.00–20.00+"] },
+  { name: "Bajaj Housing Finance", type: "HFC", b: ["7.25–7.65", "7.35–7.80", "7.65–8.10", "7.80–8.30", "8.10–8.75", "8.30–9.00", "8.75–10.00+", "9.00–11.00"] },
   { name: "Tata Capital", type: "HFC", b: ["7.50–8.00", "7.70–8.25", "8.00–8.50", "8.25–8.75", "8.50–9.00", "8.75–9.25", "9.00–10.00+", "9.25–10.00+"] },
   { name: "LIC Housing Finance", type: "HFC", b: ["7.15–7.55", "7.50–7.90", "7.55–8.00", "7.90–8.40", "8.00–8.50", "8.40–8.90", "8.50–9.50+", "8.90–11.00+"] },
   { name: "PNB Housing Finance", type: "HFC", b: ["7.90–8.30", "7.90–8.35", "8.30–8.75", "8.35–8.85", "8.75–9.25", "8.85–9.40", "9.25–10.50+", "9.40–12.00+"] },
@@ -253,8 +253,10 @@ export function rateFor(bankName: string, score: number, emp: EmploymentType): n
   const band = bandFor(score);
   const cell = bands[band.col + (emp === "se" ? 1 : 0)] as string;
   const { lo, hi } = parseCell(cell);
-  const uplift = band.uplift ? LOW_CIBIL_UPLIFT[l.type] : 0;
-  return averagedRate(score, band.cMin, band.cMax, lo + uplift, hi + uplift);
+  if (band.uplift) {
+    return floorToRateStep(hi + LOW_CIBIL_UPLIFT[l.type]);
+  }
+  return averagedRate(score, band.cMin, band.cMax, lo, hi);
 }
 
 export function formatRate(result: number | null): string {
