@@ -56,16 +56,21 @@ create trigger trg_loan_leads_updated_at
 --  the service role key).
 alter table public.loan_leads enable row level security;
 
+-- Postgres table-level privilege (RLS sits on top of this).
+grant insert, update on public.loan_leads to anon;
+
 drop policy if exists "anon insert leads"  on public.loan_leads;
 drop policy if exists "anon update leads"  on public.loan_leads;
 
+-- Target `public` so the policy applies regardless of which built-in role the
+-- publishable key resolves to (anon today, but robust to Supabase key changes).
 create policy "anon insert leads"
   on public.loan_leads for insert
-  to anon
+  to public
   with check (true);
 
 create policy "anon update leads"
   on public.loan_leads for update
-  to anon
+  to public
   using (true)
   with check (true);

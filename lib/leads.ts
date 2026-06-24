@@ -17,6 +17,11 @@ const TABLE = "loan_leads";
 
 // One session id per page load, reused across both log calls.
 let sessionId: string | null = null;
+// Tracks whether the session row has been INSERTed yet. We deliberately avoid
+// upsert(): PostgREST's ON CONFLICT path needs a SELECT policy to read the
+// conflicting row back, but this table is write-only for anon by design. So we
+// INSERT once, then UPDATE the same row on every later write.
+let inserted = false;
 
 function getSessionId(): string {
   if (sessionId) return sessionId;
@@ -50,24 +55,36 @@ export interface SavingsLog {
   maxSaving: number;
 }
 
-/** Box 1 + Box 2: upsert the session row when the user checks their rates. */
+/** Box 1 + Box 2: log the session row when the user checks their rates.
+    Re-clicking "Check my rates" updates the same row instead of inserting. */
 export async function logRateCheck(data: RateCheckLog): Promise<void> {
   const sb = getSupabase();
   if (!sb) return;
+  const row = {
+    checked_rates: true,
+    bank_name: data.bankName,
+    cibil: data.cibil,
+    employment: data.employment,
+    current_rate_shown: data.currentRateShown,
+    best_rate: data.bestRate,
+  };
   try {
-    const { error } = await sb.from(TABLE).upsert(
-      {
-        id: getSessionId(),
-        checked_rates: true,
-        bank_name: data.bankName,
-        cibil: data.cibil,
-        employment: data.employment,
-        current_rate_shown: data.currentRateShown,
-        best_rate: data.bestRate,
-      },
-      { onConflict: "id" }
-    );
-    if (error) warn("logRateCheck", error);
+    if (inserted) {
+      const { error } = await sb
+        .from(TABLE)
+        .update(row)
+        .eq("id", getSessionId());
+      if (error) warn("logRateCheck(update)", error);
+    } else {
+      const { error } = await sb
+        .from(TABLE)
+        .insert({ id: getSessionId(), ...row });
+      if (error) {
+        warn("logRateCheck(insert)", error);
+      } else {
+        inserted = true;
+      }
+    }
   } catch (err) {
     warn("logRateCheck", err);
   }

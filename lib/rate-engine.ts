@@ -9,14 +9,18 @@
    -----------------------------------------------------------------------------
    The source sheet gives each lender+employment four coarse CIBIL bands, each a
    rate RANGE like "7.50–8.00". We make the lookup 10x more granular and return a
-   single AVERAGED number for the customer's exact score.
+   single AVERAGED number for the customer's exact score, floored to the nearest
+   0.05 percentage-point display increment.
 
-   CIBIL domain = 650–850, split into four 50-point bands:
+   CIBIL domain = 600–850. Source sheets provide four 50-point bands from
+   650–850; the 600–649 band is derived from the <700 source band using a
+   lender-type risk uplift.
 
        score >= 800  -> "800+"     band, CIBIL coverage [800, 850]
        score >= 750  -> "750–799"  band, CIBIL coverage [750, 800]
        score >= 700  -> "700–749"  band, CIBIL coverage [700, 750]
-       else (<700)   -> "<700"     band, CIBIL coverage [650, 700]
+       score >= 650  -> "<700"     band, CIBIL coverage [650, 700]
+       else          -> "600–649"  band, CIBIL coverage [600, 650]
 
    Within a band each side (CIBIL coverage + rate range) is split into 10 equal
    slices. A HIGHER CIBIL earns a LOWER (better) rate, so the slice index is
@@ -54,7 +58,7 @@ const LENDERS: Lender[] = [
   { name: "Bank of India", type: "PSB", b: ["7.10–7.50", "7.10–7.50", "7.50–8.00", "7.60–8.10", "8.00–8.50", "8.10–8.65", "8.50–10.00", "8.65–10.25"] },
   { name: "Bank of Baroda", type: "PSB", b: ["7.20–7.60", "7.20–7.60", "7.60–8.10", "7.70–8.20", "8.10–8.60", "8.20–8.70", "8.60–9.10", "8.70–9.20"] },
   { name: "Canara Bank", type: "PSB", b: ["7.15–7.55", "7.15–7.55", "7.55–8.00", "7.65–8.15", "8.00–8.50", "8.15–8.65", "8.50–10.00", "8.65–10.25"] },
-  { name: "Union Bank of India", type: "PSB", b: ["7.15", "7.15", "7.35", "7.50", "7.95", "8.10", "8.85+", "9.00+"] },
+  { name: "Union Bank of India", type: "PSB", b: ["7.15–7.55", "7.15–7.55", "7.55–8.00", "7.65–8.15", "8.00–8.50", "8.15–8.65", "8.50–10.00", "8.65–10.25"] },
   { name: "Central Bank of India", type: "PSB", b: ["7.10–7.50", "7.10–7.50", "7.50–7.90", "7.60–8.00", "7.90–8.30", "8.00–8.45", "8.30–9.15", "8.45–9.30"] },
   { name: "ICICI Bank", type: "PVT", b: ["7.45–7.85", "7.60–8.00", "7.85–8.25", "8.00–8.40", "8.25–8.65", "8.40–8.80", "8.65–9.05+", "8.80–9.20+"] },
   { name: "HDFC Bank", type: "PVT", b: ["7.15–7.55", "7.30–7.70", "7.55–7.95", "7.70–8.10", "7.95–8.35", "8.10–8.50", "8.35–8.75", "8.50–8.90"] },
@@ -173,15 +177,23 @@ const TYPE_LABEL: Record<string, string> = {
   HFC: "Housing Finance Co.",
 };
 
+const LOW_CIBIL_UPLIFT: Record<LenderType, number> = {
+  PSB: 0.5,
+  PVT: 0.5,
+  SFB: 0.75,
+  HFC: 1,
+};
+
 // Number of granular slices within each band (10x granularity per the spec).
 const STEPS = 10;
 
 // Selects the band's base column index AND that band's CIBIL coverage [cMin, cMax].
-function bandFor(score: number): { col: number; cMin: number; cMax: number } {
+function bandFor(score: number): { col: number; cMin: number; cMax: number; uplift?: boolean } {
   if (score >= 800) return { col: 0, cMin: 800, cMax: 850 }; // "800+"
   if (score >= 750) return { col: 2, cMin: 750, cMax: 800 }; // "750–799"
   if (score >= 700) return { col: 4, cMin: 700, cMax: 750 }; // "700–749"
-  return { col: 6, cMin: 650, cMax: 700 }; // "<700"
+  if (score >= 650) return { col: 6, cMin: 650, cMax: 700 }; // "<700"
+  return { col: 6, cMin: 600, cMax: 650, uplift: true }; // "600–649", derived from "<700"
 }
 
 // Parse a source cell into { lo, hi }.
@@ -192,13 +204,13 @@ function parseCell(str: string): { lo: number; hi: number } {
   return { lo, hi };
 }
 
-function round3(n: number): number {
-  return Math.round(n * 1000) / 1000;
+function floorToRateStep(n: number): number {
+  return Math.round((Math.floor(n * 20 + 1e-9) / 20) * 100) / 100;
 }
 
 // The granular-averaging core. Higher score -> lower rate step.
 function averagedRate(score: number, cMin: number, cMax: number, lo: number, hi: number): number {
-  if (lo === hi) return round3(lo); // single-value cell: every slice is the same
+  if (lo === hi) return floorToRateStep(lo); // single-value cell: every slice is the same
   const span = cMax - cMin;
   const sliceSize = span / STEPS;
   const clamped = Math.min(Math.max(score, cMin), cMax);
@@ -207,7 +219,7 @@ function averagedRate(score: number, cMin: number, cMax: number, lo: number, hi:
   if (i < 0) i = 0;
   const stepIndex = STEPS - 1 - i; // higher score -> lower rate
   const stepRate = (hi - lo) / STEPS;
-  return round3(lo + (stepIndex + 0.5) * stepRate);
+  return floorToRateStep(lo + (stepIndex + 0.5) * stepRate);
 }
 
 function lowBound(str: string): number {
@@ -241,7 +253,8 @@ export function rateFor(bankName: string, score: number, emp: EmploymentType): n
   const band = bandFor(score);
   const cell = bands[band.col + (emp === "se" ? 1 : 0)] as string;
   const { lo, hi } = parseCell(cell);
-  return averagedRate(score, band.cMin, band.cMax, lo, hi);
+  const uplift = band.uplift ? LOW_CIBIL_UPLIFT[l.type] : 0;
+  return averagedRate(score, band.cMin, band.cMax, lo + uplift, hi + uplift);
 }
 
 export function formatRate(result: number | null): string {

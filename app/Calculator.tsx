@@ -22,7 +22,7 @@ import {
   bestRate,
   type EmploymentType,
 } from "@/lib/rate-engine";
-import { ALL_BANKS, filterBanks, logoSlug, initials } from "@/lib/banks";
+import { filterBanks, logoSlug, initials } from "@/lib/banks";
 import {
   computeSavings,
   inr0,
@@ -38,7 +38,16 @@ function cibilBandLabel(score: number): string {
   if (score >= 800) return "CIBIL 800+";
   if (score >= 750) return "CIBIL 750–799";
   if (score >= 700) return "CIBIL 700–749";
-  return "CIBIL below 700";
+  if (score >= 650) return "CIBIL below 700";
+  return "CIBIL 600–649";
+}
+
+function formatIndianNumberInput(value: string): string {
+  const digits = value.replace(/\D/g, "");
+  if (!digits) return "";
+  const last3 = digits.slice(-3);
+  const rest = digits.slice(0, -3);
+  return rest ? rest.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + "," + last3 : last3;
 }
 
 /* Logo chip with an initials fallback if the PNG is missing (mirrors the old
@@ -76,7 +85,7 @@ function BankLogo({
 }
 
 const FOOTER_FULL =
-  "Lower home loan rates are out there. Check yours above and see what you could save.";
+  "Most borrowers pay more than they need to. Check your rate above and see what you could save.";
 const FOOTER_TRIMMED = "Lower home loan rates are out there. See what you could save.";
 
 interface RateView {
@@ -93,14 +102,11 @@ export default function Calculator() {
 
   // ── Box 1 inputs ──────────────────────────────────────────────────────────
   const [emp, setEmp] = useState<EmploymentType>("sal");
-  const [cibil, setCibil] = useState("810");
+  const [cibil, setCibil] = useState("");
 
   // Bank combobox
-  const defaultBank = ALL_BANKS.some((b) => b.name === "HDFC Bank")
-    ? "HDFC Bank"
-    : ALL_BANKS[0]?.name || "";
-  const [committedBank, setCommittedBank] = useState(defaultBank);
-  const [bankQuery, setBankQuery] = useState(defaultBank);
+  const [committedBank, setCommittedBank] = useState("");
+  const [bankQuery, setBankQuery] = useState("");
   const [listOpen, setListOpen] = useState(false);
   const [activeIdx, setActiveIdx] = useState(-1);
   const [showSelLogo, setShowSelLogo] = useState(true);
@@ -207,11 +213,15 @@ export default function Calculator() {
   // ── Box 1 -> Box 2 : check rates ───────────────────────────────────────────
   function runCheck() {
     const score = parseInt(cibil, 10);
-    if (isNaN(score) || score < 650 || score > 850) {
-      alert("Please enter a valid CIBIL score (650–850).");
+    if (isNaN(score) || score < 600 || score > 850) {
+      alert("Please enter a valid CIBIL score (600–850).");
       return;
     }
     const bankName = committedBank;
+    if (!bankName) {
+      alert("Please select your current bank.");
+      return;
+    }
     const current = allLenders.find((l) => l.name === bankName);
     if (!current) return;
 
@@ -260,33 +270,33 @@ export default function Calculator() {
     setSavingsErr("");
     setSavings(null);
 
-    const P = parseFloat(outstanding);
+    const P = parseFloat(outstanding.replace(/,/g, ""));
     const cur = parseFloat(curRate);
     const years = parseFloat(tenure);
     const nr = newRate != null ? Number(newRate) : NaN;
 
     if (!(P > 0) || !(cur > 0) || !(years > 0)) {
       setSavingsErr(
-        "Please fill your current rate, remaining tenure and outstanding amount with valid values."
+        "Add your current rate, remaining tenure, and outstanding amount to see your savings."
       );
       return;
     }
     if (!(nr > 0)) {
       setSavingsErr(
-        "Check your rates first so we know the best rate available for your profile."
+        "Check your rate first so we know the best rate for your profile."
       );
       return;
     }
     if (nr >= cur) {
       setSavingsErr(
-        "Your current rate is already at or below today's best fair rate for your profile. No switching savings to show."
+        "Good news: your current rate is already at or below the fair rate for your profile. Nothing to switch for right now."
       );
       return;
     }
 
     const result = computeSavings(P, cur, years, nr);
     if (!result) {
-      setSavingsErr("Could not compute savings for those inputs.");
+      setSavingsErr("We couldn't calculate savings from those numbers. Double-check the values and try again.");
       return;
     }
     setSavings(result);
@@ -319,21 +329,18 @@ export default function Calculator() {
         <section className="card input-bar">
           <div className="input-row">
             <label className="field">
-              <span className="lbl">Bank name</span>
+              <span className="lbl">Your current bank</span>
               <div className="combo" id="bankCombo" ref={comboRef}>
-                <span
-                  className={`combo-selected-logo${showSelLogo && committedBank ? "" : " hidden"}`}
-                  aria-hidden="true"
-                >
-                  {showSelLogo && committedBank ? (
+                {showSelLogo && committedBank ? (
+                  <span className="combo-selected-logo" aria-hidden="true">
                     <BankLogo
                       name={committedBank}
                       size={22}
                       className=""
                       fbClassName="combo-logo-fb"
                     />
-                  ) : null}
-                </span>
+                  </span>
+                ) : null}
                 <input
                   id="bankInput"
                   ref={inputRef}
@@ -347,7 +354,7 @@ export default function Calculator() {
                     activeIdx >= 0 ? `bankOpt${activeIdx}` : undefined
                   }
                   autoComplete="off"
-                  placeholder="Search your bank"
+                  placeholder="Search your current bank"
                   value={bankQuery}
                   onFocus={focusBank}
                   onClick={focusBank}
@@ -396,7 +403,7 @@ export default function Calculator() {
               <input
                 id="cibil"
                 type="number"
-                min={650}
+                min={600}
                 max={850}
                 value={cibil}
                 placeholder="e.g. 810"
@@ -431,7 +438,7 @@ export default function Calculator() {
             </label>
 
             <button className="cta" id="checkBtn" onClick={runCheck}>
-              Check my rates
+              Show my fair rate
             </button>
           </div>
         </section>
@@ -440,11 +447,11 @@ export default function Calculator() {
       {/* BOX 2 — RATE RESULTS */}
       {rateView && (
         <div className="box" id="resultsCard">
-          <h2 className="box-head">Rates for your profile</h2>
+          <h2 className="box-head">The fair rate for your profile</h2>
           <section className="card results-card">
             <div className="results-split">
               <div className="rate-col">
-                <h3>In current institutions</h3>
+                <h3>Your current bank</h3>
                 <div id="currentRate">
                   <div className="rate-row current">
                     <BankLogo
@@ -465,7 +472,7 @@ export default function Calculator() {
                 </div>
               </div>
               <div className="rate-col">
-                <h3>Similar institutions</h3>
+                <h3>Better-priced lenders</h3>
                 <div id="otherRates">
                   {rateView.others.map((o) => (
                     <div className="rate-row" key={o.name}>
@@ -484,11 +491,11 @@ export default function Calculator() {
             </div>
             <div className="results-foot">
               <p className="foot-note">
-                These are today&apos;s fair rates for your profile. If your current rate is
-                higher, you can save on your home loan.
+                These are today&apos;s fair rates for your profile. Paying more? See what
+                you could save.
               </p>
               <button className="cta" id="savingsCta" onClick={openSavings}>
-                Check my savings
+                Show my savings
               </button>
             </div>
           </section>
@@ -498,7 +505,7 @@ export default function Calculator() {
       {/* BOX 3 — SAVINGS INPUTS */}
       {savingsOpen && (
         <div className="box" id="savingsInputCard" ref={savingsInputRef}>
-          <h2 className="box-head">Additional loan details for savings</h2>
+          <h2 className="box-head">Your loan details for savings.</h2>
           <section className="card savings-input-card">
             <div className="savings-input-row">
               <label className="field">
@@ -541,11 +548,12 @@ export default function Calculator() {
                 <span className="lbl">Outstanding amount (₹)</span>
                 <input
                   id="outstanding"
-                  type="number"
-                  min={1}
-                  placeholder="e.g. 4000000"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9,]*"
+                  placeholder="e.g. 40,00,000"
                   value={outstanding}
-                  onChange={(e) => setOutstanding(e.target.value)}
+                  onChange={(e) => setOutstanding(formatIndianNumberInput(e.target.value))}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
@@ -570,7 +578,7 @@ export default function Calculator() {
       {/* BOX 4 — SAVINGS RESULT */}
       {savings && (
         <div className="box" id="savingsResult" ref={savingsResultRef}>
-          <h2 className="box-head">Savings on rate reduction</h2>
+          <h2 className="box-head">Here&apos;s what switching saves you</h2>
           <section className="savings-result-stage">
             <div className="sv-hero" id="svHero">
               <div className="sv-hero-line">
@@ -588,11 +596,10 @@ export default function Calculator() {
             <div className="sv-cards">
               {/* Reduce tenure, keep EMI */}
               <div className="sv-card sv-card-dark">
-                <span className="sv-badge">Reduce Tenure Keeping EMI Same</span>
+                <span className="sv-badge">Reduce Tenure, Keep EMI Same</span>
                 <h3 className="sv-title">Debt-Free Faster</h3>
                 <p className="sv-sub" id="svTenureSub">
-                  Keep paying your current EMI amount, and watch your loan vanish years
-                  earlier.
+                  Keep paying the same EMI and clear your loan years ahead of schedule.
                 </p>
                 <div className="sv-metric">
                   <div className="sv-metric-label">Total Saved</div>
@@ -649,11 +656,11 @@ export default function Calculator() {
 
               {/* Reduce EMI, keep tenure */}
               <div className="sv-card sv-card-light">
-                <span className="sv-badge">Reduce EMI Keeping Tenure Same</span>
+                <span className="sv-badge">Reduce EMI, Keep Tenure Same</span>
                 <h3 className="sv-title">More Cash Monthly</h3>
                 <p className="sv-sub" id="svEmiSub">
-                  Keep your {fmtMonths(savings.nMonths)} timeline, but reduce your monthly
-                  out-of-pocket expense.
+                  Keep your {fmtMonths(savings.nMonths)} timeline and free up cash every
+                  month.
                 </p>
                 <div className="sv-metric">
                   <div className="sv-metric-label">Total Saved</div>
