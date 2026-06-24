@@ -6,6 +6,11 @@
 *.tmp
 *.bak
 
+# Env (secrets / local config)
+.env
+.env.local
+.env*.local
+
 # Next.js / Node
 /node_modules
 /.next

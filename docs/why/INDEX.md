@@ -10,10 +10,12 @@ fields) is always the source of truth. See `SEARCH.md`.
 
 | Tag | Where | Summary |
 |-----|-------|---------|
-| meta | [journal](journal/), [0001](decisions/0001-record-architecture-decisions.md) | why-journal setup and conventions |
+| meta | [journal](journal/), [0001](decisions/0001-record-architecture-decisions.md) | why-journal setup and conventions; project-scoped opencode skills under `.opencode/skills/` (e.g. copywriting) |
 | calculator | [journal](journal/), [0002](decisions/0002-single-file-static-calculator.md), [0005](decisions/0005-migrate-to-nextjs-for-vercel.md) | home loan rate + savings calculator (now a Next.js app — app/Calculator.tsx) |
 | home-loan | [journal](journal/) | rate bands, CIBIL/employment lookup |
 | rates | [journal](journal/), [0006](decisions/0006-mirror-based-rate-inheritance.md) | CIBIL-wise ROI data (Jun 2026); 10x-granular averaged lookup (650–850) in lib/rate-engine.ts; expanded to ~100 institutions with long-tail lenders mirroring the closest existing peer via `resolveBands`; mirror targets re-bucketed by observed public rate ranges (see docs/rate-mirror-mapping.md); similar-institution suggestions exclude mirrored lenders and tie-sort PSB/PSU, then PVT, then other types |
+| leads | [journal](journal/), [0007](decisions/0007-browser-side-lead-logging-with-supabase.md) | browser-side funnel logging for rate-check and savings steps into Supabase `loan_leads` |
+| supabase | [journal](journal/), [0007](decisions/0007-browser-side-lead-logging-with-supabase.md) | browser Supabase client + RLS-backed `loan_leads` table for anonymous funnel logging |
 | savings | [journal](journal/) | EMI/tenure savings math; "total saved" hero + two-ways boxes (reduce-EMI ₹/mo, reduce-tenure time) in lib/savings.ts; reduce-tenure total now amortises the partial final month (was overstating EMIs paid → understating savings by ~½ EMI) |
 | ui | [journal](journal/) | stacked-box layout (now app/Calculator.tsx, a React client component), one full-width rectangle per step, each with a section `<h2>` heading above its card (Your details / Rates for your profile / Additional loan details for savings / Savings on rate reduction; cols "In current institutions" / "Similar institutions"); Birbal design-system restyle; section cards carry a light-teal wash (`.box .card`) mirroring the hero panel; the Box 4 savings panels (`.sv-hero`/`.sv-card-*`) share that same frame — accent-24% border + shadow-sm, with the hero alone at shadow-md as the one allowed accent |
 | typography | [journal](journal/) | consolidated phone-first type ramp in css/styles.css :root: **7 sizes** (display/heading/money/lead/body 16/label 13/eyebrow 12 — the big 4 use `clamp()` so they step down on phone), **4 weights** (400/500/600/700 as an emphasis axis), **3 line-heights** (1.1/1.4/1.55), **3 letter-spacing tokens** (--ls-display/-tight/-eyebrow); EB Garamond → display(hero+showcase ₹)+headings, Figtree → all body/UI + tabular data figures; fonts loaded via `next/font` (app/layout.tsx), self-hosted at build |
@@ -39,6 +41,7 @@ fields) is always the source of truth. See `SEARCH.md`.
 | js/app.js | [journal](journal/) | Removed with v1 — was the page glue for index.html |
 | data/cibil-roi-rates.csv | [journal](journal/) | Source ROI sheet copied into the repo |
 | docs/rate-mirror-mapping.md | [journal](journal/) | Approved mapping table for mirrored/new institutions: indicative public rate range, references, chosen first-party lender, and per-row reasoning |
+| docs/why/decisions/0007-browser-side-lead-logging-with-supabase.md | [journal](journal/) | Browser-side lead logging to Supabase using a write-only `loan_leads` table |
 | scripts/fetch-logos.sh | [journal](journal/) | Reproducible logo.dev downloader (name→domain→slug, 128px PNG) |
 | public/logos/ | [journal](journal/) | lender logos pulled from logo.dev in Next's static root; expanded with new lender logos |
 | vercel.json | [journal](journal/) | Removed in the Next.js migration — Vercel auto-detects the framework; headers moved to next.config.ts |
@@ -47,9 +50,14 @@ fields) is always the source of truth. See `SEARCH.md`.
 | app/layout.tsx, app/page.tsx | [journal](journal/) | Next App Router root: layout loads next/font + the two stylesheets; page renders Calculator; `<title>` kept in sync with the hero h1 |
 | lib/rate-engine.ts | [journal](journal/), [0006](decisions/0006-mirror-based-rate-inheritance.md) | Typed RateEngine: 10x-granular averaged rate plus `mirror`/`resolveBands` inheritance for long-tail lenders; mirror targets bucketed by observed public rate ranges (docs/rate-mirror-mapping.md); `others()` excludes mirrored lenders from suggestions, then rate-sorts with PSB/PSU, PVT, then other type tie-breaks |
 | lib/banks.ts | [journal](journal/) | DISBURSE_RANK + ALIASES + ALL_BANKS + logoSlug/initials for the picker; extended for the expanded lender set |
+| lib/leads.ts | [journal](journal/), [0007](decisions/0007-browser-side-lead-logging-with-supabase.md) | Best-effort funnel logging helpers for Box 1/2 and Box 3/4 into Supabase `loan_leads` |
+| lib/supabase.ts | [journal](journal/), [0007](decisions/0007-browser-side-lead-logging-with-supabase.md) | Browser Supabase client using public `NEXT_PUBLIC_` env vars; returns null when unset |
 | lib/savings.ts | [journal](journal/) | EMI amortisation + two-strategy switching-savings math (verbatim port) |
+| supabase/schema.sql | [journal](journal/), [0007](decisions/0007-browser-side-lead-logging-with-supabase.md) | `loan_leads` table, timestamp trigger, and anonymous INSERT/UPDATE RLS for funnel logging |
+| .env.example | [journal](journal/), [0007](decisions/0007-browser-side-lead-logging-with-supabase.md) | Public Supabase env names for browser lead logging |
 | next.config.ts | [journal](journal/) | Security + logo cache headers (ported from the old vercel.json) |
 | css/styles-v2.css | [journal](journal/) | Stacked-layout overrides on top of styles.css tokens/components; `.box .card` light-teal section wash mirroring the hero panel |
+| .opencode/skills/copywriting | [journal](journal/) | Project-scoped conversion-copywriting skill (from coreyhaines31/marketingskills) for writing/improving on-page marketing copy; auto-discovered by opencode under `.opencode/skills/**/SKILL.md` |
 
 ## Decisions
 
@@ -61,3 +69,4 @@ fields) is always the source of truth. See `SEARCH.md`.
 | [0004](decisions/0004-hardcoded-disbursement-ranking.md) | Hand-maintained disbursement ranking for the bank picker | Accepted |
 | [0005](decisions/0005-migrate-to-nextjs-for-vercel.md) | Migrate to Next.js (App Router) for first-class Vercel deployment | Accepted (supersedes 0002) |
 | [0006](decisions/0006-mirror-based-rate-inheritance.md) | Mirror-based rate inheritance for the long-tail lenders | Accepted |
+| [0007](decisions/0007-browser-side-lead-logging-with-supabase.md) | Browser-side lead logging with Supabase | Accepted |
