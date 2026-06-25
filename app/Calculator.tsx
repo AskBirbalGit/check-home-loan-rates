@@ -87,6 +87,7 @@ const FOOTER_FULL =
 const FOOTER_TRIMMED = "Lower home loan rates are out there. See what you could save.";
 
 interface RateView {
+  hasBank: boolean;
   currentName: string;
   currentType: string;
   currentResult: number | null;
@@ -217,19 +218,24 @@ export default function Calculator() {
       return;
     }
     const bankName = committedBank;
-    if (!bankName) {
-      alert("Please select your current bank.");
-      return;
-    }
-    const current = allLenders.find((l) => l.name === bankName);
-    if (!current) return;
+    const current = bankName
+      ? allLenders.find((l) => l.name === bankName)
+      : undefined;
+    // Bank is optional. If they picked one we couldn't resolve, bail; but an
+    // empty selection is fine — we just suggest the best rates for the profile.
+    if (bankName && !current) return;
 
-    const currentResult = rateFor(bankName, score, emp);
-    const others = otherRates(bankName, score, emp, 3);
+    const hasBank = Boolean(current);
+    const currentResult = current ? rateFor(bankName, score, emp) : null;
+    // With no current bank, `others` falls back to the global cheapest lenders.
+    // Show 4 suggestions in that case so the column doesn't look thin without a
+    // "your current bank" panel beside it.
+    const others = otherRates(bankName, score, emp, hasBank ? 3 : 4);
 
     setRateView({
-      currentName: current.name,
-      currentType: current.type,
+      hasBank,
+      currentName: current?.name ?? "",
+      currentType: current?.type ?? "",
       currentResult,
       others: others.map((o) => ({ name: o.name, result: o.result })),
       score,
@@ -242,7 +248,7 @@ export default function Calculator() {
 
     // Log the rate check (Box 1 inputs + Box 2 result). Fire-and-forget.
     void logRateCheck({
-      bankName,
+      bankName: bankName || null,
       cibil: score,
       employment: emp,
       currentRateShown: currentResult,
@@ -335,7 +341,7 @@ export default function Calculator() {
         <section className="card input-bar">
           <div className="input-row">
             <label className="field">
-              <span className="lbl">Your bank name</span>
+                <span className="lbl">Your bank name (optional)</span>
               <div className="combo" id="bankCombo" ref={comboRef}>
                 {showSelLogo && committedBank ? (
                   <span className="combo-selected-logo" aria-hidden="true">
@@ -455,30 +461,41 @@ export default function Calculator() {
         <div className="box" id="resultsCard">
           <h2 className="box-head">The fair rate for your profile</h2>
           <section className="card results-card">
-            <div className="results-split">
-              <div className="rate-col">
-                <h3>Your current bank</h3>
-                <div id="currentRate">
-                  <div className="rate-row current">
-                    <BankLogo
-                      name={rateView.currentName}
-                      size={36}
-                      className="bank-logo"
-                      fbClassName="bank-logo-fallback"
-                    />
-                    <div className="bank">
-                      {rateView.currentName}
-                      <small>
-                        {typeLabel(rateView.currentType)} ·{" "}
-                        {cibilBandLabel(rateView.score)} · {empLabel}
-                      </small>
+            <div className={`results-split${rateView.hasBank ? "" : " results-split--single"}`}>
+              {rateView.hasBank && (
+                <div className="rate-col">
+                  <h3>Your current bank</h3>
+                  <div id="currentRate">
+                    <div className="rate-row current">
+                      <BankLogo
+                        name={rateView.currentName}
+                        size={36}
+                        className="bank-logo"
+                        fbClassName="bank-logo-fallback"
+                      />
+                      <div className="bank">
+                        {rateView.currentName}
+                        <small>
+                          {typeLabel(rateView.currentType)} ·{" "}
+                          {cibilBandLabel(rateView.score)} · {empLabel}
+                        </small>
+                      </div>
+                      <div className="rate">{formatRate(rateView.currentResult)}</div>
                     </div>
-                    <div className="rate">{formatRate(rateView.currentResult)}</div>
                   </div>
                 </div>
-              </div>
+              )}
               <div className="rate-col">
-                <h3>Better-priced lenders</h3>
+                <h3>
+                  {rateView.hasBank
+                    ? "Better-priced lenders"
+                    : "Best rates for your profile"}
+                </h3>
+                {!rateView.hasBank && (
+                  <p className="rate-col-sub">
+                    {cibilBandLabel(rateView.score)} · {empLabel}
+                  </p>
+                )}
                 <div id="otherRates">
                   {rateView.others.map((o) => (
                     <div className="rate-row" key={o.name}>

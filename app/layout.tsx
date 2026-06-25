@@ -21,9 +21,46 @@ const figtree = Figtree({
   display: "swap",
 });
 
+/* Absolute base for og:image etc. WhatsApp/iMessage/Slack can't resolve
+   relative image paths, so every social preview needs a fully-qualified URL.
+   Vercel injects VERCEL_PROJECT_PRODUCTION_URL (the stable production domain)
+   at build/runtime; we fall back to localhost for local dev. */
+const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "http://localhost:3000";
+
+const title = "Are You Paying the Right Home Loan Rate?";
+const description =
+  "Birbal suggests the best interest rate for you in seconds.";
+
 export const metadata: Metadata = {
-  title: "Are You Paying the Right Home Loan Rate?",
-  description: "Birbal suggests the best interest rate for you in seconds.",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    url: "/",
+    siteName: "Birbal",
+    type: "website",
+    images: [
+      {
+        // Baked onto a solid 1200x630 canvas (scripts/make-og-image.mjs) so
+        // WhatsApp — which renders transparency as black and expects a 1.91:1
+        // ratio — shows the Birbal logo cleanly as the link thumbnail.
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Birbal",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({

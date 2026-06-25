@@ -43,7 +43,7 @@ function warn(scope: string, err: unknown) {
 }
 
 export interface RateCheckLog {
-  bankName: string;
+  bankName: string | null;
   cibil: number;
   employment: EmploymentType;
   currentRateShown: number | null;
