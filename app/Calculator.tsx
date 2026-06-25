@@ -320,9 +320,9 @@ export default function Calculator() {
   return (
     <div className="wrap">
       <div className="brandbar">
-        <a href="/" aria-label="Birbal home">
-          <img className="brandbar-logo" src="/brand-logo.png" alt="Birbal" />
-        </a>
+        {/* eslint-disable-next-line @next/next/no-img-element -- static brand
+            lockup; plain <img> keeps markup parity with the bank logos */}
+        <img className="brandbar-logo" src="/brand-logo.png" alt="Birbal" />
       </div>
       <header className="hero">
         <h1>Are You Paying the Right Home Loan Rate?</h1>
