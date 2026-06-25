@@ -97,85 +97,69 @@ const LENDERS: Lender[] = [
 
   /* ── Long tail (mirrored) ──────────────────────────────────────────────
      The institutions below carry NO first-party rate sheet of their own; each
-     `mirror`s the closest comparable lender (same type + tier) above, since
-     institutions in the same bracket price very similarly. Rates resolve via
-     resolveBands(). Ordered to round the picker out to the top ~100 lenders. */
+     `mirror`s a first-party lender. Targets are chosen PURELY by matching each
+     institution's RESEARCHED public rate range (lowest floor + highest cap,
+     gathered from official lender pages first, aggregators only as a last
+     resort) against each first-party lender's own [R_min(800+ salaried),
+     R_max(<700 salaried)] band — the mirror is whichever first-party lender
+     (ANY type — PSB/PVT/SFB/HFC may crisscross) minimises |Δlow| + |Δhigh|,
+     ties broken toward the closer floor. The institution keeps its own display
+     name/type/logo; only the rate curve is borrowed (see decision 0011 and
+     docs/rate-mirror-mapping.md). Rates resolve via resolveBands(). */
 
-  // Public-sector banks -> priced like their PSB peers.
-  { name: "Punjab National Bank", type: "PSB", mirror: "SBI" },
-  { name: "Indian Bank", type: "PSB", mirror: "Canara Bank" },
-  { name: "Indian Overseas Bank", type: "PSB", mirror: "Bank of India" },
-  { name: "UCO Bank", type: "PSB", mirror: "Central Bank of India" },
-  { name: "Bank of Maharashtra", type: "PSB", mirror: "Bank of Baroda" },
-  { name: "Punjab & Sind Bank", type: "PSB", mirror: "Bank of India" },
+  // Public-sector banks -> rate-matched to ANY-type first-party peer.
+  { name: "Punjab National Bank", type: "PSB", mirror: "Bank of Baroda" },
+  { name: "Indian Bank", type: "PSB", mirror: "PNB Housing Finance" },
+  { name: "Indian Overseas Bank", type: "PSB", mirror: "SBI" },
+  { name: "UCO Bank", type: "PSB", mirror: "LIC Housing Finance" },
+  { name: "Bank of Maharashtra", type: "PSB", mirror: "Bajaj Housing Finance" },
+  { name: "Punjab & Sind Bank", type: "PSB", mirror: "Bajaj Housing Finance" },
 
-  // Private banks -> priced like their private peers.
-  { name: "IndusInd Bank", type: "PVT", mirror: "Axis Bank" },
-  { name: "Federal Bank", type: "PVT", mirror: "Axis Bank" },
-  { name: "South Indian Bank", type: "PVT", mirror: "Axis Bank" },
-  { name: "Karur Vysya Bank", type: "PVT", mirror: "RBL Bank" },
-  { name: "Karnataka Bank", type: "PVT", mirror: "RBL Bank" },
-  { name: "City Union Bank", type: "PVT", mirror: "Axis Bank" },
-  { name: "DCB Bank", type: "PVT", mirror: "RBL Bank" },
+  // Private banks -> rate-matched to ANY-type first-party peer.
+  { name: "IndusInd Bank", type: "PVT", mirror: "PNB Housing Finance" },
+  { name: "Federal Bank", type: "PVT", mirror: "ICICI Bank" },
+  { name: "South Indian Bank", type: "PVT", mirror: "IDFC First Bank" },
+  { name: "Karur Vysya Bank", type: "PVT", mirror: "Ujjivan SFB" },
+  { name: "Karnataka Bank", type: "PVT", mirror: "Sammaan Capital (Indiabulls)" },
+  { name: "City Union Bank", type: "PVT", mirror: "PNB Housing Finance" },
+  { name: "DCB Bank", type: "PVT", mirror: "Hinduja Housing Finance" },
   { name: "Tamilnad Mercantile Bank", type: "PVT", mirror: "RBL Bank" },
-  { name: "CSB Bank", type: "PVT", mirror: "RBL Bank" },
-  { name: "Bandhan Bank", type: "PVT", mirror: "RBL Bank" },
+  { name: "CSB Bank", type: "PVT", mirror: "Cholamandalam Finance" },
+  { name: "Bandhan Bank", type: "PVT", mirror: "Aavas Financiers" },
   { name: "Dhanlaxmi Bank", type: "PVT", mirror: "RBL Bank" },
-  { name: "Jammu & Kashmir Bank", type: "PVT", mirror: "Bank of Baroda" },
-  { name: "Nainital Bank", type: "PVT", mirror: "Bank of Baroda" },
+  { name: "Jammu & Kashmir Bank", type: "PVT", mirror: "SBI" },
+  { name: "Nainital Bank", type: "PVT", mirror: "PNB Housing Finance" },
 
-  // Small finance banks -> priced like the SFB peers.
-  { name: "Utkarsh Small Finance Bank", type: "SFB", mirror: "Ujjivan SFB" },
-  { name: "Suryoday Small Finance Bank", type: "SFB", mirror: "Jana SFB" },
-  { name: "ESAF Small Finance Bank", type: "SFB", mirror: "Jana SFB" },
-  { name: "Capital Small Finance Bank", type: "SFB", mirror: "AU Small Finance Bank" },
-  { name: "Unity Small Finance Bank", type: "SFB", mirror: "Jana SFB" },
-  { name: "Shivalik Small Finance Bank", type: "SFB", mirror: "Jana SFB" },
-  { name: "North East Small Finance Bank", type: "SFB", mirror: "Jana SFB" },
-  { name: "Fincare Small Finance Bank", type: "SFB", mirror: "AU Small Finance Bank" },
+  // Small finance banks -> rate-matched to ANY-type first-party peer.
+  { name: "Utkarsh Small Finance Bank", type: "SFB", mirror: "Hinduja Housing Finance" },
+  { name: "Suryoday Small Finance Bank", type: "SFB", mirror: "JM Financial Services" },
+  { name: "Capital Small Finance Bank", type: "SFB", mirror: "Sammaan Capital (Indiabulls)" },
+  { name: "Shivalik Small Finance Bank", type: "SFB", mirror: "Aavas Financiers" },
 
-  // Housing-finance cos + NBFCs -> priced like the closest HFC/NBFC above.
-  { name: "ICICI Home Finance", type: "HFC", mirror: "ICICI Bank" },
+  // Housing-finance cos + NBFCs -> rate-matched to ANY-type first-party peer.
+  { name: "ICICI Home Finance", type: "HFC", mirror: "Aavas Financiers" },
   { name: "Repco Home Finance", type: "HFC", mirror: "Aavas Financiers" },
-  { name: "GIC Housing Finance", type: "HFC", mirror: "Aavas Financiers" },
-  { name: "Can Fin Homes", type: "HFC", mirror: "LIC Housing Finance" },
-  { name: "India Shelter Finance", type: "HFC", mirror: "Aavas Financiers" },
-  { name: "Aptus Value Housing Finance", type: "HFC", mirror: "Aadhar Housing Finance" },
-  { name: "Shriram Housing Finance", type: "HFC", mirror: "Aadhar Housing Finance" },
-  { name: "Vastu Housing Finance", type: "HFC", mirror: "Home First Finance" },
-  { name: "Motilal Oswal Home Finance", type: "HFC", mirror: "Aadhar Housing Finance" },
-  { name: "Godrej Housing Finance", type: "HFC", mirror: "Bajaj Housing Finance" },
-  { name: "Piramal Capital & Housing Finance", type: "HFC", mirror: "Sammaan Capital (Indiabulls)" },
-  { name: "IIFL Home Finance", type: "HFC", mirror: "Sammaan Capital (Indiabulls)" },
-  { name: "L&T Finance", type: "HFC", mirror: "Tata Capital" },
-  { name: "Sundaram Home Finance", type: "HFC", mirror: "LIC Housing Finance" },
-  { name: "Cent Bank Home Finance", type: "HFC", mirror: "PNB Housing Finance" },
-  { name: "SRG Housing Finance", type: "HFC", mirror: "SK Finance" },
-  { name: "Manappuram Home Finance", type: "HFC", mirror: "Muthoot Housing Finance" },
-  { name: "Poonawalla Fincorp", type: "HFC", mirror: "Tata Capital" },
-  { name: "Edelweiss Housing Finance", type: "HFC", mirror: "JM Financial Services" },
-  { name: "Capri Global Housing Finance", type: "HFC", mirror: "Cholamandalam Finance" },
-  { name: "Star Housing Finance", type: "HFC", mirror: "Home First Finance" },
-  { name: "Altum Credo Home Finance", type: "HFC", mirror: "Aadhar Housing Finance" },
-  { name: "Five-Star Business Finance", type: "HFC", mirror: "SK Finance" },
+  { name: "GIC Housing Finance", type: "HFC", mirror: "PNB Housing Finance" },
+  { name: "Can Fin Homes", type: "HFC", mirror: "Aavas Financiers" },
+  { name: "India Shelter Finance", type: "HFC", mirror: "MAS Financial" },
+  { name: "Motilal Oswal Home Finance", type: "HFC", mirror: "Hinduja Housing Finance" },
+  { name: "Godrej Housing Finance", type: "HFC", mirror: "PNB Housing Finance" },
+  { name: "Piramal Capital & Housing Finance", type: "HFC", mirror: "Hinduja Housing Finance" },
+  { name: "IIFL Home Finance", type: "HFC", mirror: "Aavas Financiers" },
+  { name: "L&T Finance", type: "HFC", mirror: "PNB Housing Finance" },
+  { name: "Sundaram Home Finance", type: "HFC", mirror: "Sammaan Capital (Indiabulls)" },
+  { name: "Cent Bank Home Finance", type: "HFC", mirror: "JM Financial Services" },
+  { name: "Poonawalla Fincorp", type: "HFC", mirror: "Aavas Financiers" },
+  { name: "Edelweiss Housing Finance", type: "HFC", mirror: "Aavas Financiers" },
+  { name: "Altum Credo Home Finance", type: "HFC", mirror: "SK Finance" },
   { name: "Bajaj Finance", type: "HFC", mirror: "Bajaj Housing Finance" },
-  { name: "Aditya Birla Housing Finance", type: "HFC", mirror: "PNB Housing Finance" },
+  { name: "Aditya Birla Housing Finance", type: "HFC", mirror: "Aavas Financiers" },
   { name: "Hero Housing Finance", type: "HFC", mirror: "Hinduja Housing Finance" },
-  { name: "SMFG India Credit", type: "HFC", mirror: "Cholamandalam Finance" },
-  { name: "Hinduja Leyland Finance", type: "HFC", mirror: "Cholamandalam Finance" },
-  { name: "Nido Home Finance", type: "HFC", mirror: "JM Financial Services" },
-  { name: "DMI Housing Finance", type: "HFC", mirror: "Hinduja Housing Finance" },
-  { name: "Vridhi Home Finance", type: "HFC", mirror: "Home First Finance" },
+  { name: "SMFG India Credit", type: "HFC", mirror: "Hinduja Housing Finance" },
+  { name: "Nido Home Finance", type: "HFC", mirror: "Aavas Financiers" },
   { name: "Easy Home Finance", type: "HFC", mirror: "Aavas Financiers" },
-  { name: "Roha Housing Finance", type: "HFC", mirror: "Aadhar Housing Finance" },
   { name: "Svatantra Micro Housing Finance", type: "HFC", mirror: "SK Finance" },
-  { name: "Muthoot Fincorp", type: "HFC", mirror: "Muthoot Housing Finance" },
-  { name: "Shubham Housing Finance", type: "HFC", mirror: "Aadhar Housing Finance" },
-  { name: "Ummeed Housing Finance", type: "HFC", mirror: "Aadhar Housing Finance" },
-  { name: "Aviom India Housing Finance", type: "HFC", mirror: "Aadhar Housing Finance" },
-  { name: "Mahindra Rural Housing Finance", type: "HFC", mirror: "Aadhar Housing Finance" },
-  { name: "Indostar Home Finance", type: "HFC", mirror: "Cholamandalam Finance" },
-  { name: "Centrum Housing Finance", type: "HFC", mirror: "Hinduja Housing Finance" },
+  { name: "Centrum Housing Finance", type: "HFC", mirror: "MAS Financial" },
 ];
 
 const TYPE_LABEL: Record<string, string> = {
