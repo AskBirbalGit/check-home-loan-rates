@@ -290,7 +290,7 @@ export default function Calculator() {
     if (nr >= cur) {
       setSavingsErrTone("ok");
       setSavingsErr(
-        "👏 Cheers! You've already got the best rate for your profile."
+        "👏 Well done! You've already got the best rate for your profile."
       );
       return;
     }
@@ -319,6 +319,11 @@ export default function Calculator() {
 
   return (
     <div className="wrap">
+      <div className="brandbar">
+        <a href="/" aria-label="Birbal home">
+          <img className="brandbar-logo" src="/brand-logo.png" alt="Birbal" />
+        </a>
+      </div>
       <header className="hero">
         <h1>Are You Paying the Right Home Loan Rate?</h1>
         <p className="sub">Birbal suggests the best interest rate for you in seconds.</p>
