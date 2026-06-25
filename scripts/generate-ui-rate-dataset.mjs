@@ -16,14 +16,20 @@
    scraped row synchronously, so there is no background polling to time out on.
 ============================================================================= */
 
-import { randomInt } from "node:crypto";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { spawn, spawnSync } from "node:child_process";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const OUTPUT = resolve(ROOT, "data/ui-rate-dataset.csv");
+const STAMP = new Date()
+  .toISOString()
+  .replace(/[-:]/g, "")
+  .replace(/\..+$/, "")
+  .replace("T", "-");
+const OUTPUT = process.env.OUTPUT_CSV
+  ? resolve(ROOT, process.env.OUTPUT_CSV)
+  : resolve(ROOT, `data/ui-rate-dataset-${STAMP}.csv`);
 const PORT = process.env.PORT || "3100";
 const APP_URL = `http://127.0.0.1:${PORT}`;
 const SESSION = `cibil-ui-dataset-${Date.now()}`;
@@ -65,16 +71,13 @@ const INSTITUTIONS = [
   "Axis Finance",
 ];
 
-// Five base CIBIL bands, each randomized ±15. One randomized score per band,
-// reused across every institution + employment type so comparisons stay fair.
-// Plus the two domain boundaries (600 lowest, 850 highest) as fixed, un-randomized
-// endpoints so the dataset covers the full 600–850 CIBIL range.
-const baseScores = [625, 675, 725, 775, 825];
-const cibilScores = [
-  { base: 600, score: 600 },
-  ...baseScores.map((base) => ({ base, score: randomInt(base - 15, base + 16) })),
-  { base: 850, score: 850 },
-];
+// Fixed CIBIL score points (no randomization) so the dataset is reproducible
+// and re-runs are directly diffable across rate-logic changes. One score per
+// point, reused across every institution + employment type.
+const cibilScores = [600, 625, 675, 700, 720, 750, 775, 790, 815, 850].map((score) => ({
+  base: score,
+  score,
+}));
 
 const scenarios = [];
 for (const institution of INSTITUTIONS) {

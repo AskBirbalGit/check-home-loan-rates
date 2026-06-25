@@ -203,6 +203,7 @@ export default function Calculator() {
   const [tenure, setTenure] = useState("");
   const [outstanding, setOutstanding] = useState("");
   const [savingsErr, setSavingsErr] = useState("");
+  const [savingsErrTone, setSavingsErrTone] = useState<"error" | "ok">("error");
   const [savings, setSavings] = useState<SavingsResult | null>(null);
 
   const savingsInputRef = useRef<HTMLDivElement>(null);
@@ -266,6 +267,7 @@ export default function Calculator() {
   // ── Box 3 -> Box 4 : compute + render savings ──────────────────────────────
   function runSavings() {
     setSavingsErr("");
+    setSavingsErrTone("error");
     setSavings(null);
 
     const P = parseFloat(outstanding.replace(/,/g, ""));
@@ -286,8 +288,9 @@ export default function Calculator() {
       return;
     }
     if (nr >= cur) {
+      setSavingsErrTone("ok");
       setSavingsErr(
-        "Good news: your current rate is already at or below the fair rate for your profile. Nothing to switch for right now."
+        "👏 Cheers! You've already got the best rate for your profile."
       );
       return;
     }
@@ -327,7 +330,7 @@ export default function Calculator() {
         <section className="card input-bar">
           <div className="input-row">
             <label className="field">
-              <span className="lbl">Your current bank</span>
+              <span className="lbl">Bank name</span>
               <div className="combo" id="bankCombo" ref={comboRef}>
                 {showSelLogo && committedBank ? (
                   <span className="combo-selected-logo" aria-hidden="true">
@@ -587,7 +590,10 @@ export default function Calculator() {
               </button>
             </div>
             {savingsErr && (
-              <div id="savingsErr" className="err">
+              <div
+                id="savingsErr"
+                className={savingsErrTone === "ok" ? "err err--ok" : "err"}
+              >
                 {savingsErr}
               </div>
             )}

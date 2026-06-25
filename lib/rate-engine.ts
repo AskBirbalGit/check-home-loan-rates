@@ -5,27 +5,35 @@
    numbers stay identical. This module owns the CIBIL-wise rate dataset and the
    granular-averaging lookup logic; the React UI consumes it as a plain library.
 
-   GRANULAR-AVERAGING ENGINE (10x granularity, single averaged rate)
+   SPREAD-ALLOCATION CURVE (per-lender spread, fixed score→fraction curve)
    -----------------------------------------------------------------------------
-   The source sheet gives each lender+employment four coarse CIBIL bands, each a
-   rate RANGE like "7.50–8.00". We make the lookup 10x more granular and return a
-   single AVERAGED number for the customer's exact score, floored to the nearest
-   0.05 percentage-point display increment.
+   Each lender+employment is reduced to just TWO numbers from its source sheet:
 
-   CIBIL domain = 600–850. Source sheets provide four 50-point bands from
-   650–850; the 600–649 band is derived from the high-rate endpoint of the
-   <700 source band using a lender-type risk uplift.
+       R_min = the LOW of the "800+" cell   (best rate the lender offers)
+       R_max = the HIGH of the "<700" cell  (worst rate; trailing "+" stripped)
+       S     = R_max - R_min                 (the lender's full rate spread)
 
-       score >= 800  -> "800+"     band, CIBIL coverage [800, 850]
-       score >= 750  -> "750–799"  band, CIBIL coverage [750, 800]
-       score >= 700  -> "700–749"  band, CIBIL coverage [700, 750]
-       score >= 650  -> "<700"     band, CIBIL coverage [650, 700]
-       else          -> "600–649"  band, CIBIL coverage [600, 650]
+   The customer's exact CIBIL score (clamped to 600–850) maps to a CUMULATIVE
+   FRACTION of that spread via a fixed, lender-agnostic curve. The curve is
+   intentionally NON-LINEAR: it stays nearly flat at the top (so 800+ profiles
+   cluster near R_min) and steepens sharply below 750, matching how lenders
+   price risk band-wise rather than smoothly.
 
-   Within a band each side (CIBIL coverage + rate range) is split into 10 equal
-   slices. A HIGHER CIBIL earns a LOWER (better) rate, so the slice index is
-   inverted when mapping CIBIL -> rate step. Single-value cells parse as lo==hi;
-   trailing "+" cells have the "+" stripped.
+       score 850 -> f = 0.00                                  (best rate, R_min)
+       score 800 -> f = 0.03    ( >800  band carries  3% of the spread)
+       score 775 -> f = 0.10    (775-800 band carries  7% of the spread)
+       score 750 -> f = 0.20    (750-775 band carries 10% of the spread)
+       score 700 -> f = 0.40    (700-750 band carries 20% of the spread)
+       score 600 -> f = 1.00    (600-700 band carries 60% of the spread)
+
+   `f` interpolates LINEARLY between adjacent knots, so the curve is continuous
+   (kinked at each knot, not stepped). The published 750-799 / 700-749 mid-band
+   rate values are NOT used — only the two endpoints anchor the spread.
+
+   The rate is computed RAW and rounded only at the very end:
+       raw  = R_min + f * S          (no rounding inside the curve)
+       rate = floor to lower 0.05    (e.g. 7.19 -> 7.15, 7.16 -> 7.15)
+   Single-value cells parse as lo==hi; trailing "+" cells have the "+" stripped.
 ============================================================================= */
 
 export type EmploymentType = "sal" | "se";
@@ -177,23 +185,32 @@ const TYPE_LABEL: Record<string, string> = {
   HFC: "Housing Finance Co.",
 };
 
-const LOW_CIBIL_UPLIFT: Record<LenderType, number> = {
-  PSB: 0.5,
-  PVT: 0.5,
-  SFB: 0.75,
-  HFC: 1,
-};
+// The non-linear spread-allocation curve: CIBIL score -> cumulative fraction of
+// the lender's spread (0 = best/R_min, 1 = worst/R_max). Knots are ordered
+// HIGH score -> LOW score. `f` interpolates linearly between adjacent knots.
+//   850:0.00  800:0.03  775:0.10  750:0.20  700:0.40  600:1.00
+const CURVE: { score: number; f: number }[] = [
+  { score: 850, f: 0.0 },
+  { score: 800, f: 0.03 },
+  { score: 775, f: 0.1 },
+  { score: 750, f: 0.2 },
+  { score: 700, f: 0.4 },
+  { score: 600, f: 1.0 },
+];
 
-// Number of granular slices within each band (10x granularity per the spec).
-const STEPS = 10;
-
-// Selects the band's base column index AND that band's CIBIL coverage [cMin, cMax].
-function bandFor(score: number): { col: number; cMin: number; cMax: number; uplift?: boolean } {
-  if (score >= 800) return { col: 0, cMin: 800, cMax: 850 }; // "800+"
-  if (score >= 750) return { col: 2, cMin: 750, cMax: 800 }; // "750–799"
-  if (score >= 700) return { col: 4, cMin: 700, cMax: 750 }; // "700–749"
-  if (score >= 650) return { col: 6, cMin: 650, cMax: 700 }; // "<700"
-  return { col: 6, cMin: 600, cMax: 650, uplift: true }; // "600–649", derived from "<700"
+// Map a CIBIL score to its raw cumulative spread fraction (no rounding here).
+// Score is clamped to the [600, 850] curve domain.
+function curveFraction(score: number): number {
+  const s = Math.min(Math.max(score, 600), 850);
+  for (let i = 0; i < CURVE.length - 1; i++) {
+    const hi = CURVE[i] as { score: number; f: number }; // higher score, lower f
+    const lo = CURVE[i + 1] as { score: number; f: number }; // lower score, higher f
+    if (s <= hi.score && s >= lo.score) {
+      const t = (hi.score - s) / (hi.score - lo.score); // 0 at hi.score → 1 at lo.score
+      return hi.f + t * (lo.f - hi.f);
+    }
+  }
+  return (CURVE[CURVE.length - 1] as { f: number }).f;
 }
 
 // Parse a source cell into { lo, hi }.
@@ -204,22 +221,11 @@ function parseCell(str: string): { lo: number; hi: number } {
   return { lo, hi };
 }
 
-function floorToRateStep(n: number): number {
-  return Math.round((Math.floor(n * 20 + 1e-9) / 20) * 100) / 100;
-}
-
-// The granular-averaging core. Higher score -> lower rate step.
-function averagedRate(score: number, cMin: number, cMax: number, lo: number, hi: number): number {
-  if (lo === hi) return floorToRateStep(lo); // single-value cell: every slice is the same
-  const span = cMax - cMin;
-  const sliceSize = span / STEPS;
-  const clamped = Math.min(Math.max(score, cMin), cMax);
-  let i = Math.floor((clamped - cMin) / sliceSize);
-  if (i >= STEPS) i = STEPS - 1; // score == cMax lands in the top slice
-  if (i < 0) i = 0;
-  const stepIndex = STEPS - 1 - i; // higher score -> lower rate
-  const stepRate = (hi - lo) / STEPS;
-  return floorToRateStep(lo + (stepIndex + 0.5) * stepRate);
+// Floor a raw rate DOWN to the lower 0.05 percentage-point display increment
+// (e.g. 7.19 -> 7.15, 7.16 -> 7.15, 7.20 -> 7.20). Applied ONLY as the final
+// display step, never inside the curve math.
+function roundToRateStep(n: number): number {
+  return Math.round(Math.floor(n * 20 + 1e-9) / 20 * 100) / 100;
 }
 
 function lowBound(str: string): number {
@@ -250,13 +256,14 @@ export function rateFor(bankName: string, score: number, emp: EmploymentType): n
   if (!l) return null;
   const bands = resolveBands(l);
   if (!bands) return null;
-  const band = bandFor(score);
-  const cell = bands[band.col + (emp === "se" ? 1 : 0)] as string;
-  const { lo, hi } = parseCell(cell);
-  if (band.uplift) {
-    return floorToRateStep(hi + LOW_CIBIL_UPLIFT[l.type]);
-  }
-  return averagedRate(score, band.cMin, band.cMax, lo, hi);
+  const off = emp === "se" ? 1 : 0;
+  // R_min = low of the "800+" cell; R_max = high of the "<700" cell.
+  const rMin = parseCell(bands[0 + off] as string).lo;
+  const rMax = parseCell(bands[6 + off] as string).hi;
+  const spread = rMax - rMin;
+  // Raw rate from the curve; round to nearest 0.05 only at the very end.
+  const raw = rMin + curveFraction(score) * spread;
+  return roundToRateStep(raw);
 }
 
 export function formatRate(result: number | null): string {

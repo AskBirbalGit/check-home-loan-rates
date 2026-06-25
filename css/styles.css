@@ -632,6 +632,13 @@ button.cta.secondary:hover {
   border-radius: var(--radius-field);
   margin-top: 10px;
 }
+.err--ok {
+  color: var(--success-strong);
+  background: color-mix(in srgb, var(--success) 10%, var(--surface));
+  border-color: color-mix(in srgb, var(--success) 28%, transparent);
+  font-size: var(--fs-body);
+  line-height: var(--lh-snug);
+}
 
 .hidden { display: none; }
 
