@@ -341,7 +341,7 @@ export default function Calculator() {
         <section className="card input-bar">
           <div className="input-row">
             <label className="field">
-                <span className="lbl">Your bank name (optional)</span>
+                <span className="lbl">Your bank name</span>
               <div className="combo" id="bankCombo" ref={comboRef}>
                 {showSelLogo && committedBank ? (
                   <span className="combo-selected-logo" aria-hidden="true">
